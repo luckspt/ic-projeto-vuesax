@@ -1,0 +1,184 @@
+<template>
+  <div class="grid">
+    <vs-row style="margin-bottom:0;padding-bottom:0;">
+      <vs-col
+        w="12"
+        v-if="computedMensagens.length > 0"
+        style="height:465px;overflow-y:scroll;overflow-x:hidden;"
+        ref="mensagens">
+          <!-- Zona onde está contida a mensagem -->
+          <div>
+            <Messages v-if="reRenderChat" :mensagens="computedMensagens" />
+          </div>
+      </vs-col>
+      <vs-col
+        w="12"
+        v-else>
+        <div class="p-grid p-jc-center p-ai-center vertical-container" style="width:100%;height:465px">
+          <div class="grid" style="width:970px;height:100%">
+            <vs-row align="center">
+              <vs-col w="4">
+                <i id="leftArrow" class="fa-solid fa-share fa-flip-vertical" data-fa-transform="rotate--90"></i>
+              </vs-col>
+              <vs-col w="5">
+                <vs-alert relief>
+                  <template #title>
+                    <h1>Sem mensagens...</h1>
+                  </template>
+
+                  <p>Envie uma mensagem ou inicie uma ligação de vídeo para começar!
+                    <i
+                    class="fa-solid fa-face-smile-wink twemoji ml-2"
+                    data-fa-transform="grow-16" /></p>
+                </vs-alert>
+              </vs-col>
+            </vs-row>
+          </div>
+        </div>
+      </vs-col>
+
+      <!-- ESPAÇO ESCREVER MENSAGEM -->
+      <vs-col w="9">
+        <vs-input
+          block
+          class="mt-1"
+          @keypress="verEnter"
+          v-model="mensagem"
+          placeholder="Escreve uma mensagem..." />
+      </vs-col>
+
+      <!-- BOTÃO ENVIAR MENSAGEM -->
+      <vs-col w="3">
+        <span class="p-buttonset">
+          <vs-button
+            style="float:left;"
+            :disabled="mensagem === ''"
+            @click="enviarMensagem"
+            class="p-mr-1">
+            <i class="fa-solid fa-paper-plane mr-2"></i>
+            Enviar
+          </vs-button>
+
+          <!-- BOTÃO ESCOLHER FICHEIRO -->
+          <vs-button
+            type="file"
+            ref="fileUpload"
+            @uploader="uploadFicheiro">
+            <i class="fa-solid fa-paperclip mr-2"></i>
+            Ficheiro
+          </vs-button>
+        </span>
+      </vs-col>
+    </vs-row>
+  </div>
+</template>
+
+<script lang="ts">
+import Vue from 'vue';
+import Messages from '@/components/Messages.vue';
+import { Mensagem, Recente } from '@/typings/typings';
+
+export default Vue.extend({
+  components: {
+    Messages,
+  },
+  props: ['chat', 'search'],
+  watch: {
+    chat: {
+      immediate: true,
+      handler() {
+        this.forceRerenderChat();
+      },
+    },
+  },
+  data: () => ({
+    reRenderChat: true,
+    ficheirosDisplay: false,
+    mensagem: '',
+    ficheiro: null,
+  }),
+  mounted() {
+    this.descerMensagem();
+  },
+  computed: {
+    computedMensagens(): Mensagem[] {
+      const chat = this.getChat();
+      if (!chat || !chat.mensagens) return [];
+      if (!this.search) return chat.mensagens;
+      return chat.mensagens.filter((m) => (m.texto ? m.texto.toLowerCase().includes(this.search.toLowerCase()) : false));
+    },
+  },
+  methods: {
+    forceRerenderChat() {
+      this.reRenderChat = false;
+
+      this.$nextTick().then(() => {
+        this.reRenderChat = true;
+      });
+    },
+    getChat(): Recente | null {
+      return this.$store.state.contactos.recentes.find((r: Recente) => r.nome === this.chat.nome);
+    },
+    getHref() {
+      return window.location.href;
+    },
+    uploadFicheiro({ files }: unknown) {
+      this.$store.dispatch('contactos/sendMessage', {
+        chat: this.chat,
+        mensagem: {
+          autor: '$$user$$',
+          ficheiro: files[0].name,
+          momento: new Date(),
+        } as Mensagem,
+      });
+
+      this.$emit('messageSent');
+
+      this.descerMensagem();
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (this.$refs.fileUpload as any).clear();
+    },
+    openFicheirosDialog() {
+      this.ficheirosDisplay = true;
+    },
+    cancelFicheirosDialog() {
+      this.ficheirosDisplay = false;
+      return null;
+    },
+    submitFicheirosDialog() {
+      this.ficheirosDisplay = false;
+      return null;
+    },
+    verEnter(key: KeyboardEvent) {
+      if (key.code === 'Enter') this.enviarMensagem();
+    },
+    enviarMensagem() {
+      if (this.mensagem === '') return;
+
+      this.$store.dispatch('contactos/sendMessage', {
+        chat: this.chat,
+        mensagem: {
+          autor: '$$user$$',
+          texto: this.mensagem,
+          momento: new Date(),
+        } as Mensagem,
+      });
+
+      this.$emit('messageSent');
+
+      this.mensagem = '';
+
+      this.descerMensagem();
+    },
+    descerMensagem(): void {
+      setTimeout(() => {
+        const el = this.$refs.mensagens as Vue;
+        if (el?.$el.firstElementChild?.firstElementChild?.lastElementChild?.lastElementChild?.lastElementChild) {
+          el.$el.firstElementChild.firstElementChild.lastElementChild.lastElementChild.lastElementChild.scrollIntoView();
+        }
+      }, 50);
+    },
+  },
+});
+</script>
