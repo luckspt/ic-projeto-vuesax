@@ -22,7 +22,7 @@ h1,h2,h3,h4,h5,h6,p,th,td,tr,div,.vs-input:active .vs-input__icon {
   border-radius: 25px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: transparent;
+  cursor:grab;
 }
 
 .mt-0 {

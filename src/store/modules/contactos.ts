@@ -3,10 +3,12 @@ import { ActionContext } from 'vuex';
 import { Mensagem, Recente } from '@/typings/typings';
 
 const avatars = {
-  António: 'avataaars.png',
+  $$user$$: 'avataaars.png',
+  António: 'avataaars1.png',
 };
 
 const state = {
+  avatars,
   recentes: [
     {
       nome: 'António',
@@ -14,7 +16,7 @@ const state = {
       email: 'antonio@gmail.com',
       favorito: true,
       naChamada: [
-        { nome: 'António', imagem: 'https://picsu.photos/301/169' },
+        { nome: 'António' },
       ],
       mensagens: [
         {
@@ -37,6 +39,16 @@ const state = {
       favorito: false,
       naChamada: [
         { nome: 'António', imagem: 'https://i.imgur.com/mn4qhRe.jpg' },
+        { nome: 'Carlos', imagem: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fb6%2F04%2Ff3%2Fb604f33d9a7a48ec4394c87a4c1612b8.jpg&f=1&nofb=1' },
+        { nome: 'Carlos', imagem: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fb6%2F04%2Ff3%2Fb604f33d9a7a48ec4394c87a4c1612b8.jpg&f=1&nofb=1' },
+        { nome: 'Carlos', imagem: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fb6%2F04%2Ff3%2Fb604f33d9a7a48ec4394c87a4c1612b8.jpg&f=1&nofb=1' },
+        { nome: 'Carlos', imagem: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fb6%2F04%2Ff3%2Fb604f33d9a7a48ec4394c87a4c1612b8.jpg&f=1&nofb=1' },
+        { nome: 'Carlos', imagem: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fb6%2F04%2Ff3%2Fb604f33d9a7a48ec4394c87a4c1612b8.jpg&f=1&nofb=1' },
+        { nome: 'Carlos', imagem: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fb6%2F04%2Ff3%2Fb604f33d9a7a48ec4394c87a4c1612b8.jpg&f=1&nofb=1' },
+        { nome: 'Carlos', imagem: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fb6%2F04%2Ff3%2Fb604f33d9a7a48ec4394c87a4c1612b8.jpg&f=1&nofb=1' },
+        { nome: 'Carlos', imagem: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fb6%2F04%2Ff3%2Fb604f33d9a7a48ec4394c87a4c1612b8.jpg&f=1&nofb=1' },
+        { nome: 'Carlos', imagem: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fb6%2F04%2Ff3%2Fb604f33d9a7a48ec4394c87a4c1612b8.jpg&f=1&nofb=1' },
+        { nome: 'Carlos', imagem: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fb6%2F04%2Ff3%2Fb604f33d9a7a48ec4394c87a4c1612b8.jpg&f=1&nofb=1' },
         { nome: 'Carlos', imagem: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fb6%2F04%2Ff3%2Fb604f33d9a7a48ec4394c87a4c1612b8.jpg&f=1&nofb=1' },
       ],
       mensagens: [
@@ -133,20 +145,19 @@ const mutations = {
   SAVE(currState: unknown): void {
     sessionStorage.setItem('contactos', JSON.stringify(currState));
   },
-  SET_CONTACTOS(currState: Record<string, unknown>, recentes: Record<string, unknown>): void {
-    // eslint-disable-next-line no-param-reassign
+  SET_CONTACTOS(currState: typeof state, recentes: typeof state): void {
     Object.assign(currState, recentes);
   },
-  TOGGLE_FAVORITO(currState: unknown, nome: string): void {
-    const user = state.recentes.find((u) => u.nome === nome);
+  TOGGLE_FAVORITO(currState: typeof state, nome: string): void {
+    const user = currState.recentes.find((u) => u.nome === nome);
     if (user) user.favorito = !user.favorito;
   },
-  TOGGLE_GROUP(currState: unknown, nome: string): void {
-    const user = state.recentes.find((u) => u.nome === nome);
+  TOGGLE_GROUP(currState: typeof state, nome: string): void {
+    const user = currState.recentes.find((u) => u.nome === nome);
     if (user) user.grupo = !user.grupo;
   },
-  SEND_MESSAGE(currstate: unknown, data: {chat: Recente, mensagem: Mensagem}): void {
-    const user = state.recentes.find((u) => u.nome === data.chat.nome);
+  SEND_MESSAGE(currstate: typeof state, data: {chat: Recente, mensagem: Mensagem}): void {
+    const user = currstate.recentes.find((u) => u.nome === data.chat.nome);
     if (user) {
       if (!user.mensagens) user.mensagens = [];
       user.mensagens.push(data.mensagem);

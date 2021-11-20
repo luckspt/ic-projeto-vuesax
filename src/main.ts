@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuesax from 'vuesax';
+import VueSkeletonLoader from 'skeleton-loader-vue';
 
 import App from './App.vue';
 import './registerServiceWorker';
@@ -20,13 +21,15 @@ Vue.config.productionTip = false;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 Vue.use(Vuesax as any, {
   colors: {
-    primary: '#1a5cff',
+    primary: '#6495ed', // '#1a5cff',
     success: '#46c93a',
     danger: '#ff4757',
     warning: '#ffba00',
     dark: '#141417',
   },
 });
+
+Vue.component('vue-skeleton-loader', VueSkeletonLoader);
 
 new Vue({
   router,

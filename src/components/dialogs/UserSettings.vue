@@ -23,7 +23,6 @@
       label="Confirmar"
       icon="pi pi-check"
       class="p-button-success"
-      autofocus
       @click="submeterDefinicoes"/>
     </template>
   </Dialog>

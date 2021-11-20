@@ -1,40 +1,40 @@
 <template>
-  <Dialog
-    :visible.sync="isVisible"
-    modal
-    :style="{width: '500px'}"
-    @hide="closeDialog">
-    <template #header>
-      <h3>Soundboard</h3>
-    </template>
+  <vs-dialog
+    v-model="isVisible"
+    @close="closeDialog"
+    not-center>
+    <div style="width:500px;">
+      <div class="ml-6 mr-6">
+        <h2>Soundboard</h2>
 
-    <!-- <Slider v-model="value" :range="true" /> -->
-    <h3 style='margin-left:0px;'>Volume: {{ volume }}%</h3>
-      <Slider
-        v-model="volume"
-        @change="changeVolume"
-        :step="5" />
+        <p>Volume: {{ volume }}%</p>
+          <VueSlider
+            v-model="volume"
+            @change="changeVolume"
+            tooltip="none"
+            :interval="5"
+            drag-on-click />
 
-    <div class="p-buttonset">
-      <Button
-        class="p-button-text"
-        label="-"
-        @click="() => addVolume(-5)" />
+        <vs-button-group>
+          <vs-button @click="addVolume(-5)">
+            -
+          </vs-button>
 
-      <Button
-        class="p-button-text"
-        label="+"
-        @click="() => addVolume(5)" />
+          <vs-button @click="addVolume(5)">
+            +
+          </vs-button>
+        </vs-button-group>
+
+        <h3 style='margin-top:30px;'>Músicas e Sons</h3>
+        <Listbox
+          listStyle="max-height:169px"
+          filter
+          v-model="selected"
+          :options="sortedSongs"
+          optionLabel="name">
+        </Listbox>
+      </div>
     </div>
-
-    <h3 style='margin-top:30px;'>Músicas e Sons</h3>
-    <Listbox
-      listStyle="max-height:169px"
-      filter
-      v-model="selected"
-      :options="sortedSongs"
-      optionLabel="name">
-    </Listbox>
 
     <template #footer>
       <Button style="background-color: #B90E0A;"
@@ -54,32 +54,26 @@
       <Button
         :disabled="!selected"
         class="p-button-success"
-        autofocus
         @click="play">
         <i class="fa-solid fa-play p-mr-2"></i>
         Tocar
       </Button>
     </template>
-  </Dialog>
+  </vs-dialog>
 </template>
 
 <script lang="ts">
 /* eslint-disable global-require */
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable import/no-dynamic-require */
+import VueSlider from 'vue-slider-component';
+import 'vue-slider-component/theme/antd.css';
 
 import Vue from 'vue';
-import Button from 'primevue/button';
-import Dialog from 'primevue/dialog';
-import Slider from 'primevue/slider';
-import Listbox from 'primevue/listbox';
 
 export default Vue.extend({
   components: {
-    Button,
-    Dialog,
-    Slider,
-    Listbox,
+    VueSlider,
   },
   props: ['isVisible'],
   data: () => ({

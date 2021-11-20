@@ -1,77 +1,105 @@
 <template>
-  <div>
-    <div class="p-grid p-jc-center">
-      <div class="p-col-12">
-        <ScrollPanel style="width:100%;height:429px;">
-          <div class="dish p-pt-3">
+  <div class="grid" justify="center">
+    <vs-row>
+      <vs-col w="12">
+        <div style="width:100%;height:429px;">
+          <div class="dish" style="height:429px;overflow-y:scroll;">
             <div
-              class="participant p-pr-1"
+              class="participant mr-3 mb-3"
               v-for="(contacto, i) in emChamada"
               :key="i">
-              <img
-                v-show="loadedImages[contacto.nome]"
-                @load="() => setLoadedImage(contacto.nome)"
-                :src="contacto.imagem ? contacto.imagem : 'https://i.imgur.com/xKbkmS8.png'"
-                :style="{
-                  'width': '297px',
-                  'height': '165px',
-                  'border-radius': '20px',
-                  'background-image': `${contacto.background ? `url('${contacto.background}')` : ''}`,
-                  'background-size': '100% 100%'}"
-                />
-              <Skeleton
-                v-show="!loadedImages[contacto.nome]"
-                width="297px"
-                height="165px" />
-              <p class="p-text-center">{{ contacto.nome.replace('$$user$$', $store.state.user.contacto.nome) }}</p>
+              <vs-card
+                class="participantCard">
+                <template #img>
+                  <img
+                    :src="`${getContactoImage(contacto.nome, contacto.imagem)}`"
+                    :width="297"
+                    :height="165"
+                    :style="{
+                      'background-image': `${contacto.imagem && contacto.background ? `url('${contacto.background}')` : ''}`,
+                      'background-size': '100% 100%'}"
+                    />
+                </template>
+                <template #interactions>
+
+                  <vs-button
+                    class="no-hover"
+                    v-if="!contacto.micro"
+                    danger
+                    icon
+                    flat
+                    relief>
+                    <i class="fa-solid fa-microphone-slash"></i>
+                  </vs-button>
+                  <vs-button
+                    class="no-hover"
+                    v-if="!contacto.imagem"
+                    danger
+                    icon
+                    flat
+                    relief>
+                    <i class="fa-solid fa-video-slash"></i>
+                  </vs-button>
+
+                  <h4>{{ parseNome(contacto.nome) }}</h4>
+                </template>
+              </vs-card>
             </div>
           </div>
-        </ScrollPanel>
-      </div>
-      <div class="p-col-9">
-        <div class="p-grid p-jc-center">
-            <Button class="p-mr-1" @click="openDialogSoundboard">
-              <i class="fa-solid fa-volume-high p-mr-2"></i>
-              Sons &amp; Música
-            </Button>
-            <Button
-              class="p-mr-1"
+        </div>
+      </vs-col>
+      <vs-col w="12">
+        <div class="grid p-jc-center">
+          <vs-row justify="center">
+            <vs-button
+              v-if="reRenderToggles"
               @click="toggleUserVideo">
-              <i :class="`fa-solid fa-video${!$store.state.user.chamada.imagem ? '-slash' : ''} p-mr-2`"></i>
+              <i :class="`fa-solid fa-video${!$store.state.user.chamada.imagem ? '-slash' : ''} mr-2`" />
               Câmara
-            </Button>
-            <Button
-              class="p-mr-1"
+            </vs-button>
+
+            <vs-button
+              v-if="reRenderToggles"
               @click="toggleUserMicro">
-              <i :class="`fa-solid fa-microphone${!$store.state.user.chamada.micro ? '-slash' : ''} p-mr-2`"></i>
+              <i :class="`fa-solid fa-microphone${!$store.state.user.chamada.micro ? '-slash' : ''} mr-2`" />
               Microfone
-            </Button>
-            <Button
+            </vs-button>
+
+            <vs-button
               @click="openDialogFundos">
-              <i class="fa-solid fa-tv p-mr-2"></i>
-              Mudar fundo de ecrã
-            </Button>
+              <i class="fa-solid fa-tv mr-2"></i>
+              Fundos Câmara
+            </vs-button>
+
+            <vs-button
+              @click="openDialogSoundboard">
+              <i class="fa-solid fa-volume-high mr-2"></i>
+              Sons &amp; Música
+            </vs-button>
+          </vs-row>
         </div>
-      </div>
+      </vs-col>
 
-      <div class="p-col-9">
-        <div class="p-grid p-jc-center">
-          <Button
-            @click="leaveCall"
-            class="p-button-danger p-mr-1">
+      <vs-col w="12">
+        <div class="grid">
+          <vs-row justify="center">
+            <vs-button
+              danger
+              @click="leaveCall">
 
-            <i class="fa-solid fa-phone p-mr-2"></i>
-            Desligar Chamada
-          </Button>
+              <i class="fa-solid fa-phone mr-2"></i>
+              Terminar Chamada
+            </vs-button>
 
-          <Button
-            class="p-button-warning"
-            @click="$router.push({ name: 'Chat' })"
-            label="Voltar ao Chat"
-            icon="pi pi-angle-double-up" />
+            <vs-button
+              @click="$router.push({ name: 'Chat' })">
+              <i class="fa-solid fa-angles-up mr-2"></i>
+              Voltar à Conversa
+            </vs-button>
+          </vs-row>
         </div>
-      </div>
-    </div>
+      </vs-col>
+    </vs-row>
 
     <AlterarFundo
       :isVisible.sync="dialogFundos"
@@ -84,6 +112,15 @@
 </template>
 
 <style lang="scss" scoped>
+.no-hover {
+  pointer-events: none;
+}
+
+.participantCard,.vs-card,.vs-card__image {
+  border: none !important;
+  box-shadow: none !important;
+}
+
 .dish {
   display: flex;
   align-content: center;
@@ -102,7 +139,6 @@
     vertical-align: middle;
     align-self: center;
     border-radius: 10px;
-    overflow: hidden;
     display: inline-block;
   }
 
@@ -114,24 +150,22 @@
 </style>
 
 <script lang="ts">
+/* eslint-disable import/no-dynamic-require */
+/* eslint-disable global-require */
+
 import Vue from 'vue';
-import Button from 'primevue/button';
-import Skeleton from 'primevue/skeleton';
-import ScrollPanel from 'primevue/scrollpanel';
 import { ParticipanteChamada, Recente } from '@/typings/typings';
 import AlterarFundo from '@/components/dialogs/AlterarFundo.vue';
 import Soundboard from '@/components/dialogs/Soundboard.vue';
 
 export default Vue.extend({
   components: {
-    ScrollPanel,
-    Skeleton,
-    Button,
     AlterarFundo,
     Soundboard,
   },
   props: ['chat'],
   data: () => ({
+    reRenderToggles: true,
     dialogFundos: false,
     dialogSoundboard: false,
     loadedImages: {} as Record<string, boolean>,
@@ -157,11 +191,26 @@ export default Vue.extend({
     },
   },
   methods: {
+    forceRerenderToggles() {
+      this.reRenderToggles = false;
+
+      this.$nextTick().then(() => {
+        this.reRenderToggles = true;
+      });
+    },
+    getContactoImage(nome: string, chamadaImagem: string) {
+      return chamadaImagem || require(`@/assets/img/avatars/${this.$store.state.contactos.avatars[nome]}`);
+    },
+    parseNome(nome: string) {
+      return nome.replace('$$user$$', this.$store.state.user.contacto.nome);
+    },
     toggleUserVideo() {
       this.$store.dispatch('user/toggleImage');
+      this.forceRerenderToggles();
     },
     toggleUserMicro() {
       this.$store.dispatch('user/toggleMicro');
+      this.forceRerenderToggles();
     },
     setLoadedImage(nome: string) {
       this.$set(this.loadedImages, nome, true);

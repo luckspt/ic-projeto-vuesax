@@ -1,76 +1,89 @@
 <template>
-  <Dialog
-    :visible.sync="isVisible"
-    modal
-    :style="{width: '500px'}"
-    @hide="closeDialog">
-    <template #header>
-      <h3>Mudar fundo de Vídeo</h3>
-    </template>
-    <h3 style='margin-left:180px;'>Preview</h3>
-    <img
-      id="imgPreview"
-      src="https://i.imgur.com/fBl6VBK.png"
-      :style="{
-        'background-image' :`url('${fundoAtivo ? fundoAtivo.href : $store.state.user.chamada.background}')`,
-        'background-size': '100% 100%',
-        'pointer': 'cursor',
-        'margin-left': '80px'
-      }" />
-    <hr>
-    <div class="p-grid">
-      <div class="p-col" v-for="(imagem, i) in imagensFundo" :key="i">
+  <vs-dialog
+    v-model="isVisible"
+    @close="closeDialog">
+    <div style="width:500px;">
+      <div class="ml-6 mr-6">
+        <h2>Alterar fundo de Câmara</h2>
+        <p>Visualização</p>
         <img
-          @click="() => imagemClick(imagem)"
-          :class="`${imagem.ativo ? 'imgselecionada' : ''}`"
-          :src="imagem.href"
-          v-tooltip="imagem.tooltip"
-          width="200px"
-          height="112px"
-          />
+          id="imgPreview"
+          class="rounded-corners"
+          src="https://i.imgur.com/fBl6VBK.png"
+          :style="{
+            'width': '250px',
+            'height': '140px',
+            'background-image' :`url('${fundoAtivo ? fundoAtivo.href : $store.state.user.chamada.background}')`,
+            'background-size': '100% 100%',
+            'pointer': 'cursor',
+          }" />
+      </div>
+
+      <div class="grid pt-1">
+        <p class="ml-6">Fundos</p>
+        <vs-row justify="center" align="center">
+          <vs-col
+            w="5"
+            v-for="(imagem, i) in imagensFundo"
+            :key="i">
+            <img
+              @click="() => imagemClick(imagem)"
+              :class="`${imagem.ativo ? 'imgselecionada' : ''} rounded-corners`"
+              :src="imagem.href"
+              v-tooltip="imagem.tooltip"
+              width="200px"
+              height="112px"
+              />
+          </vs-col>
+        </vs-row>
       </div>
     </div>
+
     <template #footer>
-        <!-- class="p-button-text p-button-danger" -->
-      <!-- @click="" -->
-      <Button
-        class="p-button-text"
-        style="margin-right: 120px"
-        @click="reporFundo">
-        <i class="fa-solid fa-reply p-mr-2"></i>
-        Repor
-      </Button>
-      <Button @click="closeDialog" style="background-color: #B90E0A;">
-        <i class="fa-solid fa-xmark p-mr-2"></i>
-        Cancelar
-      </Button>
-      <Button style="background-color: #5BC236;"
-        class="p-button-success"
-        autofocus
-        @click="submeterFundo">
-        <i class="fa-solid fa-check p-mr-2"></i>
-        Confirmar
-      </Button>
+      <div class="grid" style="width:100%;">
+        <vs-row class="ml-6">
+          <vs-col w="2">
+            <vs-button
+              style="margin-left:-8px"
+              transparent
+              @click="reporFundo">
+              <i class="fa-solid fa-reply mr-2"></i>
+              Repor
+            </vs-button>
+          </vs-col>
+          <vs-col offset="2" w="6">
+            <div style="margin-left:12px">
+              <vs-button
+                style="float:left;"
+                @click="closeDialog">
+                <i class="fa-solid fa-xmark mr-2"></i>
+                Cancelar
+              </vs-button>
+              <vs-button
+                style="float:left;"
+                success
+                @click="submeterFundo">
+                <i class="fa-solid fa-check mr-2"></i>
+                Confirmar
+              </vs-button>
+            </div>
+          </vs-col>
+        </vs-row>
+      </div>
     </template>
-  </Dialog>
+  </vs-dialog>
 </template>
 
 <style lang="scss" scoped>
 .imgselecionada {
-  border: 2px red solid;
+  border: 2px $danger solid;
 }
 </style>
 
 <script lang="ts">
 import Vue from 'vue';
-import Button from 'primevue/button';
-import Dialog from 'primevue/dialog';
 
 export default Vue.extend({
-  components: {
-    Button,
-    Dialog,
-  },
   props: ['isVisible'],
   data: () => ({
     imagensFundo: [
@@ -112,6 +125,7 @@ export default Vue.extend({
         }
       }
     },
+
     closeDialog(): void {
       this.$emit('close');
     },
