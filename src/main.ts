@@ -21,7 +21,7 @@ Vue.config.productionTip = false;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 Vue.use(Vuesax as any, {
   colors: {
-    primary: '#6495ed', // '#1a5cff',
+    primary: '#7289da', // '#1a5cff',
     success: '#46c93a',
     danger: '#ff4757',
     warning: '#ffba00',

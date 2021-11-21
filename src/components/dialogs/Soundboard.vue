@@ -7,25 +7,31 @@
       <div class="ml-6 mr-6">
         <h2>Soundboard</h2>
 
-        <p>Volume: {{ volume }}%</p>
+        <p>Volume: <small>{{ volume }}%</small></p>
           <VueSlider
             v-model="volume"
             @change="changeVolume"
             tooltip="none"
+            :min="0"
+            :max="100"
             :interval="5"
             drag-on-click />
 
-        <vs-button-group>
-          <vs-button @click="addVolume(-5)">
+        <vs-button-group style="width:64px;">
+          <vs-button
+            @click="addVolume(-5)"
+            :disabled="volume - 5 < 0"
+            >
             -
           </vs-button>
-
-          <vs-button @click="addVolume(5)">
+          <vs-button
+          @click="addVolume(5)"
+          :disabled="volume + 5 > 100">
             +
           </vs-button>
         </vs-button-group>
 
-        <h3 style='margin-top:30px;'>Músicas e Sons</h3>
+        <p>Músicas e Sons</p>
         <Listbox
           listStyle="max-height:169px"
           filter
@@ -37,27 +43,34 @@
     </div>
 
     <template #footer>
-      <Button style="background-color: #B90E0A;"
-        @click="closeDialog">
-
-        <i class="fa-solid fa-xmark p-mr-2"></i>
-
-        Fechar
-      </Button>
-      <Button
-        :disabled="aTocar.length === 0"
-        class="p-button-danger"
-        @click="stop">
-        <i class="fa-solid fa-stop p-mr-2"></i>
-        Parar
-      </Button>
-      <Button
-        :disabled="!selected"
-        class="p-button-success"
-        @click="play">
-        <i class="fa-solid fa-play p-mr-2"></i>
-        Tocar
-      </Button>
+      <div class="grid">
+        <vs-row justify="end">
+          <vs-col w="7" class="mr-2">
+            <vs-button
+              @click="closeDialog"
+              style="float:left;">
+              <i class="fa-solid fa-xmark mr-2"></i>
+              Fechar
+            </vs-button>
+            <vs-button
+              danger
+              :disabled="aTocar.length === 0"
+              @click="stop"
+              style="float:left;">
+              <i class="fa-solid fa-stop mr-2"></i>
+              Parar
+            </vs-button>
+            <vs-button
+              success
+              :disabled="!selected"
+              @click="play"
+              style="float:left;">
+              <i class="fa-solid fa-play mr-2"></i>
+              Tocar
+            </vs-button>
+          </vs-col>
+        </vs-row>
+      </div>
     </template>
   </vs-dialog>
 </template>

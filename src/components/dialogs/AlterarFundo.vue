@@ -9,11 +9,11 @@
         <img
           id="imgPreview"
           class="rounded-corners"
-          src="https://i.imgur.com/fBl6VBK.png"
+          :src="require(`../../assets/${getUserImage}`)"
           :style="{
             'width': '250px',
             'height': '140px',
-            'background-image' :`url('${fundoAtivo ? fundoAtivo.href : $store.state.user.chamada.background}')`,
+            'background-image' :`url('${require(`../../assets/${fundoAtivo ? fundoAtivo.href : $store.state.user.chamada.background}`)}')`,
             'background-size': '100% 100%',
             'pointer': 'cursor',
           }" />
@@ -29,7 +29,7 @@
             <img
               @click="() => imagemClick(imagem)"
               :class="`${imagem.ativo ? 'imgselecionada' : ''} rounded-corners`"
-              :src="imagem.href"
+              :src="require(`../../assets/${imagem.href}`)"
               v-tooltip="imagem.tooltip"
               width="200px"
               height="112px"
@@ -62,7 +62,8 @@
               <vs-button
                 style="float:left;"
                 success
-                @click="submeterFundo">
+                @click="submeterFundo"
+                :disabled="!fundoAtivo">
                 <i class="fa-solid fa-check mr-2"></i>
                 Confirmar
               </vs-button>
@@ -88,22 +89,22 @@ export default Vue.extend({
   data: () => ({
     imagensFundo: [
       {
-        href: 'https://i.imgur.com/sOgLEmI.png',
+        href: 'img/fundos/vulcao.png',
         ativo: false,
         tooltip: 'Vulcão',
       },
       {
-        href: 'https://i.ebayimg.com/images/g/~6AAAOSwo4pYGoey/s-l400.jpg',
+        href: 'img/fundos/peixes.jpg',
         ativo: false,
         tooltip: 'Peixes',
       },
       {
-        href: 'https://i.imgur.com/psmtqEZ.jpg',
+        href: 'img/fundos/praia.jpg',
         ativo: false,
         tooltip: 'Praia',
       },
       {
-        href: 'http://www.projecto100rota.com/wp-content/uploads/2017/10/WP_20171018_12_11_14_Pro-2.jpg',
+        href: 'img/fundos/leiria.jpg',
         ativo: false,
         tooltip: 'Leiria',
       },
@@ -112,6 +113,9 @@ export default Vue.extend({
   computed: {
     fundoAtivo(): { href: string, ativo: boolean } | undefined {
       return this.imagensFundo.find((i) => i.ativo);
+    },
+    getUserImage() {
+      return this.$store.state.user.chamada.imagem || 'img/linus_nobg.png';
     },
   },
   methods: {

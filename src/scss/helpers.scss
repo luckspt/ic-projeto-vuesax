@@ -10,6 +10,10 @@ h1,h2,h3,h4,h5,h6,p,th,td,tr,div,.vs-input:active .vs-input__icon {
   color:#ffcc4d;
 }
 
+.vs-tooltip {
+  background-color: $darker;
+}
+
 // Scroll
 ::-webkit-scrollbar {
   width: 5px;

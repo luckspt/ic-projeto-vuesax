@@ -3,8 +3,8 @@ import { ActionContext } from 'vuex';
 import { ParticipanteChamada, Recente } from '@/typings/typings';
 
 const defaults = {
-  image: 'https://i.imgur.com/fBl6VBK.png',
-  background: 'https://i.imgur.com/257M3Pq.png',
+  imagem: 'img/linus_nobg.png',
+  background: 'img/linus.png',
 };
 
 const state = {
@@ -15,7 +15,7 @@ const state = {
   chamada: {
     nome: '$$user$$',
     background: defaults.background,
-    imagem: defaults.image,
+    imagem: defaults.imagem,
     micro: true,
   } as ParticipanteChamada,
 };
@@ -31,7 +31,7 @@ const mutations = {
     currState.chamada.background = background;
   },
   TOGGLE_IMAGE(currState: typeof state): void {
-    if (currState.chamada.imagem) { currState.chamada.imagem = undefined; } else currState.chamada.imagem = defaults.image;
+    if (currState.chamada.imagem) { currState.chamada.imagem = undefined; } else currState.chamada.imagem = defaults.imagem;
   },
   TOGGLE_MICRO(currState: typeof state): void {
     currState.chamada.micro = !currState.chamada.micro;

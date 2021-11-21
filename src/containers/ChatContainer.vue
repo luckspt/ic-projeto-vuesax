@@ -10,9 +10,9 @@
           <div class="grid">
             <vs-row justify="center" align="center" >
               <!-- Barra pesquisa -->
-              <vs-col w="9">
+              <vs-col w="7">
                 <vs-input
-                  color="dark"
+                  color="#ffffff"
                   block
                   icon-before
                   v-model="recentesSearch">
@@ -21,16 +21,43 @@
                   </template>
                 </vs-input>
               </vs-col>
-              <!-- Star -->
-              <vs-col w="2" class="ml-2">
-                <vs-switch warn>
-                  <template #off>
-                      <i class='fa-solid fa-star' ></i>
+              <vs-col w="4">
+                <vs-tooltip
+                  not-hover
+                  v-model="filtrosTooltip"
+                  right>
+                  <vs-button @click="filtrosTooltip = !filtrosTooltip">
+                    Filtros
+                  </vs-button>
+                  <template #tooltip>
+                    <h4>Filtros</h4>
+
+                    <!-- Star -->
+                    <vs-switch
+                      warn
+                      v-model="filtroFavoritos">
+                      <template #off>
+                          <i class='fa-solid fa-star' ></i>
+                      </template>
+                      <template #on>
+                          <i class='fa-solid fa-star' ></i>
+                      </template>
+                    </vs-switch>
+
+                    <!-- Grupos -->
+                    <vs-switch
+                      warn
+                      v-model="filtroGrupos"
+                      class="mt-1">
+                      <template #off>
+                          <i class='fa-solid fa-user-group' ></i>
+                      </template>
+                      <template #on>
+                          <i class='fa-solid fa-user-group' ></i>
+                      </template>
+                    </vs-switch>
                   </template>
-                  <template #on>
-                      <i class='fa-solid fa-star' ></i>
-                  </template>
-                </vs-switch>
+                </vs-tooltip>
               </vs-col>
             </vs-row>
           </div>
@@ -67,7 +94,10 @@
 
                 <vs-td>
                   <!-- Avatar -->
-                  <vs-avatar>
+                  <vs-avatar v-if="contacto.avatar">
+                    <img :src="require(`../assets/${contacto.avatar}`)">
+                  </vs-avatar>
+                  <vs-avatar v-else>
                     <template #text>
                       {{ contacto.nome }}
                     </template>
@@ -129,7 +159,24 @@
             <div id="chatCallHeader" class="grid mb-2">
               <vs-row align="center">
                 <vs-col w="3">
-                  <h2>{{ recenteSeleccionado.nome }}</h2>
+                  <div class="grid">
+                    <vs-row justify="center" align="center">
+                      <vs-col offset="1" w="3">
+                        <vs-avatar v-if="recenteSeleccionado.avatar">
+                          <img :src="require(`../assets/${recenteSeleccionado.avatar}`)">
+                        </vs-avatar>
+                        <vs-avatar v-else>
+                          <template #text>
+                            {{ recenteSeleccionado.nome }}
+                          </template>
+                        </vs-avatar>
+                      </vs-col>
+
+                      <vs-col w="8">
+                        <h2>{{ recenteSeleccionado.nome }}</h2>
+                      </vs-col>
+                    </vs-row>
+                  </div>
                 </vs-col>
                 <vs-col w="9" v-if="$route.name === 'Chat'">
                   <div class="grid">
@@ -249,6 +296,9 @@ export default Vue.extend({
   },
   data: () => ({
     reRenderTable: true,
+    filtrosTooltip: true,
+    filtroFavoritos: false,
+    filtroGrupos: false,
     pesquisaMensagem: '',
     contextMenuItems: [
       {
@@ -264,8 +314,16 @@ export default Vue.extend({
       return this.recenteSeleccionado?.nome === this.$store.state.user.contacto.emChamada?.nome;
     },
     computedRecentes() {
+      this.forceRerenderTable();
       return this.$store.state.contactos.recentes
-        .filter((r: Recente) => (this.recentesSearch ? r.nome.includes(this.recentesSearch) : true && !r.hidden))
+        .filter((r: Recente) => {
+          let valid = !r.hidden;
+          if (valid && this.recentesSearch) { valid = r.nome.includes(this.recentesSearch); }
+          if (valid && this.filtroFavoritos) { valid = !!r.favorito; }
+          if (valid && this.filtroGrupos) { valid = !!r.grupo; }
+
+          return valid;
+        })
         .map((r: Recente) => ({ ...r, lastMsg: r.mensagens ? r.mensagens[r.mensagens.length - 1]?.momento?.getTime() : 0 }))
         .sort((a: Recente & { lastMsg: number }, b: Recente & { lastMsg: number }) => b.lastMsg - a.lastMsg);
     },

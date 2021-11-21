@@ -44,7 +44,7 @@
           class="mt-1"
           @keypress="verEnter"
           v-model="mensagem"
-          placeholder="Escreve uma mensagem..." />
+          placeholder="Escreva uma mensagem..." />
       </vs-col>
 
       <!-- BOTÃO ENVIAR MENSAGEM -->
@@ -118,9 +118,6 @@ export default Vue.extend({
     },
     getChat(): Recente | null {
       return this.$store.state.contactos.recentes.find((r: Recente) => r.nome === this.chat.nome);
-    },
-    getHref() {
-      return window.location.href;
     },
     uploadFicheiro({ files }: unknown) {
       this.$store.dispatch('contactos/sendMessage', {

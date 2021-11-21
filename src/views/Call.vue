@@ -12,15 +12,24 @@
                 class="participantCard">
                 <template #img>
                   <img
-                    :src="`${getContactoImage(contacto.nome, contacto.imagem)}`"
+                    :src="require(`../assets/${getContactoImage(contacto.nome, contacto.imagem)}`)"
                     :width="297"
                     :height="165"
                     :style="{
-                      'background-image': `${contacto.imagem && contacto.background ? `url('${contacto.background}')` : ''}`,
+                      'background-image': `${contacto.imagem && contacto.background ? `url('${require(`../assets/${contacto.background}`)}')` : ''}`,
                       'background-size': '100% 100%'}"
                     />
                 </template>
                 <template #interactions>
+                  <vs-button
+                    class="no-hover"
+                    v-if="!contacto.imagem"
+                    danger
+                    icon
+                    flat
+                    relief>
+                    <i class="fa-solid fa-video-slash"></i>
+                  </vs-button>
 
                   <vs-button
                     class="no-hover"
@@ -30,15 +39,6 @@
                     flat
                     relief>
                     <i class="fa-solid fa-microphone-slash"></i>
-                  </vs-button>
-                  <vs-button
-                    class="no-hover"
-                    v-if="!contacto.imagem"
-                    danger
-                    icon
-                    flat
-                    relief>
-                    <i class="fa-solid fa-video-slash"></i>
                   </vs-button>
 
                   <h4>{{ parseNome(contacto.nome) }}</h4>
@@ -50,31 +50,45 @@
       </vs-col>
       <vs-col w="12">
         <div class="grid p-jc-center">
-          <vs-row justify="center">
-            <vs-button
-              v-if="reRenderToggles"
-              @click="toggleUserVideo">
-              <i :class="`fa-solid fa-video${!$store.state.user.chamada.imagem ? '-slash' : ''} mr-2`" />
-              Câmara
-            </vs-button>
+          <vs-row justify="center" align="center">
+            <vs-switch
+              v-model="userVideo"
+              @click="toggleUserVideo"
+              class="mr-2">
+              <template #on>
+                <i class="fa-solid fa-video mr-2" />
+                Câmara
+              </template>
+              <template #off>
+                <i class="fa-solid fa-video-slash mr-2" />
+                Câmara
+              </template>
+            </vs-switch>
 
-            <vs-button
-              v-if="reRenderToggles"
-              @click="toggleUserMicro">
-              <i :class="`fa-solid fa-microphone${!$store.state.user.chamada.micro ? '-slash' : ''} mr-2`" />
-              Microfone
-            </vs-button>
+            <vs-switch
+              v-model="userMicro"
+              @click="toggleUserMicro"
+              class="mr-1">
+              <template #on>
+                <i class="fa-solid fa-microphone mr-2" />
+                Microfone
+              </template>
+              <template #off>
+                <i class="fa-solid fa-microphone-slash mr-2" />
+                Microfone
+              </template>
+            </vs-switch>
 
             <vs-button
               @click="openDialogFundos">
               <i class="fa-solid fa-tv mr-2"></i>
-              Fundos Câmara
+              Fundos
             </vs-button>
 
             <vs-button
               @click="openDialogSoundboard">
               <i class="fa-solid fa-volume-high mr-2"></i>
-              Sons &amp; Música
+              Sons
             </vs-button>
           </vs-row>
         </div>
@@ -112,6 +126,14 @@
 </template>
 
 <style lang="scss" scoped>
+.vs-switch {
+  height: 34px;
+}
+
+.vs-card__interactions h4 {
+  text-shadow: 0 0 10px black;
+}
+
 .no-hover {
   pointer-events: none;
 }
@@ -165,7 +187,8 @@ export default Vue.extend({
   },
   props: ['chat'],
   data: () => ({
-    reRenderToggles: true,
+    userVideo: true,
+    userMicro: true,
     dialogFundos: false,
     dialogSoundboard: false,
     loadedImages: {} as Record<string, boolean>,
@@ -180,7 +203,7 @@ export default Vue.extend({
     chat: {
       immediate: true,
       handler(val: Recente, oldVal: Recente) {
-        // Go to chat if
+        // Go to chat if changes from one chat to another
         if (val != null && oldVal != null) {
           this.$router.push({ name: 'Chat' });
           return;
@@ -190,27 +213,22 @@ export default Vue.extend({
       },
     },
   },
+  beforeMount() {
+    this.userVideo = !!this.$store.state.user.chamada.imagem;
+    this.userMicro = this.$store.state.user.chamada.micro;
+  },
   methods: {
-    forceRerenderToggles() {
-      this.reRenderToggles = false;
-
-      this.$nextTick().then(() => {
-        this.reRenderToggles = true;
-      });
-    },
     getContactoImage(nome: string, chamadaImagem: string) {
-      return chamadaImagem || require(`@/assets/img/avatars/${this.$store.state.contactos.avatars[nome]}`);
+      return chamadaImagem || this.$store.state.contactos.avatars[nome];
     },
     parseNome(nome: string) {
       return nome.replace('$$user$$', this.$store.state.user.contacto.nome);
     },
     toggleUserVideo() {
       this.$store.dispatch('user/toggleImage');
-      this.forceRerenderToggles();
     },
     toggleUserMicro() {
       this.$store.dispatch('user/toggleMicro');
-      this.forceRerenderToggles();
     },
     setLoadedImage(nome: string) {
       this.$set(this.loadedImages, nome, true);

@@ -3,12 +3,23 @@ import { ActionContext } from 'vuex';
 import { Mensagem, Recente } from '@/typings/typings';
 
 const avatars = {
-  $$user$$: 'avataaars.png',
-  António: 'avataaars1.png',
+  $$user$$: 'img/avatars/avataaars.png',
+  António: 'img/avatars/avataaars1.png',
+};
+
+const cameras = {
+  António: 'img/cameras/antonio.jpg',
+  Carlos: 'img/cameras/carlos.jpg',
+  'Avó Miranda': 'img/cameras/avo_miranda.jpg',
+  Ze: 'img/cameras/ze.jpg',
+  Maria: 'img/cameras/maria.jpg',
+  'Ed Sheeran': 'img/cameras/ed_sheeran.jpg',
+  Twix: 'img/cameras/twix.jpg',
 };
 
 const state = {
   avatars,
+  cameras,
   recentes: [
     {
       nome: 'António',
@@ -38,18 +49,8 @@ const state = {
       grupo: true,
       favorito: false,
       naChamada: [
-        { nome: 'António', imagem: 'https://i.imgur.com/mn4qhRe.jpg' },
-        { nome: 'Carlos', imagem: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fb6%2F04%2Ff3%2Fb604f33d9a7a48ec4394c87a4c1612b8.jpg&f=1&nofb=1' },
-        { nome: 'Carlos', imagem: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fb6%2F04%2Ff3%2Fb604f33d9a7a48ec4394c87a4c1612b8.jpg&f=1&nofb=1' },
-        { nome: 'Carlos', imagem: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fb6%2F04%2Ff3%2Fb604f33d9a7a48ec4394c87a4c1612b8.jpg&f=1&nofb=1' },
-        { nome: 'Carlos', imagem: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fb6%2F04%2Ff3%2Fb604f33d9a7a48ec4394c87a4c1612b8.jpg&f=1&nofb=1' },
-        { nome: 'Carlos', imagem: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fb6%2F04%2Ff3%2Fb604f33d9a7a48ec4394c87a4c1612b8.jpg&f=1&nofb=1' },
-        { nome: 'Carlos', imagem: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fb6%2F04%2Ff3%2Fb604f33d9a7a48ec4394c87a4c1612b8.jpg&f=1&nofb=1' },
-        { nome: 'Carlos', imagem: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fb6%2F04%2Ff3%2Fb604f33d9a7a48ec4394c87a4c1612b8.jpg&f=1&nofb=1' },
-        { nome: 'Carlos', imagem: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fb6%2F04%2Ff3%2Fb604f33d9a7a48ec4394c87a4c1612b8.jpg&f=1&nofb=1' },
-        { nome: 'Carlos', imagem: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fb6%2F04%2Ff3%2Fb604f33d9a7a48ec4394c87a4c1612b8.jpg&f=1&nofb=1' },
-        { nome: 'Carlos', imagem: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fb6%2F04%2Ff3%2Fb604f33d9a7a48ec4394c87a4c1612b8.jpg&f=1&nofb=1' },
-        { nome: 'Carlos', imagem: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fb6%2F04%2Ff3%2Fb604f33d9a7a48ec4394c87a4c1612b8.jpg&f=1&nofb=1' },
+        { nome: 'António', imagem: cameras['António'] },
+        { nome: 'Carlos', imagem: cameras.Carlos },
       ],
       mensagens: [
         {
@@ -67,7 +68,7 @@ const state = {
     {
       nome: 'Avó Miranda',
       naChamada: [
-        { nome: 'Avó Miranda', imagem: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimgflip.com%2Fs%2Fmeme%2FGrandma-Finds-The-Internet.jpg&f=1&nofb=1' },
+        { nome: 'Avó Miranda', imagem: cameras['Avó Miranda'] },
       ],
       mensagens: [
         { autor: 'Avó Miranda', texto: '´onetinhoajudaaavo,naoencontro!oespaço', momento: new Date('2015/12/21 15:51:50') },
@@ -85,9 +86,9 @@ const state = {
       grupo: true,
       favorito: true,
       naChamada: [
-        { nome: 'António', imagem: 'https://picsum.photos/299/167' },
-        { nome: 'Carlos', imagem: 'https://picsum.photos/298/166' },
-        { nome: 'Zé', imagem: 'https://picsum.photos/297/165' },
+        { nome: 'António', imagem: cameras['António'] },
+        { nome: 'Carlos', imagem: cameras.Carlos },
+        { nome: 'Zé', imagem: cameras.Ze },
       ],
       mensagens: [
         {
@@ -104,7 +105,7 @@ const state = {
       nome: 'Maria',
       favorito: true,
       naChamada: [
-        { nome: 'Maria', imagem: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimg.cancaonova.com%2Fcnimages%2Fcanais%2Fuploads%2Fsites%2F6%2F2017%2F04%2Fformacao_o-segredo-de-maria-nos-aprofunda-no-amor-de-deus.jpg&f=1&nofb=1' },
+        { nome: 'Maria', imagem: cameras.Maria },
       ],
       mensagens: [
         { autor: 'Maria', texto: 'O que você sabe sobre rolar nas profundezas?', momento: new Date(2013, 13, 2) },
@@ -119,16 +120,16 @@ const state = {
     {
       nome: 'Ed Sheeran',
       naChamada: [
-        { nome: 'Ed Sheeran', imagem: 'https://ichef.bbci.co.uk/news/976/cpsprodpb/8E71/production/_121256463_2photocreditdanmartensen.jpg' },
+        { nome: 'Ed Sheeran', imagem: cameras['Ed Sheeran'] },
       ],
       mensagens: [
         { autor: 'Ed Sheeran', texto: 'Girl, you know I want your love', momento: new Date(2013, 13, 2) },
       ],
     },
     {
-      nome: 'Rick Sanchez',
+      nome: 'Twix',
       naChamada: [
-        { nome: 'Rick Sanchez', imagem: 'https://static0.srcdn.com/wordpress/wp-content/uploads/2019/11/Rick-Sanchez-Rick-and-Morty-Season-4.jpg' },
+        { nome: 'Twix', imagem: cameras.Twix },
       ],
     },
     {

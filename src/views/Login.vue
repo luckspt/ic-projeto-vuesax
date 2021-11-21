@@ -16,10 +16,8 @@
             color="#ffffff"
             block
             icon-before
-            primary
             label-placeholder="Nome de utilizador"
-            v-model="username"
-            >
+            v-model="username">
             <template #icon>
               <i class="fa-solid fa-user"></i>
             </template>
@@ -30,7 +28,7 @@
             :disabled="!username"
             @click="iniciarSessao"
             class="ml-0">
-             Continuar
+            Continuar
           </vs-button>
         </vs-alert>
       </vs-col>
