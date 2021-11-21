@@ -88,7 +88,11 @@ export default Vue.extend({
   components: {
     VueSlider,
   },
-  props: ['isVisible'],
+  props: {
+    isVisible: {
+      type: Object as () => boolean,
+    },
+  },
   data: () => ({
     volume: 75,
     selected: null as { name: string, path: string } | null,

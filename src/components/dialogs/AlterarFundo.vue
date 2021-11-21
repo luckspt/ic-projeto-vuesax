@@ -85,7 +85,11 @@
 import Vue from 'vue';
 
 export default Vue.extend({
-  props: ['isVisible'],
+  props: {
+    isVisible: {
+      type: Object as () => boolean,
+    },
+  },
   data: () => ({
     imagensFundo: [
       {

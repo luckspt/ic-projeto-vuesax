@@ -17,7 +17,7 @@ const state = {
     background: defaults.background,
     imagem: defaults.imagem,
     micro: true,
-  } as ParticipanteChamada,
+  } as ParticipanteChamada & { imagem?: string, background?: string },
 };
 
 const mutations = {

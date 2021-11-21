@@ -12,7 +12,7 @@
                 class="participantCard">
                 <template #img>
                   <img
-                    :src="require(`../assets/${getContactoImage(contacto.nome, contacto.imagem)}`)"
+                    :src="require(`../assets/${getContactoImage(contacto.nome)}`)"
                     :width="297"
                     :height="165"
                     :style="{
@@ -23,7 +23,7 @@
                 <template #interactions>
                   <vs-button
                     class="no-hover"
-                    v-if="!contacto.imagem"
+                    v-if="contacto.nome === '$$user$$' ? !userVideo : !contacto.camera"
                     danger
                     icon
                     flat
@@ -33,7 +33,7 @@
 
                   <vs-button
                     class="no-hover"
-                    v-if="!contacto.micro"
+                    v-if="contacto.nome === '$$user$$' ? !userMicro : !contacto.micro"
                     danger
                     icon
                     flat
@@ -185,7 +185,11 @@ export default Vue.extend({
     AlterarFundo,
     Soundboard,
   },
-  props: ['chat'],
+  props: {
+    chat: {
+      type: Object as () => Recente,
+    },
+  },
   data: () => ({
     userVideo: true,
     userMicro: true,
@@ -218,8 +222,9 @@ export default Vue.extend({
     this.userMicro = this.$store.state.user.chamada.micro;
   },
   methods: {
-    getContactoImage(nome: string, chamadaImagem: string) {
-      return chamadaImagem || this.$store.state.contactos.avatars[nome];
+    getContactoImage(nome: string) {
+      if (nome === '$$user$$') return this.$store.state.user.chamada.imagem || this.$store.getters['contactos/getAvatar'](nome);
+      return this.$store.getters['contactos/getCamera'](nome, this.chat.nome) || this.$store.getters['contactos/getAvatar'](nome);
     },
     parseNome(nome: string) {
       return nome.replace('$$user$$', this.$store.state.user.contacto.nome);

@@ -8,7 +8,9 @@
         ref="mensagens">
           <!-- Zona onde está contida a mensagem -->
           <div>
-            <Messages v-if="reRenderChat" :mensagens="computedMensagens" />
+            <Messages
+              v-if="reRenderChat"
+              :mensagens="computedMensagens" />
           </div>
       </vs-col>
       <vs-col
@@ -82,7 +84,14 @@ export default Vue.extend({
   components: {
     Messages,
   },
-  props: ['chat', 'search'],
+  props: {
+    chat: {
+      type: Object as () => Recente,
+    },
+    search: {
+      type: Object as () => string,
+    },
+  },
   watch: {
     chat: {
       immediate: true,
@@ -161,6 +170,19 @@ export default Vue.extend({
           momento: new Date(),
         } as Mensagem,
       });
+
+      if (this.chat.nome === 'Twix') {
+        setTimeout(() => {
+          this.$store.dispatch('contactos/sendMessage', {
+            chat: this.chat,
+            mensagem: {
+              autor: 'Twix',
+              texto: 'aoao',
+              momento: new Date(),
+            } as Mensagem,
+          });
+        }, 5 * 1000);
+      }
 
       this.$emit('messageSent');
 

@@ -9,12 +9,12 @@
 
       <!-- Avatar -->
       <div class="ic-author-avatar">
-        <vs-avatar v-if="msgs[0].avatar">
-          <img :src="require(`../assets/${msgs[0].avatar}`)">
+        <vs-avatar v-if="$store.getters['contactos/getAvatar'](msgs[0].autor)">
+          <img :src="require(`../assets/${$store.getters['contactos/getAvatar'](msgs[0].autor)}`)">
         </vs-avatar>
         <vs-avatar v-else>
           <template #text>
-            {{ parseAutor(msgs[0].autor) }}
+            {{ msgs[0].autor }}
           </template>
         </vs-avatar>
       </div>

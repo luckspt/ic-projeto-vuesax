@@ -87,7 +87,11 @@ export default Vue.extend({
     Button,
     MultiSelect,
   },
-  props: ['isVisible'],
+  props: {
+    isVisible: {
+      type: Object as () => boolean,
+    },
+  },
   data: () => ({
     txtEmail: '',
     selecionados: [],

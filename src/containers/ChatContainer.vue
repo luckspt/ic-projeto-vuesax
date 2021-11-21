@@ -22,6 +22,7 @@
                 </vs-input>
               </vs-col>
               <vs-col w="4">
+                <!-- Filtros -->
                 <vs-tooltip
                   not-hover
                   v-model="filtrosTooltip"
@@ -94,8 +95,8 @@
 
                 <vs-td>
                   <!-- Avatar -->
-                  <vs-avatar v-if="contacto.avatar">
-                    <img :src="require(`../assets/${contacto.avatar}`)">
+                  <vs-avatar v-if="$store.getters['contactos/getAvatar'](contacto.nome)">
+                    <img :src="require(`../assets/${$store.getters['contactos/getAvatar'](contacto.nome)}`)">
                   </vs-avatar>
                   <vs-avatar v-else>
                     <template #text>
@@ -118,39 +119,6 @@
               </vs-tr>
             </template>
           </vs-table>
-
-          <!-- <Listbox
-            @contextmenu="openCtxMenuRecents"
-            class="p-mt-2"
-            listStyle="max-height:505px;min-height:505px;"
-            v-model="recenteSeleccionado"
-            :options="computedRecentes"
-            optionLabel="nome"
-            filter
-            filterPlaceholder="Pesquisar..."
-            emptyFilterMessage="Sem recentes."
-            >
-            <template #option="slotProps">
-              <div @click="openCtxMenuRecents">
-                <Avatar
-                  :label="slotProps.option.nome[0]"
-                  shape="circle"
-                  class="p-m-1" />
-
-                <span>
-                  {{ slotProps.option.nome }}
-                  <i v-if="slotProps.option.favorito"
-                    class="fa-solid fa-star"
-                    :style="{ 'color': 'gold'}"
-                    v-tooltip="'Favorito'" />
-                  <i v-if="slotProps.option.grupo"
-                    class="fa-solid fa-user-group p-m-1"
-                    :style="{ 'color': 'gold'}"
-                    v-tooltip="'Grupo'" />
-                </span>
-              </div>
-            </template>
-          </Listbox> -->
         </vs-col>
 
         <!-- Parte Chat/Chamada -->
@@ -162,8 +130,8 @@
                   <div class="grid">
                     <vs-row justify="center" align="center">
                       <vs-col offset="1" w="3">
-                        <vs-avatar v-if="recenteSeleccionado.avatar">
-                          <img :src="require(`../assets/${recenteSeleccionado.avatar}`)">
+                        <vs-avatar v-if="$store.getters['contactos/getAvatar'](recenteSeleccionado.nome)">
+                          <img :src="require(`../assets/${$store.getters['contactos/getAvatar'](recenteSeleccionado.nome)}`)">
                         </vs-avatar>
                         <vs-avatar v-else>
                           <template #text>
@@ -329,6 +297,9 @@ export default Vue.extend({
     },
   },
   methods: {
+    getAvatar(nome: string) {
+      return this.$store.state.contactos.avatars[nome];
+    },
     forceRerenderTable() {
       this.reRenderTable = false;
 

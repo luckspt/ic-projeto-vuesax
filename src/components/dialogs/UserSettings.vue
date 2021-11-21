@@ -40,7 +40,11 @@ export default Vue.extend({
     Dialog,
     InputText,
   },
-  props: ['isVisible'],
+  props: {
+    isVisible: {
+      type: Object as () => boolean,
+    },
+  },
   data: () => ({
     username: '',
   }),

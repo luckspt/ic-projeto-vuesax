@@ -3,19 +3,23 @@ import { ActionContext } from 'vuex';
 import { Mensagem, Recente } from '@/typings/typings';
 
 const avatars = {
-  $$user$$: 'img/avatars/avataaars.png',
-  António: 'img/avatars/avataaars1.png',
-};
+  $$user$$: 'img/avatars/linus.jpg',
+  António: 'img/avatars/male7.jpg',
+  Carlos: 'img/avatars/male6.jpg',
+  Zé: 'img/avatars/male8.jpg',
+  Maria: 'img/avatars/female3.jpg',
+  Twix: 'img/avatars/twix.jpg',
+} as Record<string, string>;
 
 const cameras = {
   António: 'img/cameras/antonio.jpg',
   Carlos: 'img/cameras/carlos.jpg',
   'Avó Miranda': 'img/cameras/avo_miranda.jpg',
-  Ze: 'img/cameras/ze.jpg',
+  Zé: 'img/cameras/ze.jpg',
   Maria: 'img/cameras/maria.jpg',
   'Ed Sheeran': 'img/cameras/ed_sheeran.jpg',
   Twix: 'img/cameras/twix.jpg',
-};
+} as Record<string, string>;
 
 const state = {
   avatars,
@@ -23,52 +27,59 @@ const state = {
   recentes: [
     {
       nome: 'António',
-      avatar: avatars['António'],
       email: 'antonio@gmail.com',
       favorito: true,
       naChamada: [
-        { nome: 'António' },
+        { nome: 'António', micro: true, camera: true },
       ],
       mensagens: [
         {
-          autor: 'António', avatar: avatars['António'], texto: 'Hey! Tudo fixe?', momento: new Date('2003/05/30 05:37:06'),
+          autor: 'António',
+          texto: 'Hey! Tudo fixe?',
+          momento: new Date('2003/05/30 05:37:06'),
         },
         {
-          autor: '$$user$$', texto: 'Ya meu!! Tirei alta nota a Arquiteturas de Computadores!!! ', momento: new Date('2003/05/30 06:10:30'),
+          autor: '$$user$$',
+          texto: 'Ya meu!! Tirei alta nota a Arquiteturas de Computadores!!! ',
+          momento: new Date('2003/05/30 06:10:30'),
         },
         {
-          autor: 'António', avatar: avatars['António'], texto: 'Mas que grande maluco tu! Quem me dera, chumbei 8 vezes a essa cadeira :(.', momento: new Date('2003/05/30 06:11:23'),
+          autor: 'António',
+          texto: 'Mas que grande maluco tu! Quem me dera, chumbei 8 vezes a essa cadeira :(.',
+          momento: new Date('2003/05/30 06:11:23'),
         },
         {
-          autor: '$$user$$', texto: 'É como eu digo: mais vale três folhas a voar que duas garrafas na mão', momento: new Date('2003/05/30 06:11:47'),
+          autor: '$$user$$',
+          texto: 'É como eu digo: mais vale três folhas a voar que duas garrafas na mão',
+          momento: new Date('2003/05/30 06:11:47'),
         },
       ],
     },
     {
       nome: 'Amigos',
       grupo: true,
-      favorito: false,
       naChamada: [
-        { nome: 'António', imagem: cameras['António'] },
-        { nome: 'Carlos', imagem: cameras.Carlos },
+        { nome: 'António', camera: true },
+        { nome: 'Zé', micro: true, camera: true },
+        { nome: 'Carlos', camera: true, micro: true },
       ],
       mensagens: [
         {
-          autor: 'António', avatar: avatars['António'], texto: 'Quem é vosso amigo quem é?', momento: new Date(2013, 13, 1),
+          autor: 'António', texto: 'Quem é vosso amigo quem é?', momento: new Date(2013, 13, 1),
         },
         {
           autor: '$$user$$', texto: 'És tu Toninho :)', momento: new Date(2013, 13, 2),
         },
         { autor: 'Carlos', texto: 'Mas quem?', momento: new Date(2013, 13, 1) },
         {
-          autor: 'António', avatar: avatars['António'], texto: 'É por isso que ninguém é teu amigo Carlos...', momento: new Date(2013, 13, 1),
+          autor: 'António', texto: 'É por isso que ninguém é teu amigo Carlos...', momento: new Date(2013, 13, 1),
         },
       ],
     },
     {
       nome: 'Avó Miranda',
       naChamada: [
-        { nome: 'Avó Miranda', imagem: cameras['Avó Miranda'] },
+        { nome: 'Avó Miranda', camera: true, micro: true },
       ],
       mensagens: [
         { autor: 'Avó Miranda', texto: '´onetinhoajudaaavo,naoencontro!oespaço', momento: new Date('2015/12/21 15:51:50') },
@@ -86,13 +97,12 @@ const state = {
       grupo: true,
       favorito: true,
       naChamada: [
-        { nome: 'António', imagem: cameras['António'] },
-        { nome: 'Carlos', imagem: cameras.Carlos },
-        { nome: 'Zé', imagem: cameras.Ze },
+        { nome: 'António' },
+        { nome: 'Zé', micro: true },
       ],
       mensagens: [
         {
-          autor: 'António', avatar: avatars['António'], texto: 'Bom dia pessoal, bora um jogo?', momento: new Date(2013, 13, 1),
+          autor: 'António', texto: 'Bom dia pessoal, bora um jogo?', momento: new Date(2013, 13, 1),
         },
         {
           autor: '$$user$$', texto: 'Pode ser', momento: new Date(2013, 13, 2),
@@ -105,7 +115,7 @@ const state = {
       nome: 'Maria',
       favorito: true,
       naChamada: [
-        { nome: 'Maria', imagem: cameras.Maria },
+        { nome: 'Maria', micro: true, camera: true },
       ],
       mensagens: [
         { autor: 'Maria', texto: 'O que você sabe sobre rolar nas profundezas?', momento: new Date(2013, 13, 2) },
@@ -120,7 +130,7 @@ const state = {
     {
       nome: 'Ed Sheeran',
       naChamada: [
-        { nome: 'Ed Sheeran', imagem: cameras['Ed Sheeran'] },
+        { nome: 'Ed Sheeran', camera: true, micro: true },
       ],
       mensagens: [
         { autor: 'Ed Sheeran', texto: 'Girl, you know I want your love', momento: new Date(2013, 13, 2) },
@@ -129,7 +139,7 @@ const state = {
     {
       nome: 'Twix',
       naChamada: [
-        { nome: 'Twix', imagem: cameras.Twix },
+        { nome: 'Twix', micro: true, camera: true },
       ],
     },
     {
@@ -185,9 +195,20 @@ const actions = {
   },
 };
 
+const getters = {
+  getCamera: (currState: typeof state) => (nome: string, chat: string): string => {
+    if (currState.recentes
+      .find((r) => r.nome === chat)
+      ?.naChamada?.find((c) => c.nome === nome)?.camera) { return currState.cameras[nome]; }
+    return currState.avatars[nome];
+  },
+  getAvatar: (currState: typeof state) => (nome: string): string => currState.avatars[nome],
+};
+
 export default {
   namespaced: true,
   state,
   mutations,
   actions,
+  getters,
 };

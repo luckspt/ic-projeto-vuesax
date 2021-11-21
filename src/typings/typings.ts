@@ -3,7 +3,6 @@
 
 export interface Contacto {
     nome: string,
-    avatar?: string,
     grupo?: boolean,
     mail?: string,
     hidden?: boolean,
@@ -19,9 +18,8 @@ export interface Grupo extends Contacto{
 
 export interface ParticipanteChamada {
     nome: string,
-    imagem?: string,
     micro?: boolean,
-    background?: string,
+    camera?: boolean,
 }
 
 export interface Mensagem {
