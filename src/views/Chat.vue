@@ -44,7 +44,7 @@
         <vs-input
           block
           class="mt-1"
-          @keypress="verEnter"
+          @keypress="checkSubmit"
           v-model="mensagem"
           placeholder="Escreva uma mensagem..." />
       </vs-col>
@@ -163,8 +163,8 @@ export default Vue.extend({
       this.ficheirosDisplay = false;
       return null;
     },
-    verEnter(key: KeyboardEvent) {
-      if (key.code === 'Enter') this.enviarMensagem();
+    checkSubmit({ code }: KeyboardEvent) {
+      if (code === 'Enter') this.enviarMensagem();
     },
     enviarMensagem() {
       if (this.mensagem === '') return;

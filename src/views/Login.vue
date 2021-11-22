@@ -5,19 +5,20 @@
       justify="center"
       align="center">
       <vs-col w="3">
-        <vs-alert relief style="height:200px;">
+        <vs-alert relief style="height:160px;">
           <template #title>
             Iniciar Sessão
           </template>
 
           <!-- <small class="ml-1">Nome de utilizador</small> -->
           <vs-input
+            v-model="username"
+            @keypress="checkSubmit"
             class="mt-3"
             color="#ffffff"
             block
             icon-before
-            label-placeholder="Nome de utilizador"
-            v-model="username">
+            label-placeholder="Nome de utilizador">
             <template #icon>
               <i class="fa-solid fa-user"></i>
             </template>
@@ -42,7 +43,6 @@ import Vue from 'vue';
 export default Vue.extend({
   data: () => ({
     username: '',
-
   }),
   mounted() {
     if (sessionStorage.getItem('user')) { this.username = this.$store.state.user.contacto.nome; }
@@ -51,6 +51,9 @@ export default Vue.extend({
     iniciarSessao() {
       this.$store.dispatch('user/setUsername', this.username);
       this.$router.push({ name: 'Chat' });
+    },
+    checkSubmit({ code }: KeyboardEvent) {
+      if (code === 'Enter' && this.username) this.iniciarSessao();
     },
   },
 });

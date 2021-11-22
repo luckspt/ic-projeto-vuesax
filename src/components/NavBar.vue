@@ -3,7 +3,7 @@
     <vs-navbar color="dark" shadow text-white class="rounded-corners">
       <template #left>
         <img class="py-2" src="@/assets/img/logo.png" height="50" />
-        <vs-navbar-item @click="goHome">Concorde</vs-navbar-item>
+        <vs-navbar-item @click="goHome">Concord</vs-navbar-item>
 
         <vs-navbar-item @click="openCriarGrupo">
           Criar Grupo
