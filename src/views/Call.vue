@@ -120,6 +120,7 @@
       @close="closeDialogFundos" />
 
     <Soundboard
+      :chat="chat"
       :isVisible.sync="dialogSoundboard"
       @close="closeDialogSoundboard" />
   </div>

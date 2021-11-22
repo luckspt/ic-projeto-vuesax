@@ -69,7 +69,7 @@ const actions = {
     commit('SAVE');
   },
   resetBackground({ commit }: ActionContext<unknown, unknown>): void {
-    commit('SET_BACKGROUND', 'https://i.imgur.com/257M3Pq.png');
+    commit('SET_BACKGROUND', defaults.background);
     commit('SAVE');
   },
   joinCall({ commit }: ActionContext<unknown, unknown>, chamada: Recente): void {

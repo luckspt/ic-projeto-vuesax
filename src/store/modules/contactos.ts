@@ -14,6 +14,7 @@ const avatars = {
 const cameras = {
   António: 'img/cameras/antonio.jpg',
   Carlos: 'img/cameras/carlos.jpg',
+  CarlosAssustado: 'img/cameras/carlos_assustado.jpg',
   'Avó Miranda': 'img/cameras/avo_miranda.jpg',
   Zé: 'img/cameras/ze.jpg',
   Maria: 'img/cameras/maria.jpg',
@@ -53,6 +54,11 @@ const state = {
           texto: 'É como eu digo: mais vale três folhas a voar que duas garrafas na mão',
           momento: new Date('2003/05/30 06:11:47'),
         },
+        {
+          autor: 'António',
+          texto: 'Fixe',
+          momento: new Date('2003/05/30 17:58:23'),
+        },
       ],
     },
     {
@@ -65,15 +71,14 @@ const state = {
       ],
       mensagens: [
         {
-          autor: 'António', texto: 'Quem é vosso amigo quem é?', momento: new Date(2013, 13, 1),
+          autor: 'António', texto: 'Quem é vosso amigo quem é?', momento: new Date('2013/01/13 12:34:11'),
         },
         {
-          autor: '$$user$$', texto: 'És tu Toninho :)', momento: new Date(2013, 13, 2),
+          autor: '$$user$$', texto: 'És tu Toninho :)', momento: new Date('2013/01/13 12:36:11'),
         },
-        { autor: 'Carlos', texto: 'Mas quem?', momento: new Date(2013, 13, 1) },
-        {
-          autor: 'António', texto: 'É por isso que ninguém é teu amigo Carlos...', momento: new Date(2013, 13, 1),
-        },
+        { autor: 'Carlos', texto: 'Mas quem', momento: new Date('2013/01/13 12:37:11') },
+        { autor: 'António', texto: 'quem te perguntou', momento: new Date('2013/01/13 13:14:11') },
+        { autor: 'António', texto: 'já não caio nessa amigo carlitos pirulitos', momento: new Date('2013/01/13 13:15:11') },
       ],
     },
     {
@@ -90,6 +95,7 @@ const state = {
         {
           autor: '$$user$$', texto: 'burger', momento: new Date('2015/12/27 12:11:50'),
         },
+        { autor: 'Avó Miranda', texto: 'hojenaojantas', momento: new Date('2015/12/27 19:38:18') },
       ],
     },
     {
@@ -101,14 +107,10 @@ const state = {
         { nome: 'Zé', micro: true },
       ],
       mensagens: [
-        {
-          autor: 'António', texto: 'Bom dia pessoal, bora um jogo?', momento: new Date(2013, 13, 1),
-        },
-        {
-          autor: '$$user$$', texto: 'Pode ser', momento: new Date(2013, 13, 2),
-        },
-        { autor: 'Zé', texto: 'Ainda é muito cedo, talvez daqui a uma hora', momento: new Date(2013, 13, 1) },
-        { autor: 'Carlos', texto: 'Sim bora!', momento: new Date(2013, 13, 1) },
+        { autor: 'António', texto: 'Bom dia pessoal, bora um jogo?', momento: new Date('2019/03/18 11:38:39') },
+        { autor: '$$user$$', texto: 'Pode ser', momento: new Date('2019/03/18 11:40:39') },
+        { autor: 'Zé', texto: 'Ainda é muito cedo, talvez daqui a uma hora', momento: new Date('2019/03/18 11:41:39') },
+        { autor: 'Carlos', texto: 'Sim bora!', momento: new Date('2019/03/18 11:43:39') },
       ],
     },
     {
@@ -118,13 +120,12 @@ const state = {
         { nome: 'Maria', micro: true, camera: true },
       ],
       mensagens: [
-        { autor: 'Maria', texto: 'O que você sabe sobre rolar nas profundezas?', momento: new Date(2013, 13, 2) },
-        { autor: 'Maria', texto: 'Quando seu cérebro fica entorpecido, você pode chamar isso de congelamento mental', momento: new Date(2013, 13, 2) },
-        { autor: 'Maria', texto: 'Quando essas pessoas falam demais, coloque essa cena em câmera lenta, sim', momento: new Date(2013, 13, 2) },
-        { autor: 'Maria', texto: 'Eu me sinto como um astronauta no oceano, sim', momento: new Date(2013, 13, 2) },
-        {
-          autor: '$$user$$', texto: 'ok', momento: new Date(2013, 13, 2),
-        },
+        { autor: 'Maria', texto: 'O que você sabe sobre rolar nas profundezas?', momento: new Date('2019/12/19 19:01:52') },
+        { autor: 'Maria', texto: 'Quando seu cérebro fica entorpecido, você pode chamar isso de congelamento mental', momento: new Date('2019/12/19 19:02:13') },
+        { autor: 'Maria', texto: 'Quando essas pessoas falam demais, coloque essa cena em câmera lenta, sim', momento: new Date('2019/12/19 19:02:42') },
+        { autor: 'Maria', texto: 'Eu me sinto como um astronauta no oceano, sim', momento: new Date('2019/12/19 19:03:12') },
+        { autor: '$$user$$', texto: 'ok', momento: new Date('2019/12/23 12:46:52') },
+        { autor: 'Maria', texto: 'feliz natal', momento: new Date('2019/12/25 14:53:52') },
       ],
     },
     {
@@ -133,13 +134,20 @@ const state = {
         { nome: 'Ed Sheeran', camera: true, micro: true },
       ],
       mensagens: [
-        { autor: 'Ed Sheeran', texto: 'Girl, you know I want your love', momento: new Date(2013, 13, 2) },
+        { autor: 'Ed Sheeran', texto: 'Girl, you know I want your love', momento: new Date('2018/01/22 18:15:36') },
       ],
     },
     {
       nome: 'Twix',
       naChamada: [
         { nome: 'Twix', micro: true, camera: true },
+      ],
+      mensagens: [
+        { autor: 'Twix', texto: 'ola sou o twix venho do futuro queres as respostas do exame de interação com computadores??? rapido', momento: new Date('2022/10/19 02:21:48') },
+        { autor: '$$user$$', texto: 'omeudeus ola twix!!! sim por favor as respotas do exame de interação com computadores sim', momento: new Date('2022/10/19 10:12:48') },
+        { autor: 'Twix', ficheiro: 'respostas_exame_ic2021.pdf', momento: new Date('2022/10/19 11:46:21') },
+        { autor: '$$user$$', texto: 'TWIX ERA EXATAMENTE ISSO COMO E QUE SOUBESTE', momento: new Date('2022/01/10 16:01:12') },
+        { autor: 'Twix', texto: 'um bom magico nao revela os seus segredos', momento: new Date('2022/01/10 20:13:21') },
       ],
     },
     {
@@ -168,10 +176,19 @@ const mutations = {
     if (user) user.grupo = !user.grupo;
   },
   SEND_MESSAGE(currstate: typeof state, data: {chat: Recente, mensagem: Mensagem}): void {
-    const user = currstate.recentes.find((u) => u.nome === data.chat.nome);
-    if (user) {
-      if (!user.mensagens) user.mensagens = [];
-      user.mensagens.push(data.mensagem);
+    const c = currstate.recentes.find((r) => r.nome === data.chat.nome);
+    if (c) {
+      if (!c.mensagens) c.mensagens = [];
+      c.mensagens.push(data.mensagem);
+    }
+  },
+  SET_PARTICIPANT_CAMERA(currstate: typeof state, data: { chat: Recente, participant: string, cameraKey: string }): void {
+    const c = currstate.recentes.find((r) => r.nome === data.chat.nome);
+    if (c) {
+      const user = c.naChamada?.find((r) => r.nome === data.participant);
+      if (user) {
+        user.camera = currstate.cameras[data.cameraKey];
+      }
     }
   },
 };
@@ -180,6 +197,9 @@ const actions = {
   sendMessage({ commit }: ActionContext<unknown, unknown>, data: { chat: Recente, mensagem: Mensagem }): void {
     commit('SEND_MESSAGE', data);
     commit('SAVE');
+  },
+  setParticipantCamera({ commit }: ActionContext<unknown, unknown>, data: { chat: Recente, participant: string, cameraKey: string }): void {
+    commit('SET_PARTICIPANT_CAMERA', data);
   },
   fetch({ commit }: ActionContext<unknown, unknown>): void {
     const recentesStr = sessionStorage.getItem('contactos');
@@ -197,9 +217,16 @@ const actions = {
 
 const getters = {
   getCamera: (currState: typeof state) => (nome: string, chat: string): string => {
-    if (currState.recentes
-      .find((r) => r.nome === chat)
-      ?.naChamada?.find((c) => c.nome === nome)?.camera) { return currState.cameras[nome]; }
+    const c = currState.recentes
+      .find((r) => r.nome === chat);
+    if (c) {
+      const u = c.naChamada?.find((r) => r.nome === nome);
+      if (u) {
+        if (typeof u.camera === 'string') return u.camera;
+        return u.camera ? currState.cameras[nome] : currState.avatars[nome];
+      }
+    }
+
     return currState.avatars[nome];
   },
   getAvatar: (currState: typeof state) => (nome: string): string => currState.avatars[nome],

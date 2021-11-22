@@ -62,13 +62,17 @@
           </vs-button>
 
           <!-- BOTÃO ESCOLHER FICHEIRO -->
-          <vs-button
+          <label for="ficheiroInput">
+            <vs-button @click="openFileExplorer">
+              <i class="fa-solid fa-paperclip mr-2"></i>
+              Ficheiro
+            </vs-button>
+          </label>
+          <input
+            @change="uploadFicheiro"
             type="file"
             ref="fileUpload"
-            @uploader="uploadFicheiro">
-            <i class="fa-solid fa-paperclip mr-2"></i>
-            Ficheiro
-          </vs-button>
+            style="display:none;" />
         </span>
       </vs-col>
     </vs-row>
@@ -118,6 +122,9 @@ export default Vue.extend({
     },
   },
   methods: {
+    openFileExplorer() {
+      (this.$refs.fileUpload as HTMLInputElement).click();
+    },
     forceRerenderChat() {
       this.reRenderChat = false;
 
@@ -128,7 +135,7 @@ export default Vue.extend({
     getChat(): Recente | null {
       return this.$store.state.contactos.recentes.find((r: Recente) => r.nome === this.chat.nome);
     },
-    uploadFicheiro({ files }: unknown) {
+    uploadFicheiro({ target: { files } }: unknown) {
       this.$store.dispatch('contactos/sendMessage', {
         chat: this.chat,
         mensagem: {
@@ -143,7 +150,7 @@ export default Vue.extend({
       this.descerMensagem();
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (this.$refs.fileUpload as any).clear();
+      (this.$refs.fileUpload as HTMLInputElement).value = '';
     },
     openFicheirosDialog() {
       this.ficheirosDisplay = true;
@@ -172,15 +179,19 @@ export default Vue.extend({
       });
 
       if (this.chat.nome === 'Twix') {
+        // No caso da pessoa mudar de chat
+        const chatCpy = { ...this.chat };
         setTimeout(() => {
           this.$store.dispatch('contactos/sendMessage', {
-            chat: this.chat,
+            chat: chatCpy,
             mensagem: {
               autor: 'Twix',
               texto: 'aoao',
               momento: new Date(),
             } as Mensagem,
           });
+
+          if (this.chat.nome === 'Twix') { this.descerMensagem(); }
         }, 5 * 1000);
       }
 

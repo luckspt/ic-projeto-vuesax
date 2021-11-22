@@ -19,7 +19,7 @@ export interface Grupo extends Contacto{
 export interface ParticipanteChamada {
     nome: string,
     micro?: boolean,
-    camera?: boolean,
+    camera?: boolean | string,
 }
 
 export interface Mensagem {

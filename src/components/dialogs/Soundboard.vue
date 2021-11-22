@@ -62,7 +62,7 @@
             </vs-button>
             <vs-button
               success
-              :disabled="!selected"
+              :disabled="selected"
               @click="play"
               style="float:left;">
               <i class="fa-solid fa-play mr-2"></i>
@@ -83,6 +83,7 @@ import VueSlider from 'vue-slider-component';
 import 'vue-slider-component/theme/antd.css';
 
 import Vue from 'vue';
+import { Recente } from '@/typings/typings';
 
 export default Vue.extend({
   components: {
@@ -92,9 +93,13 @@ export default Vue.extend({
     isVisible: {
       type: Object as () => boolean,
     },
+    chat: {
+      type: Object as () => Recente,
+    },
   },
   data: () => ({
     volume: 75,
+    lastVol: 75,
     selected: null as { name: string, path: string } | null,
     songs: [
       { name: 'Amogus', path: 'amogus.mp3' },
@@ -122,7 +127,6 @@ export default Vue.extend({
       { name: 'Never Gonna Give You Up', path: 'never_gonna_give_you_up.mp3' },
     ],
     aTocar: [] as HTMLAudioElement[],
-    lastVol: 75,
   }),
   computed: {
     sortedSongs(): {name: string, path: string}[] {
@@ -159,10 +163,16 @@ export default Vue.extend({
     },
     play() {
       try {
-        const audio = new Audio(require(`@/assets/audio/${this.selected?.path}`));
-        audio.volume = this.volume / 100;
-        audio.play();
-        this.aTocar.push(audio);
+        // const audio = new Audio(require(`../assets/audio/${this.selected?.path}`));
+        // audio.volume = this.volume / 100;
+        // audio.play();
+        // this.aTocar.push(audio);
+
+        if (this.chat.nome === 'Amigos' && this.volume === 100) {
+          setTimeout(() => {
+            this.$store.dispatch('contactos/setParticipantCamera', { chat: this.chat, participant: 'Carlos', cameraKey: 'CarlosAssustado' });
+          }, 1 * 1000);
+        }
         // document.getElementById('tocar').disabled;
       } catch {
         alert(`Erro ao reproduzir o áudio ${this.selected?.name}`);
