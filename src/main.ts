@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Vuesax from 'vuesax';
-import VueSkeletonLoader from 'skeleton-loader-vue';
 
 import App from './App.vue';
 import './registerServiceWorker';
@@ -28,8 +27,6 @@ Vue.use(Vuesax as any, {
     dark: '#141417',
   },
 });
-
-Vue.component('vue-skeleton-loader', VueSkeletonLoader);
 
 new Vue({
   router,

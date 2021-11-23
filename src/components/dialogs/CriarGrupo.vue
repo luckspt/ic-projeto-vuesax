@@ -74,19 +74,9 @@
 //
 
 import Vue from 'vue';
-import InputText from 'primevue/inputtext';
-import MultiSelect from 'primevue/multiselect';
-import Dialog from 'primevue/dialog';
-import Button from 'primevue/button';
 import { Recente } from '@/typings/typings';
 
 export default Vue.extend({
-  components: {
-    InputText,
-    Dialog,
-    Button,
-    MultiSelect,
-  },
   props: {
     isVisible: {
       type: Object as () => boolean,
