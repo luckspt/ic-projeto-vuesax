@@ -34,7 +34,7 @@ const routes: Array<RouteConfig> = [
 
 const router = new VueRouter({
   mode: 'hash',
-  base: process.env.VUE_APP_DEVELOPMENT ? '/' : '/~ic024/entregas/iteracao2/E2-1/',
+  base: process.env.VUE_APP_BASE_URL,
   routes,
 });
 
