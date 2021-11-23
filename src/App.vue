@@ -97,6 +97,6 @@ body {
   width: 100vw;
   height: 100vh;
   transition: background 3s;
-  background-color: #7289da;
+  background-color: $primary;
 }
 </style>
