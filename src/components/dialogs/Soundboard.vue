@@ -5,7 +5,7 @@
     not-center>
     <div style="width:500px;">
       <div class="ml-6 mr-6">
-        <h2>Soundboard</h2>
+        <h2>Sons</h2>
 
         <p>Volume: <small>{{ volume }}%</small></p>
           <VueSlider

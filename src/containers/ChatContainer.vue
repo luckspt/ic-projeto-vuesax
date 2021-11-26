@@ -107,13 +107,17 @@
                   <!-- Nome -->
                   {{ contacto.nome }}
                   <i v-show="contacto.favorito"
-                    class="fa-solid fa-star"
+                    class="fa-solid fa-star mx-1"
                     :style="{ 'color': 'gold'}"
                     v-tooltip="'Favorito'" />
                   <i v-show="contacto.grupo"
-                    class="fa-solid fa-user-group p-m-1"
+                    class="fa-solid fa-user-group mx-1"
                     :style="{ 'color': 'gold'}"
                     v-tooltip="'Grupo'" />
+                  <i v-show="$store.state.user.contacto.emChamada && $store.state.user.contacto.emChamada.nome === contacto.nome"
+                    class="fa-solid fa-phone mx-1"
+                    :style="{ 'color': 'red'}"
+                    v-tooltip="'Em chamada'" />
                 </vs-td>
               </vs-tr>
             </template>
@@ -163,18 +167,46 @@
                             </vs-col>
                             <vs-col w="4">
                               <div v-if="!emChamada" class="ml-5">
-                                <vs-button
-                                  style="float:left;"
-                                  icon
-                                  @click="entraChamada(false)">
-                                  <i class="fa-solid fa-phone"></i>
-                                </vs-button>
-                                <vs-button
-                                  icon
-                                  style="float:left;"
-                                  @click="entraChamada(true)">
-                                  <i class="fa-solid fa-video"></i>
-                                </vs-button>
+                                <vs-tooltip
+                                  bottom
+                                  shadow
+                                  not-hover
+                                  v-model="chamadaTooltip">
+                                  <vs-button
+                                    style="float:left;"
+                                    icon
+                                    @click="entraChamada(false, false)">
+                                    <i class="fa-solid fa-phone"></i>
+                                  </vs-button>
+                                  <vs-button
+                                    icon
+                                    style="float:left;"
+                                    @click="entraChamada(false, true)">
+                                    <i class="fa-solid fa-video"></i>
+                                  </vs-button>
+
+                                  <template #tooltip>
+                                    <div class="content-tooltip">
+                                      <h4 class="center">
+                                        Confirmar
+                                      </h4>
+                                      <p>Já se encontra numa chamada. Se continuar, irá terminar a chamada anterior.</p>
+                                      <footer class="center">
+                                        <vs-button
+                                          @click="chamadaTooltip = false"
+                                          style="float:left;">
+                                          Cancelar
+                                        </vs-button>
+                                        <vs-button
+                                          @click="entraChamada(true)"
+                                          danger
+                                          style="float:left;">
+                                          Continuar
+                                        </vs-button>
+                                      </footer>
+                                    </div>
+                                  </template>
+                                </vs-tooltip>
                               </div>
                               <div v-else>
                                 <vs-button
@@ -197,7 +229,8 @@
             <router-view
               :chat="recenteSeleccionado"
               :search="pesquisaMensagem"
-              @messageSent="forceRerenderTable"/>
+              @messageSent="forceRerenderTable"
+              @callEnd="forceRerenderTable"/>
           </div>
         </vs-col>
 
@@ -205,7 +238,7 @@
         <vs-col v-else w="9">
           <div class="grid" style="width:970px;height:100%">
             <vs-row align="center">
-              <vs-col w="4">
+              <vs-col w="5">
                 <i id="leftArrow" class="fa-solid fa-share" data-fa-transform="rotate-220"></i>
               </vs-col>
               <vs-col w="5">
@@ -274,6 +307,7 @@ export default Vue.extend({
     ],
     recentesSearch: '',
     recenteSeleccionado: null as Recente | null,
+    chamadaTooltip: false,
   }),
   computed: {
     emChamada() {
@@ -307,10 +341,20 @@ export default Vue.extend({
         this.reRenderTable = true;
       });
     },
-    entraChamada(camera: boolean) {
-      this.$store.dispatch('user/joinCall', this.recenteSeleccionado);
-      if (!!this.$store.state.user.chamada.imagem !== camera) { this.$store.dispatch('user/toggleImage'); }
-      this.$router.push({ name: 'Call' });
+    entraChamada(force: boolean, camera: boolean) {
+      if (!force && (this.$store.state.user.contacto.emChamada?.nome && this.$store.state.user.contacto.emChamada?.nome !== this.recenteSeleccionado?.nome)) {
+        this.chamadaTooltip = true;
+        return;
+      }
+      this.chamadaTooltip = false;
+
+      setTimeout(() => {
+        this.forceRerenderTable();
+
+        this.$store.dispatch('user/joinCall', this.recenteSeleccionado);
+        if (!!this.$store.state.user.chamada.imagem !== camera) { this.$store.dispatch('user/toggleImage'); }
+        this.$router.push({ name: 'Call' });
+      }, 10);
     },
   },
 });

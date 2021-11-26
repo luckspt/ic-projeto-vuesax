@@ -243,6 +243,7 @@ export default Vue.extend({
       this.loadedImages = {};
     },
     leaveCall() {
+      this.$emit('callEnd');
       this.$store.dispatch('user/leaveCall');
       this.$router.push({ name: 'Chat' });
     },
