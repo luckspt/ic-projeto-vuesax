@@ -226,11 +226,15 @@
               </vs-row>
             </div>
 
-            <router-view
-              :chat="recenteSeleccionado"
-              :search="pesquisaMensagem"
-              @messageSent="forceRerenderTable"
-              @callEnd="forceRerenderTable"/>
+            <transition
+              name="fade"
+              mode="out-in">
+              <router-view
+                :chat="recenteSeleccionado"
+                :search="pesquisaMensagem"
+                @messageSent="forceRerenderTable"
+                @callEnd="forceRerenderTable"/>
+            </transition>
           </div>
         </vs-col>
 
