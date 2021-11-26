@@ -5,7 +5,9 @@
       justify="center"
       align="center">
       <vs-col w="3">
-        <vs-alert relief style="height:160px;">
+        <vs-alert
+          relief
+          style="height:170px;">
           <template #title>
             Iniciar Sessão
           </template>
@@ -15,7 +17,6 @@
             v-model="username"
             @keypress="checkSubmit"
             class="mt-3"
-            color="#ffffff"
             block
             icon-before
             label-placeholder="Nome de utilizador">

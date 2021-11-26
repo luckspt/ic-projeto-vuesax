@@ -20,8 +20,7 @@
         <vs-button-group style="width:64px;">
           <vs-button
             @click="addVolume(-5)"
-            :disabled="volume - 5 < 0"
-            >
+            :disabled="volume - 5 < 0">
             -
           </vs-button>
           <vs-button
@@ -32,13 +31,48 @@
         </vs-button-group>
 
         <p>Músicas e Sons</p>
-        <Listbox
-          listStyle="max-height:169px"
-          filter
+        <vs-table
           v-model="selected"
-          :options="sortedSongs"
-          optionLabel="name">
-        </Listbox>
+          striped
+          style="height:300px;overflow-y:scroll;">
+          <template #notFound>
+            Sem resultados
+          </template>
+
+          <!-- Header -->
+          <template #thead>
+            <vs-tr>
+              <vs-th
+                sort
+                @click="songs = $vs.sortData($event, sortedSongs, 'nome')">
+                Nome
+              </vs-th>
+              <vs-th>
+                Duração
+              </vs-th>
+            </vs-tr>
+          </template>
+
+          <!-- Body -->
+          <template #tbody>
+            <vs-tr
+              v-for="(som, i) in songs"
+              :key="i"
+              :data="som"
+              :is-selected="selected && selected.nome === som.nome">
+
+              <!-- Nome -->
+              <vs-td>
+                {{ som.nome }}
+              </vs-td>
+
+              <!-- Duração -->
+              <vs-td>
+                {{ ms(som.duracao) }}
+              </vs-td>
+            </vs-tr>
+          </template>
+        </vs-table>
       </div>
     </div>
 
@@ -62,7 +96,7 @@
             </vs-button>
             <vs-button
               success
-              :disabled="selected"
+              :disabled="!selected"
               @click="play"
               style="float:left;">
               <i class="fa-solid fa-play mr-2"></i>
@@ -83,7 +117,7 @@ import VueSlider from 'vue-slider-component';
 import 'vue-slider-component/theme/antd.css';
 
 import Vue from 'vue';
-import { Recente } from '@/typings/typings';
+import { Recente, Som } from '@/typings/typings';
 
 export default Vue.extend({
   components: {
@@ -102,43 +136,47 @@ export default Vue.extend({
     lastVol: 75,
     selected: null as { name: string, path: string } | null,
     songs: [
-      { name: 'Amogus', path: 'amogus.mp3' },
-      { name: 'John Cena', path: 'john_cena.mp3' },
-      { name: 'Anúncio LOL', path: 'anuncio_lol.mp3' },
-      { name: 'Boss AC - Sexta Feira', path: 'bossac.mp3' },
-      { name: 'Burgir', path: 'burgir.mp3' },
-      { name: 'Careless Whisper', path: 'careless_whisper.mp3' },
-      { name: 'Cyberpunk', path: 'cyberpunk.mp3' },
-      { name: 'Discord', path: 'discord.mp3' },
-      { name: 'Ihh ca burro', path: 'ihh_ca_burro.mp3' },
-      { name: 'Não é não', path: 'nao_e_nao.mp3' },
-      { name: 'Olha tanta luz', path: 'olha_tanta_luz.mp3' },
-      { name: 'Super idol', path: 'super_idol.mp3' },
-      { name: 'Vine Boom', path: 'vine_boom.mp3' },
-      { name: 'Yeah Baby', path: 'yeah_baby.mp3' },
-      { name: 'MLG Airhorn', path: 'mlg_airhorn.mp3' },
-      { name: 'Jojos Three Pillar Theme - Ayayay', path: 'jojo_ayayay.mp3' },
-      { name: 'Hallelujah', path: 'hallelujah.mp3' },
-      { name: 'Amanha hablamos ok?', path: 'jorgejesus.mp3' },
-      { name: 'Astronaut in the Ocean', path: 'astronaut_ocean.mp3' },
-      { name: 'Um Volto Já - João Pedro Pais', path: 'um_volto_ja.mp3' },
-      { name: 'Polozhenie - Zedline', path: 'polozhenie.mp3' },
-      { name: 'Shooting Stars', path: 'shooting_stars.mp3' },
-      { name: 'Never Gonna Give You Up', path: 'never_gonna_give_you_up.mp3' },
-    ],
+      { nome: 'Amanha hablamos ok?', path: 'jorgejesus.mp3' },
+      { nome: 'Amogus', path: 'amogus.mp3' },
+      { nome: 'Anúncio LOL', path: 'anuncio_lol.mp3' },
+      { nome: 'Astronaut in the Ocean', path: 'astronaut_ocean.mp3' },
+      { nome: 'Boss AC - Sexta Feira', path: 'bossac.mp3' },
+      { nome: 'Burgir', path: 'burgir.mp3' },
+      { nome: 'Can you feel my heart', path: 'can_you_feel_my_heart.mp3' },
+      { nome: 'Careless Whisper', path: 'careless_whisper.mp3' },
+      { nome: 'Cyberpunk', path: 'cyberpunk.mp3' },
+      { nome: 'Discord', path: 'discord.mp3' },
+      { nome: 'Hallelujah', path: 'hallelujah.mp3' },
+      { nome: 'Ihh ca burro', path: 'ihh_ca_burro.mp3' },
+      { nome: 'John Cena', path: 'john_cena.mp3' },
+      { nome: 'Jojos Three Pillar Theme - Ayayay', path: 'jojo_ayayay.mp3' },
+      { nome: 'MLG Airhorn', path: 'mlg_airhorn.mp3' },
+      { nome: 'Never Gonna Give You Up', path: 'never_gonna_give_you_up.mp3' },
+      { nome: 'Não é não', path: 'nao_e_nao.mp3' },
+      { nome: 'Olha tanta luz', path: 'olha_tanta_luz.mp3' },
+      { nome: 'Polozhenie - Zedline', path: 'polozhenie.mp3' },
+      { nome: 'Shooting Stars', path: 'shooting_stars.mp3' },
+      { nome: 'Super idol', path: 'super_idol.mp3' },
+      { nome: 'Um Volto Já - João Pedro Pais', path: 'um_volto_ja.mp3' },
+      { nome: 'Vine Boom', path: 'vine_boom.mp3' },
+      { nome: 'Yeah Baby', path: 'yeah_baby.mp3' },
+    ] as Som[],
     aTocar: [] as HTMLAudioElement[],
   }),
   computed: {
-    sortedSongs(): {name: string, path: string}[] {
+    sortedSongs(): Som[] {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return this.songs.slice(0).sort((a, b) => {
-        if (a.name < b.name) { return -1; }
-        if (a.name > b.name) { return 1; }
+        if (a.nome < b.nome) { return -1; }
+        if (a.nome > b.nome) { return 1; }
         return 0;
       });
     },
   },
   methods: {
+    ms(ms: number) {
+      return ms;
+    },
     addVolume(amount: number): void {
       this.volume += amount;
       this.changeVolume();
@@ -163,19 +201,28 @@ export default Vue.extend({
     },
     play() {
       try {
-        // const audio = new Audio(require(`../assets/audio/${this.selected?.path}`));
-        // audio.volume = this.volume / 100;
-        // audio.play();
-        // this.aTocar.push(audio);
+        const audio = new Audio(require(`../../assets/audio/${this.selected?.path}`));
+        audio.volume = this.volume / 100;
+        audio.play();
+        this.aTocar.push(audio);
 
         if (this.chat.nome === 'Amigos' && this.volume === 100) {
           setTimeout(() => {
             this.$store.dispatch('contactos/setParticipantCamera', { chat: this.chat, participant: 'Carlos', cameraKey: 'CarlosAssustado' });
           }, 1 * 1000);
         }
-        // document.getElementById('tocar').disabled;
-      } catch {
-        alert(`Erro ao reproduzir o áudio ${this.selected?.name}`);
+      } catch (err: any) {
+        let msg = err.message;
+        if (err.message.startsWith('Cannot find module')) {
+          msg = `Ficheiro de áudio ${this.selected?.path} não encontrado.`;
+        }
+
+        this.$vs.notification({
+          color: 'danger',
+          position: 'top-right',
+          title: 'Erro ao tocar som',
+          text: msg,
+        });
       }
     },
   },

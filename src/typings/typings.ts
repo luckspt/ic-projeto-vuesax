@@ -16,6 +16,8 @@ export interface Grupo extends Contacto{
     participantes?: Contacto[],
 }
 
+export type Recente = Contacto|Grupo;
+
 export interface ParticipanteChamada {
     nome: string,
     micro?: boolean,
@@ -26,7 +28,7 @@ export interface Mensagem {
     autor: string,
     texto: string,
     momento: Date,
-    imagem?: string, // b64
+    imagem?: string, // TODO b64 ?
     ficheiro?: Ficheiro,
 }
 
@@ -35,4 +37,8 @@ export interface Ficheiro {
     tamanho: string,
 }
 
-export type Recente = Contacto|Grupo
+export interface Som {
+    nome: string,
+    path: string,
+    duracao?: number,
+}

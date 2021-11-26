@@ -12,7 +12,6 @@
               <!-- Barra pesquisa -->
               <vs-col w="7">
                 <vs-input
-                  color="#ffffff"
                   block
                   icon-before
                   v-model="recentesSearch">
@@ -91,7 +90,7 @@
                 v-for="(contacto, i) in computedRecentes"
                 :key="i"
                 :data="contacto"
-                :is-selected="recenteSeleccionado == contacto">
+                :is-selected="recenteSeleccionado && recenteSeleccionado.nome == contacto.nome"> <!-- TODO force name unique -->
 
                 <vs-td>
                   <!-- Avatar -->
@@ -155,7 +154,6 @@
                             <vs-col w="8">
                               <vs-input
                                 block
-                                color="dark"
                                 icon-before
                                 v-model="pesquisaMensagem">
                                 <template #icon>
@@ -283,10 +281,12 @@ export default Vue.extend({
     },
     computedRecentes() {
       this.forceRerenderTable();
+      const query = this.recentesSearch.toLowerCase();
+
       return this.$store.state.contactos.recentes
         .filter((r: Recente) => {
           let valid = !r.hidden;
-          if (valid && this.recentesSearch) { valid = r.nome.includes(this.recentesSearch); }
+          if (valid && this.recentesSearch) { valid = r.nome.toLowerCase().includes(query); }
           if (valid && this.filtroFavoritos) { valid = !!r.favorito; }
           if (valid && this.filtroGrupos) { valid = !!r.grupo; }
 
