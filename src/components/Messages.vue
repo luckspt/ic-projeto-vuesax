@@ -22,6 +22,9 @@
       <div class="ic-message-content">
         <span class="ic-author-info">
           {{ parseAutor(msgs[0].autor) }}
+          <span v-if="msgs[0].autor === 'Jogo'" class="ic-system-tag">
+            Sistema
+          </span>
         </span>
 
         <span class="ic-message-timestamp">
@@ -39,7 +42,10 @@
             {{ mensagem.momento.toTimeString().slice(0, -45) }}
           </span>
 
-          {{ mensagem.texto }}
+          <div v-if="mensagem.texto">
+            <span v-html="mensagem.texto" />
+            <br />
+          </div>
 
           <!-- FICHEIRO -->
           <a
@@ -54,6 +60,13 @@
               <i class="fa-solid fa-download ml-2 mb-1"></i>
             </div>
           </a>
+
+          <!-- IMAGEM -->
+          <img
+            v-if="mensagem.imagem"
+            class="rounded-corners"
+            width="300px"
+            :src="require(`../assets/${mensagem.imagem}`)" />
 
           <!-- TODO CHAMADA -->
         </div>
@@ -131,6 +144,16 @@ $timeColor: #72767d;
       font-size: 1.1em;
       font-weight: 500;
       letter-spacing: 0.5px;
+    }
+
+    .ic-system-tag {
+      background-color: $primary;
+      font-size: 0.8em;
+      margin-left: 5px;
+      padding: 3px;
+      border-radius: 3px;
+      line-height: 100%;
+      text-transform: uppercase;
     }
   }
 }

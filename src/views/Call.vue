@@ -177,7 +177,7 @@
 /* eslint-disable global-require */
 
 import Vue from 'vue';
-import { ParticipanteChamada, Recente } from '@/typings/typings';
+import { ParticipanteChamada, Contacto } from '@/typings/typings';
 import AlterarFundo from '@/components/dialogs/AlterarFundo.vue';
 import Soundboard from '@/components/dialogs/Soundboard.vue';
 
@@ -188,7 +188,7 @@ export default Vue.extend({
   },
   props: {
     chat: {
-      type: Object as () => Recente,
+      type: Object as () => Contacto,
     },
   },
   data: () => ({
@@ -207,7 +207,7 @@ export default Vue.extend({
   watch: {
     chat: {
       immediate: true,
-      handler(val: Recente, oldVal: Recente) {
+      handler(val: Contacto, oldVal: Contacto) {
         // Go to chat if changes from one chat to another
         if (val != null && oldVal != null) {
           this.$router.push({ name: 'Chat' });
@@ -232,6 +232,7 @@ export default Vue.extend({
     },
     toggleUserVideo() {
       this.$store.dispatch('user/toggleImage');
+      this.$emit('cameraUpdate');
     },
     toggleUserMicro() {
       this.$store.dispatch('user/toggleMicro');

@@ -117,7 +117,7 @@ import VueSlider from 'vue-slider-component';
 import 'vue-slider-component/theme/antd.css';
 
 import Vue from 'vue';
-import { Recente, Som } from '@/typings/typings';
+import { Contacto, Som } from '@/typings/typings';
 
 export default Vue.extend({
   components: {
@@ -128,7 +128,7 @@ export default Vue.extend({
       type: Object as () => boolean,
     },
     chat: {
-      type: Object as () => Recente,
+      type: Object as () => Contacto,
     },
   },
   data: () => ({

@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 import { ActionContext } from 'vuex';
-import { Mensagem, Recente } from '@/typings/typings';
+import { Mensagem, Contacto } from '@/typings/typings';
 
 const avatars = {
   $$user$$: 'img/avatars/linus.jpg',
@@ -9,6 +9,7 @@ const avatars = {
   Zé: 'img/avatars/male8.jpg',
   Maria: 'img/avatars/female3.jpg',
   Twix: 'img/avatars/twix.jpg',
+  Jogo: 'img/avatars/jogo.png',
 } as Record<string, string>;
 
 const cameras = {
@@ -156,16 +157,19 @@ const state = {
       hidden: true,
       mensagens: [{ autor: 'Carla', texto: 'what you know about rolling down in ', momento: new Date(2013, 13, 2) }],
     },
-
-  ] as Recente[],
+    { nome: 'Jogo', hidden: true }, // fallback pq do Jogo quando se inicia um jogo
+  ] as Contacto[],
 };
 
 const mutations = {
   SAVE(currState: unknown): void {
     sessionStorage.setItem('contactos', JSON.stringify(currState));
   },
-  SET_CONTACTOS(currState: typeof state, recentes: typeof state): void {
-    Object.assign(currState, recentes);
+  RESET(): void {
+    sessionStorage.removeItem('contactos');
+  },
+  SET_CONTACTOS(currState: typeof state, newState: typeof state): void {
+    Object.assign(currState, newState);
   },
   TOGGLE_FAVORITO(currState: typeof state, nome: string): void {
     const user = currState.recentes.find((u) => u.nome === nome);
@@ -175,14 +179,14 @@ const mutations = {
     const user = currState.recentes.find((u) => u.nome === nome);
     if (user) user.grupo = !user.grupo;
   },
-  SEND_MESSAGE(currstate: typeof state, data: {chat: Recente, mensagem: Mensagem}): void {
+  SEND_MESSAGE(currstate: typeof state, data: {chat: Contacto, mensagem: Mensagem}): void {
     const c = currstate.recentes.find((r) => r.nome === data.chat.nome);
     if (c) {
       if (!c.mensagens) c.mensagens = [];
       c.mensagens.push(data.mensagem);
     }
   },
-  SET_PARTICIPANT_CAMERA(currstate: typeof state, data: { chat: Recente, participant: string, cameraKey: string }): void {
+  SET_PARTICIPANT_CAMERA(currstate: typeof state, data: { chat: Contacto, participant: string, cameraKey: string }): void {
     const c = currstate.recentes.find((r) => r.nome === data.chat.nome);
     if (c) {
       const user = c.naChamada?.find((r) => r.nome === data.participant);
@@ -191,14 +195,30 @@ const mutations = {
       }
     }
   },
+  CREATE_GROUP(currState: typeof state, data: { nome: string, contactos: Contacto[] }): void {
+    currState.recentes.push({
+      nome: data.nome,
+      grupo: true,
+      mensagens: [],
+      naChamada: data.contactos,
+      createdAt: new Date(),
+    });
+  },
 };
 
 const actions = {
-  sendMessage({ commit }: ActionContext<unknown, unknown>, data: { chat: Recente, mensagem: Mensagem }): void {
+  reset({ commit }: ActionContext<unknown, unknown>): void {
+    commit('RESET');
+  },
+  createGroup({ commit }: ActionContext<unknown, unknown>, data: { nome: string, contactos: Contacto[] }): void {
+    commit('CREATE_GROUP', data);
+    commit('SAVE');
+  },
+  sendMessage({ commit }: ActionContext<unknown, unknown>, data: { chat: Contacto, mensagem: Mensagem }): void {
     commit('SEND_MESSAGE', data);
     commit('SAVE');
   },
-  setParticipantCamera({ commit }: ActionContext<unknown, unknown>, data: { chat: Recente, participant: string, cameraKey: string }): void {
+  setParticipantCamera({ commit }: ActionContext<unknown, unknown>, data: { chat: Contacto, participant: string, cameraKey: string }): void {
     commit('SET_PARTICIPANT_CAMERA', data);
   },
   fetch({ commit }: ActionContext<unknown, unknown>): void {

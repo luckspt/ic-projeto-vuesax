@@ -8,16 +8,10 @@ export interface Contacto {
     hidden?: boolean,
     favorito?: boolean,
     mensagens?: Mensagem[],
-    naChamada?: ParticipanteChamada[],
+    naChamada: ParticipanteChamada[],
+    createdAt?: Date,
     command?: () => void // used on ListBox
 }
-
-export interface Grupo extends Contacto{
-    participantes?: Contacto[],
-}
-
-export type Recente = Contacto|Grupo;
-
 export interface ParticipanteChamada {
     nome: string,
     micro?: boolean,

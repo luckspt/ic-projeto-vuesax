@@ -3,12 +3,12 @@
     v-model="isVisible"
     @close="closeDialog">
     <div style="width:500px;">
-      <div class="ml-6 mr-6">
+      <div class="ml-5">
         <h2>Alterar fundo de Câmara</h2>
         <p>Visualização</p>
         <img
           id="imgPreview"
-          class="rounded-corners"
+          class="rounded-corners ml-2"
           :src="require(`../../assets/${getUserImage}`)"
           :style="{
             'width': '250px',
@@ -19,8 +19,8 @@
           }" />
       </div>
 
-      <div class="grid pt-1">
-        <p class="ml-6">Fundos</p>
+      <p class="ml-5">Fundos</p>
+      <div class="grid">
         <vs-row justify="center" align="center">
           <vs-col
             w="5"
@@ -41,7 +41,7 @@
 
     <template #footer>
       <div class="grid" style="width:100%;">
-        <vs-row class="ml-6">
+        <vs-row class="ml-5">
           <vs-col w="2">
             <vs-button
               style="margin-left:-8px"

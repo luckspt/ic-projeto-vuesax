@@ -115,7 +115,11 @@
                     :style="{ 'color': 'gold'}"
                     v-tooltip="'Grupo'" />
                   <i v-show="$store.state.user.contacto.emChamada && $store.state.user.contacto.emChamada.nome === contacto.nome"
-                    class="fa-solid fa-phone mx-1"
+                    :class="{
+                      'fa-solid': true,
+                      'fa-phone': !$store.state.user.chamada.imagem,
+                      'fa-video': !!$store.state.user.chamada.imagem,
+                      'mx-1': true }"
                     :style="{ 'color': 'red'}"
                     v-tooltip="'Em chamada'" />
                 </vs-td>
@@ -129,10 +133,10 @@
           <div style="width:100%;">
             <div id="chatCallHeader" class="grid mb-2">
               <vs-row align="center">
-                <vs-col w="3">
+                <vs-col w="4">
                   <div class="grid">
                     <vs-row justify="center" align="center">
-                      <vs-col offset="1" w="3">
+                      <vs-col w="1" class="ml-1">
                         <vs-avatar v-if="$store.getters['contactos/getAvatar'](recenteSeleccionado.nome)">
                           <img :src="require(`../assets/${$store.getters['contactos/getAvatar'](recenteSeleccionado.nome)}`)">
                         </vs-avatar>
@@ -143,19 +147,19 @@
                         </vs-avatar>
                       </vs-col>
 
-                      <vs-col w="8">
+                      <vs-col w="9" class="ml-5">
                         <h2>{{ recenteSeleccionado.nome }}</h2>
                       </vs-col>
                     </vs-row>
                   </div>
                 </vs-col>
-                <vs-col w="9" v-if="$route.name === 'Chat'">
+                <vs-col w="8" v-if="$route.name === 'Chat'">
                   <div class="grid">
                     <vs-row justify="end" align="center">
-                      <vs-col w="6">
+                      <vs-col w="8">
                         <div class="grid">
                           <vs-row align="center" justify="end">
-                            <vs-col w="8">
+                            <vs-col w="6">
                               <vs-input
                                 block
                                 icon-before
@@ -165,24 +169,27 @@
                                 </template>
                               </vs-input>
                             </vs-col>
-                            <vs-col w="4">
-                              <div v-if="!emChamada" class="ml-5">
+                            <vs-col w="6">
+                              <div v-if="!emChamada" class="ml-1">
                                 <vs-tooltip
                                   bottom
                                   shadow
                                   not-hover
                                   v-model="chamadaTooltip">
+
                                   <vs-button
                                     style="float:left;"
                                     icon
                                     @click="entraChamada(false, false)">
-                                    <i class="fa-solid fa-phone"></i>
+                                    <i class="fa-solid fa-phone mr-2"></i>
+                                    Áudio
                                   </vs-button>
                                   <vs-button
                                     icon
                                     style="float:left;"
                                     @click="entraChamada(false, true)">
-                                    <i class="fa-solid fa-video"></i>
+                                    <i class="fa-solid fa-video mr-2"></i>
+                                    Vídeo
                                   </vs-button>
 
                                   <template #tooltip>
@@ -211,7 +218,7 @@
                               <div v-else>
                                 <vs-button
                                   icon
-                                  @click="entraChamada">
+                                  @click="entraChamada(true, !!$store.state.user.chamada.imagem)">
                                   <i class="fa-solid fa-phone mr-2"></i>
                                   Retomar chamada
                                 </vs-button>
@@ -232,6 +239,7 @@
               <router-view
                 :chat="recenteSeleccionado"
                 :search="pesquisaMensagem"
+                @cameraUpdate="forceRerenderTable"
                 @messageSent="forceRerenderTable"
                 @callEnd="forceRerenderTable"/>
             </transition>
@@ -290,7 +298,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Recente } from '@/typings/typings';
+import { Contacto } from '@/typings/typings';
 import NavBar from '@/components/NavBar.vue';
 
 export default Vue.extend({
@@ -310,7 +318,7 @@ export default Vue.extend({
       },
     ],
     recentesSearch: '',
-    recenteSeleccionado: null as Recente | null,
+    recenteSeleccionado: null as Contacto | null,
     chamadaTooltip: false,
   }),
   computed: {
@@ -322,7 +330,7 @@ export default Vue.extend({
       const query = this.recentesSearch.toLowerCase();
 
       return this.$store.state.contactos.recentes
-        .filter((r: Recente) => {
+        .filter((r: Contacto) => {
           let valid = !r.hidden;
           if (valid && this.recentesSearch) { valid = r.nome.toLowerCase().includes(query); }
           if (valid && this.filtroFavoritos) { valid = !!r.favorito; }
@@ -330,8 +338,8 @@ export default Vue.extend({
 
           return valid;
         })
-        .map((r: Recente) => ({ ...r, lastMsg: r.mensagens ? r.mensagens[r.mensagens.length - 1]?.momento?.getTime() : 0 }))
-        .sort((a: Recente & { lastMsg: number }, b: Recente & { lastMsg: number }) => b.lastMsg - a.lastMsg);
+        .map((r: Contacto) => ({ ...r, lastIteraction: r.mensagens ? r.mensagens[r.mensagens.length - 1]?.momento?.getTime() : r.createdAt?.getTime() }))
+        .sort((a: Contacto & { lastIteraction: number }, b: Contacto & { lastIteraction: number }) => b.lastIteraction - a.lastIteraction);
     },
   },
   methods: {
