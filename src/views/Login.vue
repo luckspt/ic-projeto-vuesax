@@ -32,7 +32,7 @@
 
           <vs-button
             color="primary"
-            :disabled="erro"
+            :disabled="!!erro"
             @click="iniciarSessao"
             class="ml-0">
             Continuar
