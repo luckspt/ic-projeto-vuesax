@@ -5,6 +5,7 @@ import ChatContainer from '@/containers/ChatContainer.vue';
 import Chat from '@/views/Chat.vue';
 import Call from '@/views/Call.vue';
 import Login from '@/views/Login.vue';
+import Help from '@/views/Help.vue';
 
 Vue.use(VueRouter);
 
@@ -29,6 +30,11 @@ const routes: Array<RouteConfig> = [
         component: Call,
       },
     ],
+  },
+  {
+    path: '/help',
+    name: 'Help',
+    component: Help,
   },
 ];
 

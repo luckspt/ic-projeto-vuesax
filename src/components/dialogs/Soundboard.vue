@@ -1,5 +1,6 @@
 <template>
   <vs-dialog
+    prevent-close
     v-model="isVisible"
     @close="closeDialog"
     not-center>
@@ -7,7 +8,7 @@
       <div class="ml-6 mr-6">
         <h2>Sons</h2>
 
-        <p>Volume: <small>{{ volume }}%</small></p>
+        <p>Volume música: <small>{{ volume }}%</small></p>
           <VueSlider
             v-model="volume"
             @change="changeVolume"
@@ -136,30 +137,31 @@ export default Vue.extend({
     lastVol: 75,
     selected: null as { name: string, path: string } | null,
     songs: [
-      { nome: 'Amanha hablamos ok?', path: 'jorgejesus.mp3' },
-      { nome: 'Amogus', path: 'amogus.mp3' },
-      { nome: 'Anúncio LOL', path: 'anuncio_lol.mp3' },
-      { nome: 'Astronaut in the Ocean', path: 'astronaut_ocean.mp3' },
-      { nome: 'Boss AC - Sexta Feira', path: 'bossac.mp3' },
-      { nome: 'Burgir', path: 'burgir.mp3' },
-      { nome: 'Can you feel my heart', path: 'can_you_feel_my_heart.mp3' },
-      { nome: 'Careless Whisper', path: 'careless_whisper.mp3' },
-      { nome: 'Cyberpunk', path: 'cyberpunk.mp3' },
-      { nome: 'Discord', path: 'discord.mp3' },
-      { nome: 'Hallelujah', path: 'hallelujah.mp3' },
-      { nome: 'Ihh ca burro', path: 'ihh_ca_burro.mp3' },
-      { nome: 'John Cena', path: 'john_cena.mp3' },
-      { nome: 'Jojos Three Pillar Theme - Ayayay', path: 'jojo_ayayay.mp3' },
-      { nome: 'MLG Airhorn', path: 'mlg_airhorn.mp3' },
-      { nome: 'Never Gonna Give You Up', path: 'never_gonna_give_you_up.mp3' },
-      { nome: 'Não é não', path: 'nao_e_nao.mp3' },
-      { nome: 'Olha tanta luz', path: 'olha_tanta_luz.mp3' },
-      { nome: 'Polozhenie - Zedline', path: 'polozhenie.mp3' },
-      { nome: 'Shooting Stars', path: 'shooting_stars.mp3' },
-      { nome: 'Super idol', path: 'super_idol.mp3' },
-      { nome: 'Um Volto Já - João Pedro Pais', path: 'um_volto_ja.mp3' },
-      { nome: 'Vine Boom', path: 'vine_boom.mp3' },
-      { nome: 'Yeah Baby', path: 'yeah_baby.mp3' },
+      { nome: 'Amanha hablamos ok?', path: 'jorgejesus.mp3', duracao: 2000 },
+      { nome: 'Amogus', path: 'amogus.mp3', duracao: 4000 },
+      { nome: 'Anúncio LOL', path: 'anuncio_lol.mp3', duracao: 103000 },
+      { nome: 'Astronaut in the Ocean', path: 'astronaut_ocean.mp3', duracao: 13000 },
+      { nome: 'Boss AC - Sexta Feira', path: 'bossac.mp3', duracao: 177000 },
+      { nome: 'Burgir', path: 'burgir.mp3', duracao: 1000 },
+      { nome: 'Can you feel my heart', path: 'can_you_feel_my_heart.mp3', duracao: 228000 },
+      { nome: 'Careless Whisper', path: 'careless_whisper.mp3', duracao: 300000 },
+      { nome: 'Cyberpunk', path: 'cyberpunk.mp3', duracao: 2000 },
+      { nome: 'Discord', path: 'discord.mp3', duracao: 1000 },
+      { nome: 'Hallelujah', path: 'hallelujah.mp3', duracao: 2000 },
+      { nome: 'Ihh ca burro', path: 'ihh_ca_burro.mp3', duracao: 1000 },
+      { nome: 'John Cena', path: 'john_cena.mp3', duracao: 49000 },
+      { nome: 'Jojos Three Pillar Theme - Ayayay', path: 'jojo_ayayay.mp3', duracao: 10000 },
+      { nome: 'MLG Airhorn', path: 'mlg_airhorn.mp3', duracao: 3000 },
+      { nome: 'Never Gonna Give You Up', path: 'never_gonna_give_you_up.mp3', duracao: 212000 },
+      { nome: 'Não é não', path: 'nao_e_nao.mp3', duracao: 1000 },
+      { nome: 'Olha tanta luz', path: 'olha_tanta_luz.mp3', duracao: 2000 },
+      { nome: 'Polozhenie - Zedline', path: 'polozhenie.mp3', duracao: 67000 },
+      { nome: 'Shape of you', path: 'shape_of_you.mp3', duracao: 235000 },
+      { nome: 'Shooting Stars', path: 'shooting_stars.mp3', duracao: 6000 },
+      { nome: 'Super idol', path: 'super_idol.mp3', duracao: 14000 },
+      { nome: 'Um Volto Já - João Pedro Pais', path: 'um_volto_ja.mp3', duracao: 257000 },
+      { nome: 'Vine Boom', path: 'vine_boom.mp3', duracao: 1000 },
+      { nome: 'Yeah Baby', path: 'yeah_baby.mp3', duracao: 7000 },
     ] as Som[],
     aTocar: [] as HTMLAudioElement[],
   }),

@@ -11,7 +11,9 @@
       </template>
 
       <template #right>
-        <vs-button>Ajuda</vs-button>
+        <vs-button @click="goHelp">
+          Ajuda
+        </vs-button>
         <vs-button flat @click="signout">
           <i class="fas fa-power-off mr-2"></i>
           Terminar Sessão
@@ -70,6 +72,9 @@ export default Vue.extend({
   methods: {
     goHome() {
       if (this.$route.name !== 'Chat') this.$router.push({ name: 'Chat' });
+    },
+    goHelp() {
+      if (this.$route.name !== 'Help') this.$router.push({ name: 'Help' });
     },
     openCriarGrupo() {
       this.dialogCriarGrupo = true;

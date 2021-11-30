@@ -1,5 +1,6 @@
 <template>
   <vs-dialog
+    prevent-close
     v-model="isVisible"
     @close="closeDialog">
     <div style="width:375px;">

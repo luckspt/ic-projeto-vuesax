@@ -1,5 +1,6 @@
 <template>
   <vs-dialog
+    prevent-close
     v-model="isVisible"
     @close="closeDialog" >
     <div style="width:500px;">
@@ -57,19 +58,39 @@
           label="Adicionar participante por e-mail"
           type="text"
           v-model="txtEmail"
-          @input="emailErrors">
+          @input="emailErrors"
+          @click-icon="add"
+          icon-after>
+          <template #icon>
+            <i class='fa-solid fa-plus' id="btnAdicionar"></i>
+          </template>
+
           <template
             #message-danger
             v-if="errosEmail">
             {{ errosEmail }}
           </template>
         </vs-input>
-        <vs-button
-          :disabled="!!this.errosEmail"
-          class="mr-1">
-          Adicionar
-        </vs-button>
+
+        <!-- Contactos email -->
+        <div class="grid">
+          <vs-row justify="center" align="center">
+            <vs-col
+              v-for="(email, i) in selecionadosEmail"
+              :key="i">
+              <span
+                class="vs-select__chips__chip">
+                {{ email }}
+                <!-- TODO meter reticencias se comprimento > x; hover se comprimento > x -->
+                <!-- TODO @click -->
+                <span class="vs-select__chips__chip__close">
+                  <i class="vs-icon-close vs-icon-hover-less"></i>
+                </span>
+              </span>
+            </vs-col>
+          </vs-row>
         </div>
+      </div>
     </div>
 
     <template #footer>
@@ -101,6 +122,12 @@
 .vs-select__chips__input {
   color: white;
 }
+
+// TODO get parent e por no parent
+#btnAdicionar {
+  border: 5px $primary solid;
+  border-radius: 10px;
+}
 </style>
 
 <script lang="ts">
@@ -117,11 +144,12 @@ export default Vue.extend({
     nome: '',
     txtEmail: '',
     selecionados: [],
-    selecionadosEmail: [],
+    selecionadosEmail: [] as string[],
     errosNome: '',
     errosEmail: '',
     errosContactos: '',
     contactos: [],
+
   }),
   computed: {
     canSubmit() {
@@ -130,7 +158,7 @@ export default Vue.extend({
   },
   beforeMount() {
     this.contactos = this.$store.state.contactos.recentes
-      .filter((c: Contacto) => !c.grupo)
+      .filter((c: Contacto) => !c.grupo && !c.hidden)
       .sort((a: Contacto, b: Contacto) => {
         if (a.favorito && !b.favorito) return -1;
         if (b.favorito && !a.favorito) return 1;
@@ -150,7 +178,7 @@ export default Vue.extend({
       else this.errosNome = '';
     },
     emailErrors() {
-      if (!this.txtEmail.length) this.errosEmail = 'Email obrigatório';
+      if (!this.txtEmail.length) this.errosEmail = 'E-mail obrigatório';
       else if (this.txtEmail.length > 128) this.errosEmail = 'Comprimento máximo: 128 caracteres';
       else if (!this.emailValid(this.txtEmail)) this.errosEmail = 'Email inválido — Não apresenta formato de e-mail.';
       else this.errosEmail = '';
@@ -164,6 +192,9 @@ export default Vue.extend({
 
       this.resetFields();
       this.closeDialog();
+    },
+    add() {
+      this.selecionadosEmail.push(this.txtEmail);
     },
     resetFields() {
       this.nome = '';
