@@ -150,8 +150,6 @@ export default Vue.extend({
         return 0;
       });
 
-    console.log(this.contactosEmail);
-
     this.resetFields();
   },
   methods: {

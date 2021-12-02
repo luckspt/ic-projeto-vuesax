@@ -60,8 +60,7 @@ export default Vue.extend({
     };
   },
   mounted() {
-    this.lightMode = localStorage.getItem('vsTheme') !== 'dark';
-    this.$vs.setTheme(this.lightMode ? 'light' : 'dark');
+    this.lightMode = localStorage.getItem('vsTheme') === 'light';
   },
   methods: {
     changeTheme() {

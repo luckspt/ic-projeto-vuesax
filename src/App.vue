@@ -37,6 +37,9 @@ import Vue from 'vue';
 export default Vue.extend({
   created() {
     console.log('Hola que hace');
+    const lightMode = localStorage.getItem('vsTheme') === 'light';
+    this.$vs.setTheme(lightMode ? 'light' : 'dark');
+
     // Login pela primeira vez
     if (this.$route.name !== 'Login' && !sessionStorage.getItem('user')) {
       this.$router.push({ name: 'Login' });
