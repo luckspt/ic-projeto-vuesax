@@ -6,7 +6,6 @@ export interface Contacto {
     grupo?: boolean,
     mail?: string,
     hidden?: boolean,
-    favorito?: boolean,
     mensagens?: Mensagem[],
     naChamada: ParticipanteChamada[],
     createdAt?: Date,

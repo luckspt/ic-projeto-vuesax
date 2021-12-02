@@ -32,18 +32,6 @@
                   <template #tooltip>
                     <h4>Filtros</h4>
 
-                    <!-- Star -->
-                    <vs-switch
-                      warn
-                      v-model="filtroFavoritos">
-                      <template #off>
-                          <i class='fa-solid fa-star' ></i>
-                      </template>
-                      <template #on>
-                          <i class='fa-solid fa-star' ></i>
-                      </template>
-                    </vs-switch>
-
                     <!-- Grupos -->
                     <vs-switch
                       warn
@@ -106,21 +94,17 @@
                 <vs-td>
                   <!-- Nome -->
                   {{ contacto.nome }}
-                  <i v-show="contacto.favorito"
-                    class="fa-solid fa-star mx-1"
-                    :style="{ 'color': 'gold'}"
-                    v-tooltip="'Favorito'" />
                   <i v-show="contacto.grupo"
                     class="fa-solid fa-user-group mx-1"
                     :style="{ 'color': 'gold'}"
                     v-tooltip="'Grupo'" />
                   <i v-show="$store.state.user.contacto.emChamada && $store.state.user.contacto.emChamada.nome === contacto.nome"
+                    id="chamadaIconContactos"
                     :class="{
                       'fa-solid': true,
                       'fa-phone': !$store.state.user.chamada.imagem,
                       'fa-video': !!$store.state.user.chamada.imagem,
                       'mx-1': true }"
-                    :style="{ 'color': 'red'}"
                     v-tooltip="'Em chamada'" />
                 </vs-td>
               </vs-tr>
@@ -274,6 +258,10 @@
 </template>
 
 <style lang="scss">
+#chamadaIconContactos {
+  color: $danger;
+}
+
 #chatCallHeader {
   border-bottom: 3px $darker solid;
   border-radius: 20px;
@@ -308,15 +296,8 @@ export default Vue.extend({
   data: () => ({
     reRenderTable: true,
     filtrosTooltip: true,
-    filtroFavoritos: false,
     filtroGrupos: false,
     pesquisaMensagem: '',
-    contextMenuItems: [
-      {
-        label: 'Adicionar/Remover Favoritos',
-        icon: 'pi pi-star-o',
-      },
-    ],
     recentesSearch: '',
     recenteSeleccionado: null as Contacto | null,
     chamadaTooltip: false,
@@ -333,7 +314,6 @@ export default Vue.extend({
         .filter((r: Contacto) => {
           let valid = !r.hidden;
           if (valid && this.recentesSearch) { valid = r.nome.toLowerCase().includes(query); }
-          if (valid && this.filtroFavoritos) { valid = !!r.favorito; }
           if (valid && this.filtroGrupos) { valid = !!r.grupo; }
 
           return valid;

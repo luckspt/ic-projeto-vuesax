@@ -160,8 +160,6 @@ export default Vue.extend({
     this.contactos = this.$store.state.contactos.recentes
       .filter((c: Contacto) => !c.grupo && !c.hidden)
       .sort((a: Contacto, b: Contacto) => {
-        if (a.favorito && !b.favorito) return -1;
-        if (b.favorito && !a.favorito) return 1;
         if (a.nome < b.nome) return -1;
         if (a.nome > b.nome) return 1;
 

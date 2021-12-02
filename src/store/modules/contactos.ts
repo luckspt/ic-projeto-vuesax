@@ -30,7 +30,6 @@ const state = {
     {
       nome: 'António',
       email: 'antonio@gmail.com',
-      favorito: true,
       naChamada: [
         { nome: 'António', micro: true, camera: true },
       ],
@@ -102,7 +101,6 @@ const state = {
     {
       nome: 'LOL123',
       grupo: true,
-      favorito: true,
       naChamada: [
         { nome: 'António' },
         { nome: 'Zé', micro: true },
@@ -116,7 +114,6 @@ const state = {
     },
     {
       nome: 'Maria',
-      favorito: true,
       naChamada: [
         { nome: 'Maria', micro: true, camera: true },
       ],
@@ -170,10 +167,6 @@ const mutations = {
   },
   SET_CONTACTOS(currState: typeof state, newState: typeof state): void {
     Object.assign(currState, newState);
-  },
-  TOGGLE_FAVORITO(currState: typeof state, nome: string): void {
-    const user = currState.recentes.find((u) => u.nome === nome);
-    if (user) user.favorito = !user.favorito;
   },
   TOGGLE_GROUP(currState: typeof state, nome: string): void {
     const user = currState.recentes.find((u) => u.nome === nome);
