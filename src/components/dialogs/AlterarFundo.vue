@@ -78,7 +78,7 @@
 
 <style lang="scss" scoped>
 .imgselecionada {
-  border: 2px $danger solid;
+  border: 2px rgb(var(--vs-danger)) solid;
 }
 </style>
 

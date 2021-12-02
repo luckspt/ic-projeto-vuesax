@@ -37,8 +37,6 @@ import Vue from 'vue';
 export default Vue.extend({
   created() {
     console.log('Hola que hace');
-    this.$vs.setTheme('dark');
-
     // Login pela primeira vez
     if (this.$route.name !== 'Login' && !sessionStorage.getItem('user')) {
       this.$router.push({ name: 'Login' });
@@ -91,13 +89,13 @@ body {
   height: 720px !important;
   padding: 0;
   margin: 0;
-  background-color: $dark;
+  background-color: rgb(var(--vs-dark));
 }
 
 #cont {
   width: 100vw;
   height: 100vh;
   transition: background 3s;
-  background-color: $primary;
+  background-color: rgb(var(--vs-primary));
 }
 </style>

@@ -4,7 +4,7 @@
 export interface Contacto {
     nome: string,
     grupo?: boolean,
-    mail?: string,
+    email?: string,
     hidden?: boolean,
     mensagens?: Mensagem[],
     naChamada: ParticipanteChamada[],

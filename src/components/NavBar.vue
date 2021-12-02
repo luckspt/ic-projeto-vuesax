@@ -1,6 +1,6 @@
 <template>
   <div>
-    <vs-navbar color="dark" shadow text-white class="rounded-corners">
+    <vs-navbar dark shadow text-white class="rounded-corners">
       <template #left>
         <img class="py-2" src="@/assets/img/logo.png" height="50" />
         <vs-navbar-item @click="goHome">Concord</vs-navbar-item>
@@ -11,6 +11,18 @@
       </template>
 
       <template #right>
+        <vs-switch
+          v-model="lightMode"
+          @click="changeTheme">
+          <template #on>
+            <i class='fa-solid fa-sun mr-2'></i>
+            Claro
+          </template>
+          <template #off>
+            <i class='fa-solid fa-moon mr-2'></i>
+            Escuro
+          </template>
+        </vs-switch>
         <vs-button flat @click="goHelp">
           Ajuda
         </vs-button>
@@ -29,6 +41,12 @@
   </div>
 </template>
 
+<style lang="scss" scoped>
+.vs-switch {
+  height: 34px;
+}
+</style>
+
 <script lang="ts">
 import Vue from 'vue';
 import CriarGrupo from './dialogs/CriarGrupo.vue';
@@ -38,40 +56,17 @@ export default Vue.extend({
   data() {
     return {
       dialogCriarGrupo: false,
-      items: [
-        {
-          label: 'Criar',
-          icon: 'pi pi-fw pi-plus',
-          items: [
-            {
-              label: 'Grupo',
-              icon: 'pi pi-fw pi-users',
-              command: () => {
-                alert('Não implementado.');
-                this.$data.dialogCriarGrupo = true;
-              },
-            },
-            {
-              label: 'Contacto',
-              icon: 'pi pi-fw pi-user',
-              command: () => {
-                alert('Não implementado.');
-              },
-            },
-
-          ],
-        },
-        {
-          label: 'Ajuda',
-          icon: 'pi pi-fw pi-question-circle',
-          command: () => {
-            alert('Não implementado.');
-          },
-        },
-      ],
+      lightMode: false,
     };
   },
+  mounted() {
+    this.lightMode = localStorage.getItem('vsTheme') !== 'dark';
+    this.$vs.setTheme(this.lightMode ? 'light' : 'dark');
+  },
   methods: {
+    changeTheme() {
+      this.$vs.toggleTheme(this.lightMode ? 'light' : 'dark');
+    },
     goHome() {
       if (this.$route.name !== 'Chat') this.$router.push({ name: 'Chat' });
     },
@@ -95,4 +90,5 @@ export default Vue.extend({
     },
   },
 });
+
 </script>

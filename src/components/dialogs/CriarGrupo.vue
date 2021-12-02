@@ -51,45 +51,25 @@
 
         <!-- ADICIONAR P/MAIL -->
         <!-- TODO add botão confirmar; espaço c/lista de mails; botão remover cada mail; -->
-        <vs-input
-          primary
+        <vs-select
           block
-          class="mt-5"
-          label="Adicionar participante por e-mail"
-          type="text"
-          v-model="txtEmail"
-          @input="emailErrors"
-          @click-icon="add"
-          icon-after>
-          <template #icon>
-            <i class='fa-solid fa-plus' id="btnAdicionar"></i>
-          </template>
+          primary
+          class="mt-4"
+          label="Contactos por email"
+          multiple
+          filter
+          collapse-chips
+          v-model="selecionadosEmail"
+          @input="contactosErrors">
 
-          <template
-            #message-danger
-            v-if="errosEmail">
-            {{ errosEmail }}
-          </template>
-        </vs-input>
-
-        <!-- Contactos email -->
-        <div class="grid">
-          <vs-row justify="center" align="center">
-            <vs-col
-              v-for="(email, i) in selecionadosEmail"
-              :key="i">
-              <span
-                class="vs-select__chips__chip">
-                {{ email }}
-                <!-- TODO meter reticencias se comprimento > x; hover se comprimento > x -->
-                <!-- TODO @click -->
-                <span class="vs-select__chips__chip__close">
-                  <i class="vs-icon-close vs-icon-hover-less"></i>
-                </span>
-              </span>
-            </vs-col>
-          </vs-row>
-        </div>
+          <vs-option
+            v-for="(contacto, i) in contactosEmail"
+            :key="i"
+            :label="`${contacto.nome} ${contacto.email}`"
+            :value="contacto">
+            {{ contacto.nome }} <span>{{ contacto.email }}</span>
+          </vs-option>
+        </vs-select>
       </div>
     </div>
 
@@ -122,12 +102,6 @@
 .vs-select__chips__input {
   color: white;
 }
-
-// TODO get parent e por no parent
-#btnAdicionar {
-  border: 5px $primary solid;
-  border-radius: 10px;
-}
 </style>
 
 <script lang="ts">
@@ -149,6 +123,7 @@ export default Vue.extend({
     errosEmail: '',
     errosContactos: '',
     contactos: [],
+    contactosEmail: [],
 
   }),
   computed: {
@@ -165,6 +140,18 @@ export default Vue.extend({
 
         return 0;
       });
+
+    this.contactosEmail = this.$store.state.contactos.recentes
+      .filter((c: Contacto) => !c.grupo && !!c.email)
+      .sort((a: Contacto, b: Contacto) => {
+        if (a.nome < b.nome) return -1;
+        if (a.nome > b.nome) return 1;
+
+        return 0;
+      });
+
+    console.log(this.contactosEmail);
+
     this.resetFields();
   },
   methods: {

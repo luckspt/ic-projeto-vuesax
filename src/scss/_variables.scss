@@ -1,7 +1,37 @@
-// Não esquecer mudar no main.ts
-$primary: #7289da; //#1a5cff;
-$success: #46c93a;
-$danger: #d80c0c;
-$warning: #ffba00;
-$dark: #1e2023;
-$darker: #141417;
+// // Não esquecer mudar no main.ts
+// $primary: #7289da; //#1a5cff;
+// $success: #46c93a;
+// $danger: #d80c0c;
+// $warning: #ffba00;
+// $dark: #1e2023;
+// $darker: #141417;
+
+// Light
+body {
+  // Theme
+  --vs-primary: 114, 137, 218;
+  --vs-success: 70, 201, 58;
+  --vs-danger: 216, 12, 12;
+  --vs-warn: 255, 186, 0;
+  --vs-dark: 255, 255, 255;
+
+  // Custom
+  --vs-darker: 240, 240, 240;
+  --message-hover-color: 230, 230, 230;
+  --text-color: 0, 0, 0;
+}
+
+// Dark
+body[vs-theme="dark"] {
+  // Theme
+  --vs-primary: 114, 137, 218;
+  --vs-success: 70, 201, 58;
+  --vs-danger: 216, 12, 12;
+  --vs-warn: 255, 186, 0;
+  --vs-dark: 30, 32, 35;
+
+  // Custom
+  --vs-darker: 20, 20, 23;
+  --message-hover-color: 28, 29, 32;
+  --text-color: 255, 255, 255;
+}

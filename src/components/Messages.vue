@@ -22,7 +22,7 @@
       <div class="ic-message-content">
         <span class="ic-author-info">
           {{ parseAutor(msgs[0].autor) }}
-          <span v-if="msgs[0].autor === 'Jogo'" class="ic-system-tag">
+          <span v-if="msgs[0].autor === 'Jogo'" class="ic-system-tag rounded-corners">
             Sistema
           </span>
         </span>
@@ -49,7 +49,7 @@
 
           <!-- FICHEIRO -->
           <a
-            class="vs-button vs-button--icon vs-button--dark vs-button--default"
+            class="vs-button vs-button--icon vs-button--darker vs-button--default"
             :style="`text-decoration:none;width:${mensagem.ficheiro.length}em;`"
             v-if="mensagem.ficheiro"
             :href="mensagem.ficheiro"
@@ -84,7 +84,7 @@ $timeColor: #72767d;
 }
 
 .ic-message {
-  background-color: $dark;
+  background-color: rgb(var(--vs-dark));
   display: flex;
   font-size: 0.9em;
   margin: 1em 0;
@@ -110,7 +110,7 @@ $timeColor: #72767d;
 
   .ic-message-time {
     position: absolute;
-    color: $dark;
+    color: rgb(var(--vs-dark));
     margin-left:-50px;
     font-size: 12px;
   }
@@ -128,7 +128,7 @@ $timeColor: #72767d;
   }
 
   .ic-message-body:hover {
-    background-color: darken($dark, 1%);
+    background-color: rgb(var(--message-hover-color));
 
     .ic-message-time {
       color: $timeColor;
@@ -147,11 +147,10 @@ $timeColor: #72767d;
     }
 
     .ic-system-tag {
-      background-color: $primary;
+      background-color: rgb(var(--vs-primary));
       font-size: 0.8em;
       margin-left: 5px;
       padding: 3px;
-      border-radius: 3px;
       line-height: 100%;
       text-transform: uppercase;
     }

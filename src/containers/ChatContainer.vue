@@ -246,11 +246,11 @@
 
 <style lang="scss">
 #chamadaIconContactos {
-  color: $danger;
+  color: rgb(var(--vs-danger));
 }
 
 #chatCallHeader {
-  border-bottom: 3px $darker solid;
+  border-bottom: 3px rgb(var(--vs-darker)) solid;
   border-radius: 20px;
 }
 
@@ -258,7 +258,7 @@
   font-size: 10em;
   margin-top: 200px;
   margin-left: 70px;
-  color: $primary;
+  color: rgb(var(--vs-primary));
 }
 
 .vs-table table {
