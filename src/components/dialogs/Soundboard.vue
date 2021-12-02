@@ -48,7 +48,9 @@
                 @click="songs = $vs.sortData($event, sortedSongs, 'nome')">
                 Nome
               </vs-th>
-              <vs-th>
+              <vs-th
+                sort
+                @click="songs = $vs.sortData($event, sortedSongs, 'duracao')">
                 Duração
               </vs-th>
             </vs-tr>
@@ -114,10 +116,10 @@
 /* eslint-disable global-require */
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable import/no-dynamic-require */
-import VueSlider from 'vue-slider-component';
-import 'vue-slider-component/theme/antd.css';
-
 import Vue from 'vue';
+import ms from 'ms';
+import 'vue-slider-component/theme/antd.css';
+import VueSlider from 'vue-slider-component';
 import { Contacto, Som } from '@/typings/typings';
 
 export default Vue.extend({
@@ -135,7 +137,7 @@ export default Vue.extend({
   data: () => ({
     volume: 75,
     lastVol: 75,
-    selected: null as { name: string, path: string } | null,
+    selected: null as Som | null,
     songs: [
       { nome: 'Amanha hablamos ok?', path: 'jorgejesus.mp3', duracao: 2000 },
       { nome: 'Amogus', path: 'amogus.mp3', duracao: 4000 },
@@ -176,8 +178,8 @@ export default Vue.extend({
     },
   },
   methods: {
-    ms(ms: number) {
-      return ms;
+    ms(time: number) {
+      return ms(time);
     },
     addVolume(amount: number): void {
       this.volume += amount;
@@ -203,11 +205,21 @@ export default Vue.extend({
     },
     play() {
       try {
-        const audio = new Audio(require(`../../assets/audio/${this.selected?.path}`));
+        if (!this.selected) return;
+
+        // Tocar som
+        const audio = new Audio(require(`../../assets/audio/${this.selected.path}`));
+        audio.id = `soundboard_${this.selected.nome}_${Date.now()}`;
         audio.volume = this.volume / 100;
         audio.play();
         this.aTocar.push(audio);
 
+        // Remover som no fim
+        setTimeout(() => {
+          this.aTocar.splice(this.aTocar.findIndex((i) => i.id === audio.id), 1);
+        }, this.selected.duracao);
+
+        // Cenário em que o carlos se assusta
         if (this.chat.nome === 'Amigos' && this.volume === 100) {
           setTimeout(() => {
             this.$store.dispatch('contactos/setParticipantCamera', { chat: this.chat, participant: 'Carlos', cameraKey: 'CarlosAssustado' });

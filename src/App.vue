@@ -36,6 +36,7 @@ import Vue from 'vue';
 
 export default Vue.extend({
   created() {
+    console.log('Hola que hace');
     this.$vs.setTheme('dark');
 
     // Login pela primeira vez

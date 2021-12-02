@@ -53,7 +53,10 @@ export default Vue.extend({
     erro: 'Nome obrigatório',
   }),
   mounted() {
-    if (sessionStorage.getItem('user')) { this.nome = this.$store.state.user.contacto.nome; }
+    if (sessionStorage.getItem('user')) {
+      this.nome = this.$store.state.user.contacto.nome;
+      this.erro = '';
+    }
   },
   methods: {
     iniciarSessao() {

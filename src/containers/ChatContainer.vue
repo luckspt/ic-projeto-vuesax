@@ -90,7 +90,7 @@
                 v-for="(contacto, i) in computedRecentes"
                 :key="i"
                 :data="contacto"
-                :is-selected="recenteSeleccionado && recenteSeleccionado.nome == contacto.nome"> <!-- TODO force name unique -->
+                :is-selected="recenteSeleccionado && recenteSeleccionado.nome == contacto.nome">
 
                 <vs-td>
                   <!-- Avatar -->

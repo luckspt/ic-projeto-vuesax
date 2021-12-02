@@ -22,7 +22,7 @@ Vue.use(Vuesax as any, {
   colors: {
     primary: '#7289da', // '#1a5cff',
     success: '#46c93a',
-    danger: '#ff4757',
+    danger: '#d80c0c',
     warning: '#ffba00',
     dark: '#141417',
   },

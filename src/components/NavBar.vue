@@ -11,10 +11,12 @@
       </template>
 
       <template #right>
-        <vs-button @click="goHelp">
+        <vs-button flat @click="goHelp">
           Ajuda
         </vs-button>
-        <vs-button flat @click="signout">
+        <vs-button
+          danger
+          @click="signout">
           <i class="fas fa-power-off mr-2"></i>
           Terminar Sessão
         </vs-button>

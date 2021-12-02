@@ -171,7 +171,6 @@ export default Vue.extend({
   },
   methods: {
     nomeErrors() {
-      console.log(this.$store.state.contactos.recentes.find((c: Contacto) => c.nome === this.nome));
       if (!this.nome.length) this.errosNome = 'Nome obrigatório';
       else if (this.nome.length > 20) this.errosNome = 'Comprimento máximo: 20 caracteres';
       else if (this.$store.state.contactos.recentes.find((c: Contacto) => c.nome === this.nome)) this.errosNome = 'Já existe um grupo ou contacto com esse nome';
