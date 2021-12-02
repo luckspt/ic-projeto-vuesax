@@ -20,32 +20,19 @@
                   </template>
                 </vs-input>
               </vs-col>
-              <vs-col w="4">
-                <!-- Filtros -->
-                <vs-tooltip
-                  not-hover
-                  v-model="filtrosTooltip"
-                  right>
-                  <vs-button @click="filtrosTooltip = !filtrosTooltip">
-                    Filtros
-                  </vs-button>
-                  <template #tooltip>
-                    <h4>Filtros</h4>
-
-                    <!-- Grupos -->
-                    <vs-switch
-                      warn
-                      v-model="filtroGrupos"
-                      class="mt-1">
-                      <template #off>
-                          <i class='fa-solid fa-user-group' ></i>
-                      </template>
-                      <template #on>
-                          <i class='fa-solid fa-user-group' ></i>
-                      </template>
-                    </vs-switch>
+              <vs-col w="3" class="ml-2">
+                <!-- Filtro Grupos -->
+                <vs-switch
+                  warn
+                  v-model="filtroGrupos"
+                  class="mt-1">
+                  <template #off>
+                      <i class='fa-solid fa-user-group' ></i>
                   </template>
-                </vs-tooltip>
+                  <template #on>
+                      <i class='fa-solid fa-user-group' ></i>
+                  </template>
+                </vs-switch>
               </vs-col>
             </vs-row>
           </div>
@@ -295,7 +282,6 @@ export default Vue.extend({
   },
   data: () => ({
     reRenderTable: true,
-    filtrosTooltip: true,
     filtroGrupos: false,
     pesquisaMensagem: '',
     recentesSearch: '',
