@@ -11,17 +11,30 @@
       </template>
 
       <template #right>
-        <vs-button flat >Login</vs-button>
-        <vs-button>Ajuda</vs-button>
+        <vs-button flat @click="goHelp">
+          Ajuda
+        </vs-button>
+        <vs-button
+          danger
+          @click="signout">
+          <i class="fas fa-power-off mr-2"></i>
+          Terminar Sessão
+        </vs-button>
       </template>
     </vs-navbar>
+
+    <CriarGrupo
+      :isVisible.sync="dialogCriarGrupo"
+      @close="closeCriarGrupo" />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import CriarGrupo from './dialogs/CriarGrupo.vue';
 
 export default Vue.extend({
+  components: { CriarGrupo },
   data() {
     return {
       dialogCriarGrupo: false,
@@ -62,6 +75,9 @@ export default Vue.extend({
     goHome() {
       if (this.$route.name !== 'Chat') this.$router.push({ name: 'Chat' });
     },
+    goHelp() {
+      if (this.$route.name !== 'Help') this.$router.push({ name: 'Help' });
+    },
     openCriarGrupo() {
       this.dialogCriarGrupo = true;
     },
@@ -70,6 +86,12 @@ export default Vue.extend({
     },
     submitGroupCreate(): void {
       // todo group create submit
+    },
+    async signout() {
+      await this.$store.dispatch('user/reset');
+      await this.$store.dispatch('contactos/reset');
+      await this.$router.push({ name: 'Login' });
+      window.location.reload();
     },
   },
 });

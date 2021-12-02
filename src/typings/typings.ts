@@ -6,16 +6,11 @@ export interface Contacto {
     grupo?: boolean,
     mail?: string,
     hidden?: boolean,
-    favorito?: boolean,
     mensagens?: Mensagem[],
-    naChamada?: ParticipanteChamada[],
+    naChamada: ParticipanteChamada[],
+    createdAt?: Date,
     command?: () => void // used on ListBox
 }
-
-export interface Grupo extends Contacto{
-    participantes?: Contacto[],
-}
-
 export interface ParticipanteChamada {
     nome: string,
     micro?: boolean,
@@ -26,7 +21,7 @@ export interface Mensagem {
     autor: string,
     texto: string,
     momento: Date,
-    imagem?: string, // b64
+    imagem?: string, // TODO b64 ?
     ficheiro?: Ficheiro,
 }
 
@@ -35,4 +30,8 @@ export interface Ficheiro {
     tamanho: string,
 }
 
-export type Recente = Contacto|Grupo
+export interface Som {
+    nome: string,
+    path: string,
+    duracao?: number,
+}

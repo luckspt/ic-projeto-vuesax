@@ -17,7 +17,7 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .fade-enter-active,
 .fade-leave-active {
   transition-duration: 0.3s;
@@ -36,6 +36,7 @@ import Vue from 'vue';
 
 export default Vue.extend({
   created() {
+    console.log('Hola que hace');
     this.$vs.setTheme('dark');
 
     // Login pela primeira vez

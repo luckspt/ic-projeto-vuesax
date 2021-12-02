@@ -5,6 +5,7 @@ import ChatContainer from '@/containers/ChatContainer.vue';
 import Chat from '@/views/Chat.vue';
 import Call from '@/views/Call.vue';
 import Login from '@/views/Login.vue';
+import Help from '@/views/Help.vue';
 
 Vue.use(VueRouter);
 
@@ -30,11 +31,16 @@ const routes: Array<RouteConfig> = [
       },
     ],
   },
+  {
+    path: '/help',
+    name: 'Help',
+    component: Help,
+  },
 ];
 
 const router = new VueRouter({
   mode: 'hash',
-  base: process.env.VUE_APP_DEVELOPMENT ? '/' : '/~ic024/entregas/iteracao2/E2-1/',
+  base: process.env.VUE_APP_BASE_URL,
   routes,
 });
 

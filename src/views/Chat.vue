@@ -40,7 +40,7 @@
       </vs-col>
 
       <!-- ESPAÇO ESCREVER MENSAGEM -->
-      <vs-col w="9">
+      <vs-col w="8">
         <vs-input
           block
           class="mt-1"
@@ -50,18 +50,18 @@
       </vs-col>
 
       <!-- BOTÃO ENVIAR MENSAGEM -->
-      <vs-col w="3">
-        <span class="p-buttonset">
-          <vs-button
-            style="float:left;"
-            :disabled="mensagem === ''"
-            @click="enviarMensagem"
-            class="p-mr-1">
-            <i class="fa-solid fa-paper-plane mr-2"></i>
-            Enviar
-          </vs-button>
+      <vs-col w="4">
+        <vs-button
+          style="float:left;"
+          :disabled="mensagem === ''"
+          @click="enviarMensagem"
+          class="p-mr-1">
+          <i class="fa-solid fa-paper-plane mr-2"></i>
+          Enviar
+        </vs-button>
 
-          <!-- BOTÃO ESCOLHER FICHEIRO -->
+        <!-- BOTÃO ESCOLHER FICHEIRO -->
+        <div style="float:left;">
           <label for="ficheiroInput">
             <vs-button @click="openFileExplorer">
               <i class="fa-solid fa-paperclip mr-2"></i>
@@ -73,24 +73,39 @@
             type="file"
             ref="fileUpload"
             style="display:none;" />
-        </span>
+        </div>
+        <!-- BOTAO DE JOGOS -->
+        <vs-button
+          style="float:left;height:36px;"
+          icon
+          @click="openDialogJogos">
+          <i class="fa fa-gamepad mr-2" style="font-size:20px"></i>
+          Jogos
+        </vs-button>
       </vs-col>
     </vs-row>
+
+    <Jogos
+      :chat="chat"
+      :isVisible.sync="dialogJogos"
+      @close="closeDialogJogos" />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import Messages from '@/components/Messages.vue';
-import { Mensagem, Recente } from '@/typings/typings';
+import { Mensagem, Contacto } from '@/typings/typings';
+import Jogos from '@/components/dialogs/Jogos.vue';
 
 export default Vue.extend({
   components: {
+    Jogos,
     Messages,
   },
   props: {
     chat: {
-      type: Object as () => Recente,
+      type: Object as () => Contacto,
     },
     search: {
       type: Object as () => string,
@@ -105,6 +120,7 @@ export default Vue.extend({
     },
   },
   data: () => ({
+    dialogJogos: false,
     reRenderChat: true,
     ficheirosDisplay: false,
     mensagem: '',
@@ -118,10 +134,16 @@ export default Vue.extend({
       const chat = this.getChat();
       if (!chat || !chat.mensagens) return [];
       if (!this.search) return chat.mensagens;
-      return chat.mensagens.filter((m) => (m.texto ? m.texto.toLowerCase().includes(this.search.toLowerCase()) : false));
+      return chat.mensagens.filter((m: Mensagem) => (m.texto ? m.texto.toLowerCase().includes(this.search.toLowerCase()) : false));
     },
   },
   methods: {
+    openDialogJogos() {
+      this.dialogJogos = true;
+    },
+    closeDialogJogos() {
+      this.dialogJogos = false;
+    },
     openFileExplorer() {
       (this.$refs.fileUpload as HTMLInputElement).click();
     },
@@ -132,8 +154,8 @@ export default Vue.extend({
         this.reRenderChat = true;
       });
     },
-    getChat(): Recente | null {
-      return this.$store.state.contactos.recentes.find((r: Recente) => r.nome === this.chat.nome);
+    getChat(): Contacto | null {
+      return this.$store.state.contactos.recentes.find((r: Contacto) => r.nome === this.chat.nome);
     },
     uploadFicheiro({ target: { files } }: unknown) {
       this.$store.dispatch('contactos/sendMessage', {

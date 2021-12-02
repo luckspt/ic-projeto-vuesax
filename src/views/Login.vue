@@ -4,29 +4,35 @@
       style="height:720px;"
       justify="center"
       align="center">
-      <vs-col w="3">
-        <vs-alert relief style="height:160px;">
+      <vs-col w="4">
+        <vs-alert
+          color="rbg(255,255,255)"
+          style="height:180px;">
           <template #title>
             Iniciar Sessão
           </template>
 
           <!-- <small class="ml-1">Nome de utilizador</small> -->
           <vs-input
-            v-model="username"
+            v-model="nome"
             @keypress="checkSubmit"
+            @input="checkErro"
             class="mt-3"
-            color="#ffffff"
             block
             icon-before
             label-placeholder="Nome de utilizador">
             <template #icon>
               <i class="fa-solid fa-user"></i>
             </template>
+
+            <template #message-danger v-if="erro" class="mb-0">
+              {{ erro }}
+            </template>
           </vs-input>
 
           <vs-button
-            color="dark"
-            :disabled="!username"
+            color="primary"
+            :disabled="!!erro"
             @click="iniciarSessao"
             class="ml-0">
             Continuar
@@ -39,21 +45,32 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { Contacto } from '@/typings/typings';
 
 export default Vue.extend({
   data: () => ({
-    username: '',
+    nome: '',
+    erro: 'Nome obrigatório',
   }),
   mounted() {
-    if (sessionStorage.getItem('user')) { this.username = this.$store.state.user.contacto.nome; }
+    if (sessionStorage.getItem('user')) {
+      this.nome = this.$store.state.user.contacto.nome;
+      this.erro = '';
+    }
   },
   methods: {
     iniciarSessao() {
-      this.$store.dispatch('user/setUsername', this.username);
+      this.$store.dispatch('user/setUsername', this.nome);
       this.$router.push({ name: 'Chat' });
     },
     checkSubmit({ code }: KeyboardEvent) {
-      if (code === 'Enter' && this.username) this.iniciarSessao();
+      if (code === 'Enter' && !this.erro) this.iniciarSessao();
+    },
+    checkErro() {
+      if (!this.nome) this.erro = 'Nome obrigatório';
+      else if (this.nome.length > 20) this.erro = 'Comprimento máximo: 20 caracteres';
+      else if (this.$store.state.contactos.recentes.find((c: Contacto) => c.nome === this.nome)) this.erro = 'Já existe um grupo ou contacto com esse nome';
+      else this.erro = '';
     },
   },
 });

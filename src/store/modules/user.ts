@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { ActionContext } from 'vuex';
-import { ParticipanteChamada, Recente } from '@/typings/typings';
+import { ParticipanteChamada, Contacto } from '@/typings/typings';
 
 const defaults = {
   imagem: 'img/linus_nobg.png',
@@ -10,7 +10,7 @@ const defaults = {
 const state = {
   contacto: {
     nome: 'José',
-    emChamada: {} as Recente,
+    emChamada: {} as Contacto,
   },
   chamada: {
     nome: '$$user$$',
@@ -24,6 +24,9 @@ const mutations = {
   SAVE(currState: typeof state): void {
     sessionStorage.setItem('user', JSON.stringify(currState));
   },
+  RESET(): void {
+    sessionStorage.removeItem('user');
+  },
   SET_USER(currState: typeof state, user: typeof state): void {
     Object.assign(currState, user);
   },
@@ -36,7 +39,7 @@ const mutations = {
   TOGGLE_MICRO(currState: typeof state): void {
     currState.chamada.micro = !currState.chamada.micro;
   },
-  SET_EMCHAMADA(currState: typeof state, chamada: Recente): void {
+  SET_EMCHAMADA(currState: typeof state, chamada: Contacto): void {
     currState.contacto.emChamada = chamada;
   },
   SET_USERNAME(currState: typeof state, username: string): void {
@@ -45,6 +48,9 @@ const mutations = {
 };
 
 const actions = {
+  reset({ commit }: ActionContext<unknown, unknown>): void {
+    commit('RESET');
+  },
   fetch({ commit }: ActionContext<unknown, unknown>): void {
     const userStr = sessionStorage.getItem('user');
     if (userStr) {
@@ -72,7 +78,7 @@ const actions = {
     commit('SET_BACKGROUND', defaults.background);
     commit('SAVE');
   },
-  joinCall({ commit }: ActionContext<unknown, unknown>, chamada: Recente): void {
+  joinCall({ commit }: ActionContext<unknown, unknown>, chamada: Contacto): void {
     commit('SET_EMCHAMADA', chamada);
     commit('SAVE');
   },
