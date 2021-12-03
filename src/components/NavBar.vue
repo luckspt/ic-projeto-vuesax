@@ -87,7 +87,7 @@ export default Vue.extend({
       if (this.$route.name !== 'Chat') this.$router.push({ name: 'Chat' });
     },
     goHelp() {
-      if (this.$route.name !== 'Help') this.$router.push({ name: 'Help', params: { p: this.$route.name } });
+      if (this.$route.name !== 'Help') this.$router.push({ name: 'Help', params: { p: this.$route.name as string } });
     },
     openCriarGrupo() {
       this.dialogCriarGrupo = true;
