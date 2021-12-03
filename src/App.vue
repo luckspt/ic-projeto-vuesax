@@ -9,11 +9,6 @@
         </transition>
       </vs-col>
     </vs-row>
-
-    <!-- <Login
-      :isVisible.sync="dialogLogin"
-      @close="closeDialogLogin" /> -->
-
   </div>
 </template>
 

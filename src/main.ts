@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuesax from 'vuesax';
+import ShortKey from 'vue-shortkey';
 
 import App from './App.vue';
 import './registerServiceWorker';
@@ -18,7 +19,6 @@ Vue.config.warnHandler = (msg) => {
 
 Vue.config.productionTip = false;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 // Vue.use(Vuesax as any, {
 //   colors: {
 //     primary: '#7289da', // '#1a5cff',
@@ -28,7 +28,12 @@ Vue.config.productionTip = false;
 //     dark: '#141417',
 //   },
 // });
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 Vue.use(Vuesax as any);
+
+Vue.use(ShortKey, {
+  prevent: ['input'],
+});
 
 new Vue({
   router,

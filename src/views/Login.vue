@@ -34,8 +34,10 @@
             color="primary"
             :disabled="!!erro"
             @click="iniciarSessao"
-            class="ml-0">
-            Continuar
+            class="ml-0"
+            v-shortkey="['c']"
+            @shortkey="!erro ? iniciarSessao() : () => {}">
+            <u>C</u>ontinuar
           </vs-button>
         </vs-alert>
       </vs-col>

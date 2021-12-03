@@ -15,7 +15,9 @@
         <vs-tooltip>
           <vs-switch
             v-model="lightMode"
-            @click="changeTheme">
+            @click="changeTheme"
+            v-shortkey="['t']"
+            @shortkey="changeTheme">
             <template #on>
               <i class='fa-solid fa-sun mr-2'></i>
               Claro
@@ -27,12 +29,14 @@
           </vs-switch>
 
           <template #tooltip>
-            Mudar tema
+            Mudar <u>t</u>ema
           </template>
         </vs-tooltip>
 
         <vs-button
-          @click="goHelp">
+          @click="goHelp"
+          v-shortkey="['f1']"
+          @shortkey="goHelp">
           <i class="fa-solid fa-circle-question mr-2"></i>
           Ajuda
         </vs-button>

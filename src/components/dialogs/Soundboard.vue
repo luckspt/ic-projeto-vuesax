@@ -21,12 +21,16 @@
         <vs-button-group style="width:64px;">
           <vs-button
             @click="addVolume(-5)"
-            :disabled="volume - 5 < 0">
+            :disabled="volume - 5 < 0"
+            v-shortkey="['-']"
+            @shortkey="volume - 5 >= 0 ? addVolume(-5) : () => {}">
             -
           </vs-button>
           <vs-button
-          @click="addVolume(5)"
-          :disabled="volume + 5 > 100">
+            @click="addVolume(5)"
+            :disabled="volume + 5 > 100"
+            v-shortkey="['+']"
+            @shortkey="volume + 5 <= 100 ? addVolume(5) : () => {}">
             +
           </vs-button>
         </vs-button-group>
@@ -85,25 +89,31 @@
           <vs-col w="7" class="mr-2">
             <vs-button
               @click="closeDialog"
-              style="float:left;">
+              style="float:left;"
+              v-shortkey="['f']"
+              @shortkey="closeDialog">
               <i class="fa-solid fa-xmark mr-2"></i>
-              Fechar
+              <u>F</u>echar
             </vs-button>
             <vs-button
               danger
               :disabled="aTocar.length === 0"
               @click="stop"
-              style="float:left;">
+              style="float:left;"
+              v-shortkey="['p']"
+              @shortkey="aTocar.length !== 0 ? stop() : () => {}">
               <i class="fa-solid fa-stop mr-2"></i>
-              Parar
+              <u>P</u>arar
             </vs-button>
             <vs-button
               success
               :disabled="!selected"
               @click="play"
-              style="float:left;">
+              style="float:left;"
+              v-shortkey="['t']"
+              @shortkey="selected ? play() : () => {}">
               <i class="fa-solid fa-play mr-2"></i>
-              Tocar
+              <u>T</u>ocar
             </vs-button>
           </vs-col>
         </vs-row>

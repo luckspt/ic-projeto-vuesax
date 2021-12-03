@@ -80,15 +80,19 @@
         :disabled="!canSubmit"
         success
         style="float:right;"
-        class="mb-2">
+        class="mb-2"
+        v-shortkey="['g']"
+        @shortkey="!!canSubmit ? submit() : () => {}">
         <i class="fa-solid fa-check mr-2"></i>
-        Confirmar
+        <span>Criar <u>G</u>rupo</span>
       </vs-button>
       <vs-button
         @click="closeDialog"
-        style="float:right;">
+        style="float:right;"
+        v-shortkey="['c']"
+        @shortkey="closeDialog">
         <i class="fa-solid fa-xmark mr-2"></i>
-        Cancelar
+        <u>C</u>ancelar
       </vs-button>
     </template>
   </vs-dialog>

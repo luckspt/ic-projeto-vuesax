@@ -210,7 +210,6 @@
                               </div>
                               <div v-else>
                                 <vs-button
-                                  icon
                                   @click="entraChamada(true, !!$store.state.user.chamada.imagem, true)">
                                   <i class="fa-solid fa-phone mr-2"></i>
                                   Retomar chamada

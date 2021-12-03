@@ -66,17 +66,21 @@
             <div style="margin-left:12px">
               <vs-button
                 style="float:left;"
-                @click="closeDialog">
+                @click="closeDialog"
+                v-shortkey="['c']"
+                @shortkey="closeDialog">
                 <i class="fa-solid fa-xmark mr-2"></i>
-                Cancelar
+                <u>C</u>ancelar
               </vs-button>
               <vs-button
                 style="float:left;"
                 success
                 :disabled="!jogoAtivo || !selecionado"
-                @click="submeter">
+                @click="submeter"
+                v-shortkey="['j']"
+                @shortkey="jogoAtivo && selecionado ? submeter() : () => {}">
                 <i class="fa-solid fa-check mr-2"></i>
-                Confirmar
+                <u>J</u>ogar
               </vs-button>
             </div>
           </vs-col>

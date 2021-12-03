@@ -52,26 +52,32 @@
             <vs-button
               style="margin-left:-8px"
               transparent
-              @click="reporFundo">
+              @click="reporFundo"
+              v-shortkey="['r']"
+              @shortkey="reporFundo">
               <i class="fa-solid fa-reply mr-2"></i>
-              Repor
+              <u>R</u>epor
             </vs-button>
           </vs-col>
           <vs-col offset="2" w="8">
             <div style="margin-left:12px">
               <vs-button
                 style="float:left;"
-                @click="closeDialog">
+                @click="closeDialog"
+                v-shortkey="['c']"
+                @shortkey="closeDialog">
                 <i class="fa-solid fa-xmark mr-2"></i>
-                Cancelar
+                <u>C</u>ancelar
               </vs-button>
               <vs-button
                 style="float:left;"
                 success
                 @click="submeterFundo"
-                :disabled="!fundoAtivo">
+                :disabled="!fundoAtivo"
+                v-shortkey="['a']"
+                @shortkey="fundoAtivo ? submeterFundo() : () => {}">
                 <i class="fa-solid fa-check mr-2"></i>
-                Confirmar
+                <u>A</u>lterar fundo
               </vs-button>
             </div>
           </vs-col>
