@@ -90,10 +90,10 @@
             <vs-button
               @click="closeDialog"
               style="float:left;"
-              v-shortkey="['f']"
+              v-shortkey="['c']"
               @shortkey="closeDialog">
               <i class="fa-solid fa-xmark mr-2"></i>
-              <u>F</u>echar
+              <u>C</u>ancelar
             </vs-button>
             <vs-button
               danger

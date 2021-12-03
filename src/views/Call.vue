@@ -51,44 +51,56 @@
       <vs-col w="12">
         <div class="grid p-jc-center">
           <vs-row justify="center" align="center">
-            <vs-switch
-              v-model="userVideo"
-              @click="toggleUserVideo"
-              class="mr-2">
-              <template #on>
-                <i class="fa-solid fa-video mr-2" />
-                Câmara
-              </template>
-              <template #off>
-                <i class="fa-solid fa-video-slash mr-2" />
-                Câmara
-              </template>
-            </vs-switch>
+            <div
+              v-shortkey="['r']"
+              @shortkey="userVideo = !userVideo; toggleUserVideo()">
+              <vs-switch
+                v-model="userVideo"
+                @click="toggleUserVideo"
+                class="mr-2">
+                <template #on>
+                  <i class="fa-solid fa-video mr-2" />
+                  Câma<u>r</u>a
+                </template>
+                <template #off>
+                  <i class="fa-solid fa-video-slash mr-2" />
+                  Câma<u>r</u>a
+                </template>
+              </vs-switch>
+            </div>
 
-            <vs-switch
-              v-model="userMicro"
-              @click="toggleUserMicro"
-              class="mr-1">
-              <template #on>
-                <i class="fa-solid fa-microphone mr-2" />
-                Microfone
-              </template>
-              <template #off>
-                <i class="fa-solid fa-microphone-slash mr-2" />
-                Microfone
-              </template>
-            </vs-switch>
+            <div
+              v-shortkey="['m']"
+              @shortkey="userMicro = !userMicro; toggleUserMicro()">
+              <vs-switch
+                v-model="userMicro"
+                @click="toggleUserMicro"
+                class="mr-1">
+                <template #on>
+                  <i class="fa-solid fa-microphone mr-2" />
+                  <u>M</u>icrofone
+                </template>
+                <template #off>
+                  <i class="fa-solid fa-microphone-slash mr-2" />
+                  <u>M</u>icrofone
+                </template>
+              </vs-switch>
+            </div>
 
             <vs-button
-              @click="openDialogFundos">
+              @click="openDialogFundos"
+              v-shortkey="['f']"
+              @shortkey="openDialogFundos">
               <i class="fa-solid fa-tv mr-2"></i>
-              Fundos
+              <u>F</u>undos
             </vs-button>
 
             <vs-button
-              @click="openDialogSoundboard">
+              @click="openDialogSoundboard"
+              v-shortkey="['s']"
+              @shortkey="openDialogSoundboard">
               <i class="fa-solid fa-volume-high mr-2"></i>
-              Sons
+              <u>S</u>ons
             </vs-button>
           </vs-row>
         </div>
@@ -106,9 +118,11 @@
             </vs-button>
 
             <vs-button
+              v-shortkey="['v']"
+              @shortkey="$router.push({ name: 'Chat' })"
               @click="$router.push({ name: 'Chat' })">
               <i class="fa-solid fa-circle-arrow-left mr-2"></i>
-              Voltar à Conversa
+              <u>V</u>oltar à Conversa
             </vs-button>
           </vs-row>
         </div>
@@ -133,10 +147,6 @@
 
 .vs-card__interactions h4 {
   text-shadow: 0 0 10px black;
-}
-
-.no-hover {
-  pointer-events: none;
 }
 
 .participantCard,.vs-card,.vs-card__image {

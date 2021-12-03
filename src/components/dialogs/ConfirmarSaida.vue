@@ -1,46 +1,44 @@
 <template>
-  <div class="grid p-2">
-    <vs-dialog
-      prevent-close
-      v-model="isVisible"
-      @close="closeDialog">
-      <div class="ml-6 mr-6">
-        <h2>Deseja terminar sessão?</h2>
-      </div>
+  <vs-dialog
+    prevent-close
+    v-model="isVisible"
+    @close="closeDialog">
+    <div class="ml-6 mr-6">
+      <h2>Deseja terminar sessão?</h2>
+    </div>
 
-      <div class="grid">
-        <vs-row
-          primary
-          justify="center"
-          align="center">
-          <vs-col w="5">
-            <vs-button
-              danger
-              @click="submit"
-              v-shortkey="['t']"
-              @shortkey="submit">
-              <u>T</u>erminar sessão
-              <template #animate>
-                <i class="fa-solid fa-right-from-bracket"></i>
-              </template>
-            </vs-button>
-          </vs-col>
+    <div class="grid">
+      <vs-row
+        primary
+        justify="center"
+        align="center">
+        <vs-col w="5">
+          <vs-button
+            danger
+            @click="submit"
+            v-shortkey="['t']"
+            @shortkey="submit">
+            <u>T</u>erminar sessão
+            <template #animate>
+              <i class="fa-solid fa-right-from-bracket"></i>
+            </template>
+          </vs-button>
+        </vs-col>
 
-          <vs-col w="4">
-            <vs-button
-              @click="closeDialog"
-              v-shortkey="['c']"
-              @shortkey="goHelp">
-              <u>C</u>ancelar
-              <template #animate >
-                <i class="fa-solid fa-face-smile-beam"></i>
-              </template>
-            </vs-button>
-          </vs-col>
-        </vs-row>
-      </div>
-    </vs-dialog>
-  </div>
+        <vs-col w="4">
+          <vs-button
+            @click="closeDialog"
+            v-shortkey="['c']"
+            @shortkey="goHelp">
+            <u>C</u>ancelar
+            <template #animate >
+              <i class="fa-solid fa-face-smile-beam"></i>
+            </template>
+          </vs-button>
+        </vs-col>
+      </vs-row>
+    </div>
+  </vs-dialog>
 </template>
 
 <script lang="ts">

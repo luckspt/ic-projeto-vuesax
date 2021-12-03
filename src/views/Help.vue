@@ -1,11 +1,29 @@
 <template>
   <div
     class="mr-1">
-    <div class="grid p-3" >
-      <vs-button
-        @click="goBack" class="ml-6 mb-3">
-        <i class="fa-solid fa-circle-arrow-left mr-2"></i>Voltar
-      </vs-button>
+    <div class="grid p-3">
+      <vs-row>
+        <vs-col w="1">
+          <vs-button
+            @click="goBack"
+            class="ml-6 mb-3"
+            v-shortkey="['v']"
+            @shortkey="goBack">
+            <i class="fa-solid fa-circle-arrow-left mr-2"></i>
+            <u>V</u>oltar
+          </vs-button>
+        </vs-col>
+        <vs-col w="1">
+          <vs-button
+            @click="openDialogKeybinds"
+            class="ml-6 mb-3"
+            v-shortkey="['a']"
+            @shortkey="openDialogKeybinds">
+            <i class="fa-solid fa-keyboard mr-2"></i>
+            <u>A</u>celeradores
+          </vs-button>
+        </vs-col>
+      </vs-row>
 
       <!-- style="height:200px;" -->
       <!-- style="overflow-y:auto;height:200px" -->
@@ -15,6 +33,7 @@
         align="center">
         <!-- Inicio de sessao -->
         <vs-col
+          class="bg-darker p-3 my-5 rounded-corners"
           w="5"
           v-for="(help, i) in filteredHelp"
           :key="i"
@@ -33,26 +52,37 @@
         </vs-col>
       </vs-row>
     </div>
+
+    <Keybinds
+      :isVisible.sync="dialogKeybinds"
+      @close="closeDialogKeybinds" />
   </div>
 </template>
 
 <style lang="scss" scoped>
 img {
-  border: 3px solid white;
-  width: 400px;
+  width: 100%;
+  max-width: 480px;
+  float: left;
+  clear: both;
 }
 </style>
 
 <script lang="ts">
 import Vue from 'vue';
+import Keybinds from '@/components/dialogs/Keybinds.vue';
 
 export default Vue.extend({
+  components: {
+    Keybinds,
+  },
   computed: {
     filteredHelp() {
       return this.helps.filter((h) => h.paginaBefore === this.$route.params.p);
     },
   },
   data: () => ({
+    dialogKeybinds: false,
     helps: [
       {
         paginaBefore: 'Chat', titulo: 'Chat', descricao: ['Depois de iniciar sessão, escolha uma conversa que pretende no chat lateral à esquerda'], imagem: 'img/help/chat.png',
@@ -101,6 +131,12 @@ export default Vue.extend({
     ] as {titulo: string, descricao:string[], imagem?:string, paginaBefore: string }[],
   }),
   methods: {
+    openDialogKeybinds() {
+      this.dialogKeybinds = true;
+    },
+    closeDialogKeybinds() {
+      this.dialogKeybinds = false;
+    },
     goBack() {
       this.$router.push({ name: this.$route.params.p });
     },

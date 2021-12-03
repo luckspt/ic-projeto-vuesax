@@ -63,9 +63,12 @@
         <!-- BOTÃO ESCOLHER FICHEIRO -->
         <div style="float:left;">
           <label for="ficheiroInput">
-            <vs-button @click="openFileExplorer">
+            <vs-button
+              v-shortkey="['f']"
+              @shortkey="openFileExplorer"
+              @click="openFileExplorer">
               <i class="fa-solid fa-paperclip mr-2"></i>
-              Ficheiro
+              <u>F</u>icheiro
             </vs-button>
           </label>
           <input
@@ -78,9 +81,11 @@
         <vs-button
           style="float:left;height:36px;"
           icon
+          v-shortkey="['j']"
+          @shortkey="openDialogJogos"
           @click="openDialogJogos">
           <i class="fa fa-gamepad mr-2" style="font-size:20px"></i>
-          Jogos
+          <u>J</u>ogos
         </vs-button>
       </vs-col>
     </vs-row>

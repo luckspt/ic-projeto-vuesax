@@ -6,7 +6,11 @@
         <vs-navbar-item @click="goHome">Concord</vs-navbar-item>
 
         <vs-navbar-item @click="openCriarGrupo">
-          Criar Grupo
+          <span
+            v-shortkey="['ctrl', 'g']"
+            @shortkey="openCriarGrupo">
+            Criar Grupo
+          </span>
         </vs-navbar-item>
       </template>
 
@@ -15,9 +19,7 @@
         <vs-tooltip>
           <vs-switch
             v-model="lightMode"
-            @click="changeTheme"
-            v-shortkey="['t']"
-            @shortkey="changeTheme">
+            @click="changeTheme">
             <template #on>
               <i class='fa-solid fa-sun mr-2'></i>
               Claro
@@ -29,7 +31,7 @@
           </vs-switch>
 
           <template #tooltip>
-            Mudar <u>t</u>ema
+            Mudar tema
           </template>
         </vs-tooltip>
 
@@ -85,6 +87,7 @@ export default Vue.extend({
   },
   methods: {
     changeTheme() {
+      console.log('toggleTheme', this.lightMode ? 'light' : 'dark');
       this.$vs.toggleTheme(this.lightMode ? 'light' : 'dark');
     },
     goHome() {

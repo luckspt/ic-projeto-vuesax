@@ -38,6 +38,15 @@
           </div>
 
           <!-- Tabela Recentes -->
+          <!-- Aceleradores -->
+          <div
+            v-shortkey="['ctrl', 'arrowup']"
+            @shortkey="selecionar(-1)">
+          </div>
+          <div
+            v-shortkey="['ctrl', 'arrowdown']"
+            @shortkey="selecionar(1)">
+          </div>
           <vs-table
             style="height:585px;overflow-y:scroll"
             v-if="reRenderTable"
@@ -165,16 +174,20 @@
                                   <vs-button
                                     style="float:left;"
                                     icon
+                                    v-shortkey="['a']"
+                                    @shortkey="entraChamada(false, false)"
                                     @click="entraChamada(false, false)">
                                     <i class="fa-solid fa-phone mr-2"></i>
-                                    Áudio
+                                    <u>Á</u>udio
                                   </vs-button>
                                   <vs-button
                                     icon
                                     style="float:left;"
+                                    v-shortkey="['v']"
+                                    @shortkey="entraChamada(false, true)"
                                     @click="entraChamada(false, true)">
                                     <i class="fa-solid fa-video mr-2"></i>
-                                    Vídeo
+                                    <u>V</u>ídeo
                                   </vs-button>
 
                                   <template #tooltip>
@@ -188,17 +201,21 @@
                                           <vs-row align="center" justify="center">
                                             <vs-col w="4">
                                               <vs-button
+                                                v-shortkey="['c']"
+                                                @shortkey="chamadaTooltip = false"
                                                 @click="chamadaTooltip = false"
                                                 style="float:left;">
-                                                Cancelar
+                                                <u>C</u>ancelar
                                               </vs-button>
                                             </vs-col>
                                             <vs-col w="4">
                                               <vs-button
+                                                v-shortkey="['o']"
+                                                @shortkey="entraChamada(true)"
                                                 @click="entraChamada(true)"
                                                 danger
                                                 style="float:left;">
-                                                Continuar
+                                                C<u>o</u>ntinuar
                                               </vs-button>
                                             </vs-col>
                                           </vs-row>
@@ -210,9 +227,11 @@
                               </div>
                               <div v-else>
                                 <vs-button
+                                  v-shortkey="['r']"
+                                  @shortkey="entraChamada(true, !!$store.state.user.chamada.imagem, true)"
                                   @click="entraChamada(true, !!$store.state.user.chamada.imagem, true)">
                                   <i class="fa-solid fa-phone mr-2"></i>
-                                  Retomar chamada
+                                  <u>R</u>etomar chamada
                                 </vs-button>
                               </div>
                             </vs-col>
@@ -323,7 +342,7 @@ export default Vue.extend({
     emChamada() {
       return this.recenteSeleccionado?.nome === this.$store.state.user.contacto.emChamada?.nome;
     },
-    computedRecentes() {
+    computedRecentes(): Contacto[] {
       this.forceRerenderTable();
       const query = this.recentesSearch.toLowerCase();
 
@@ -340,6 +359,16 @@ export default Vue.extend({
     },
   },
   methods: {
+    selecionar(sentido: number) {
+      if (!this.recenteSeleccionado) return;
+
+      const idx = this.computedRecentes.findIndex((c) => c.nome === this.recenteSeleccionado?.nome);
+      if ((idx === 0 && sentido < 0)
+        || (idx === this.computedRecentes.length - 1 && sentido > 0)) { return; }
+
+      this.recenteSeleccionado = this.computedRecentes[idx + sentido];
+      console.log(this.recenteSeleccionado);
+    },
     getAvatar(nome: string) {
       return this.$store.state.contactos.avatars[nome];
     },
