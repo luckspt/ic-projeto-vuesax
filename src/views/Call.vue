@@ -107,7 +107,7 @@
 
             <vs-button
               @click="$router.push({ name: 'Chat' })">
-              <i class="fa-solid fa-angles-up mr-2"></i>
+              <i class="fa-solid fa-circle-arrow-left mr-2"></i>
               Voltar à Conversa
             </vs-button>
           </vs-row>
@@ -244,6 +244,8 @@ export default Vue.extend({
       this.loadedImages = {};
     },
     leaveCall() {
+      this.$store.dispatch('contactos/setLastCallDuration', this.chat);
+
       this.$emit('callEnd');
       this.$store.dispatch('user/leaveCall');
       this.$router.push({ name: 'Chat' });

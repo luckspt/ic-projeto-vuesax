@@ -22,7 +22,7 @@
       <div class="ic-message-content">
         <span class="ic-author-info">
           {{ parseAutor(msgs[0].autor) }}
-          <span v-if="msgs[0].autor === 'Jogo'" class="ic-system-tag rounded-corners">
+          <span v-if="msgs[0].sistema" class="ic-system-tag rounded-corners">
             Sistema
           </span>
         </span>

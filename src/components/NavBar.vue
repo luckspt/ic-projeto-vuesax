@@ -11,24 +11,35 @@
       </template>
 
       <template #right>
-        <vs-switch
-          v-model="lightMode"
-          @click="changeTheme">
-          <template #on>
-            <i class='fa-solid fa-sun mr-2'></i>
-            Claro
+
+        <vs-tooltip>
+          <vs-switch
+            v-model="lightMode"
+            @click="changeTheme">
+            <template #on>
+              <i class='fa-solid fa-sun mr-2'></i>
+              Claro
+            </template>
+            <template #off>
+              <i class='fa-solid fa-moon mr-2'></i>
+              Escuro
+            </template>
+          </vs-switch>
+
+          <template #tooltip>
+            Mudar tema
           </template>
-          <template #off>
-            <i class='fa-solid fa-moon mr-2'></i>
-            Escuro
-          </template>
-        </vs-switch>
-        <vs-button flat @click="goHelp">
+        </vs-tooltip>
+
+        <vs-button
+          @click="goHelp">
+          <i class="fa-solid fa-circle-question mr-2"></i>
           Ajuda
         </vs-button>
+
         <vs-button
           danger
-          @click="signout">
+          @click="openConfirmarSaida">
           <i class="fas fa-power-off mr-2"></i>
           Terminar Sessão
         </vs-button>
@@ -38,24 +49,30 @@
     <CriarGrupo
       :isVisible.sync="dialogCriarGrupo"
       @close="closeCriarGrupo" />
+    <ConfirmarSaida
+      :isVisible.sync="dialogConfirmarSaida"
+      @close="closeConfirmarSaida"
+      @signout="signout"/>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .vs-switch {
-  height: 34px;
+  height: 34px !important;
 }
 </style>
 
 <script lang="ts">
 import Vue from 'vue';
 import CriarGrupo from './dialogs/CriarGrupo.vue';
+import ConfirmarSaida from './dialogs/ConfirmarSaida.vue';
 
 export default Vue.extend({
-  components: { CriarGrupo },
+  components: { CriarGrupo, ConfirmarSaida },
   data() {
     return {
       dialogCriarGrupo: false,
+      dialogConfirmarSaida: false,
       lightMode: false,
     };
   },
@@ -70,13 +87,19 @@ export default Vue.extend({
       if (this.$route.name !== 'Chat') this.$router.push({ name: 'Chat' });
     },
     goHelp() {
-      if (this.$route.name !== 'Help') this.$router.push({ name: 'Help' });
+      if (this.$route.name !== 'Help') this.$router.push({ name: 'Help', params: { p: this.$route.name } });
     },
     openCriarGrupo() {
       this.dialogCriarGrupo = true;
     },
     closeCriarGrupo(): void {
       this.dialogCriarGrupo = false;
+    },
+    openConfirmarSaida() {
+      this.dialogConfirmarSaida = true;
+    },
+    closeConfirmarSaida() {
+      this.dialogConfirmarSaida = false;
     },
     submitGroupCreate(): void {
       // todo group create submit

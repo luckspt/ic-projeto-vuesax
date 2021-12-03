@@ -65,9 +65,9 @@
           <vs-option
             v-for="(contacto, i) in contactosEmail"
             :key="i"
-            :label="`${contacto.nome} ${contacto.email}`"
+            :label="contacto.email"
             :value="contacto">
-            {{ contacto.nome }} <span>{{ contacto.email }}</span>
+            {{ contacto.email }}
           </vs-option>
         </vs-select>
       </div>
@@ -170,7 +170,13 @@ export default Vue.extend({
       else this.errosContactos = '';
     },
     submit() {
-      this.$store.dispatch('contactos/createGroup', { nome: this.nome, contactos: this.selecionados });
+      this.$store.dispatch('contactos/createGroup', {
+        nome: this.nome,
+        contactos: [
+          ...this.selecionados,
+          ...this.selecionadosEmail,
+        ],
+      });
 
       this.resetFields();
       this.closeDialog();

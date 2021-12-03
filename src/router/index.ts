@@ -33,8 +33,23 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: '/help',
-    name: 'Help',
-    component: Help,
+    component: {
+      render(c) { return c('router-view'); },
+    },
+    children: [
+      {
+        path: '',
+        redirect: {
+          name: 'Help',
+          params: { p: 'chat' },
+        },
+      },
+      {
+        path: ':p',
+        name: 'Help',
+        component: Help,
+      },
+    ],
   },
 ];
 

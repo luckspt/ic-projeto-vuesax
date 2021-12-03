@@ -81,18 +81,32 @@
                 <vs-td>
                   <!-- Nome -->
                   {{ contacto.nome }}
-                  <i v-show="contacto.grupo"
-                    class="fa-solid fa-user-group mx-1"
-                    :style="{ 'color': 'gold'}"
-                    v-tooltip="'Grupo'" />
-                  <i v-show="$store.state.user.contacto.emChamada && $store.state.user.contacto.emChamada.nome === contacto.nome"
-                    id="chamadaIconContactos"
-                    :class="{
-                      'fa-solid': true,
-                      'fa-phone': !$store.state.user.chamada.imagem,
-                      'fa-video': !!$store.state.user.chamada.imagem,
-                      'mx-1': true }"
-                    v-tooltip="'Em chamada'" />
+
+                  <vs-tooltip
+                    v-show="contacto.grupo"
+                    class="mx-1"
+                    style="float:right;">
+                    <i class="fa-solid fa-user-group"
+                      :style="{ 'color': 'gold'}"/>
+                    <template #tooltip>
+                      Grupo
+                    </template>
+                  </vs-tooltip>
+
+                  <vs-tooltip
+                    v-show="$store.state.user.contacto.emChamada && $store.state.user.contacto.emChamada.nome === contacto.nome"
+                    class="mx-1"
+                    style="float:right;">
+                    <i id="chamadaIconContactos"
+                      :class="{
+                        'fa-solid': true,
+                        'fa-phone': !$store.state.user.chamada.imagem,
+                        'fa-video': !!$store.state.user.chamada.imagem}" />
+
+                    <template #tooltip>
+                      Em {{!!$store.state.user.chamada.imagem ? 'video' : ''}}chamada
+                    </template>
+                  </vs-tooltip>
                 </vs-td>
               </vs-tr>
             </template>
@@ -130,7 +144,7 @@
                       <vs-col w="8">
                         <div class="grid">
                           <vs-row align="center" justify="end">
-                            <vs-col w="6">
+                            <vs-col w="6" class="mr-1">
                               <vs-input
                                 block
                                 icon-before
@@ -140,7 +154,7 @@
                                 </template>
                               </vs-input>
                             </vs-col>
-                            <vs-col w="6">
+                            <vs-col w="5">
                               <div v-if="!emChamada" class="ml-1">
                                 <vs-tooltip
                                   bottom
@@ -165,22 +179,30 @@
 
                                   <template #tooltip>
                                     <div class="content-tooltip">
-                                      <h4 class="center">
+                                      <h4>
                                         Confirmar
                                       </h4>
                                       <p>Já se encontra numa chamada. Se continuar, irá terminar a chamada anterior.</p>
-                                      <footer class="center">
-                                        <vs-button
-                                          @click="chamadaTooltip = false"
-                                          style="float:left;">
-                                          Cancelar
-                                        </vs-button>
-                                        <vs-button
-                                          @click="entraChamada(true)"
-                                          danger
-                                          style="float:left;">
-                                          Continuar
-                                        </vs-button>
+                                      <footer>
+                                        <div class="grid">
+                                          <vs-row align="center" justify="center">
+                                            <vs-col w="4">
+                                              <vs-button
+                                                @click="chamadaTooltip = false"
+                                                style="float:left;">
+                                                Cancelar
+                                              </vs-button>
+                                            </vs-col>
+                                            <vs-col w="4">
+                                              <vs-button
+                                                @click="entraChamada(true)"
+                                                danger
+                                                style="float:left;">
+                                                Continuar
+                                              </vs-button>
+                                            </vs-col>
+                                          </vs-row>
+                                        </div>
                                       </footer>
                                     </div>
                                   </template>
@@ -189,7 +211,7 @@
                               <div v-else>
                                 <vs-button
                                   icon
-                                  @click="entraChamada(true, !!$store.state.user.chamada.imagem)">
+                                  @click="entraChamada(true, !!$store.state.user.chamada.imagem, true)">
                                   <i class="fa-solid fa-phone mr-2"></i>
                                   Retomar chamada
                                 </vs-button>
@@ -273,7 +295,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Contacto } from '@/typings/typings';
+import { Contacto, Mensagem } from '@/typings/typings';
 import NavBar from '@/components/NavBar.vue';
 
 export default Vue.extend({
@@ -288,6 +310,16 @@ export default Vue.extend({
     recenteSeleccionado: null as Contacto | null,
     chamadaTooltip: false,
   }),
+  beforeMount() {
+    // Carregar chamada se tiver ido ao help ou feito refresh
+    if (this.$route.name === 'Call') {
+      const chamada: Contacto = this.$store.state.user.contacto.emChamada;
+      if (chamada) {
+        this.recenteSeleccionado = this.$store.state.contactos.recentes
+          .find((c: Contacto) => c.nome === chamada.nome);
+      }
+    }
+  },
   computed: {
     emChamada() {
       return this.recenteSeleccionado?.nome === this.$store.state.user.contacto.emChamada?.nome;
@@ -319,7 +351,7 @@ export default Vue.extend({
         this.reRenderTable = true;
       });
     },
-    entraChamada(force: boolean, camera: boolean) {
+    entraChamada(force: boolean, camera: boolean, jaNaChamada: boolean) {
       if (!force && (this.$store.state.user.contacto.emChamada?.nome && this.$store.state.user.contacto.emChamada?.nome !== this.recenteSeleccionado?.nome)) {
         this.chamadaTooltip = true;
         return;
@@ -328,6 +360,25 @@ export default Vue.extend({
 
       setTimeout(() => {
         this.forceRerenderTable();
+
+        if (!jaNaChamada) {
+          this.$store.dispatch('contactos/sendMessage', {
+            chat: this.recenteSeleccionado,
+            mensagem: {
+              autor: 'Chamada',
+              sistema: true,
+              momento: new Date(),
+              texto: `<strong>${this.$store.state.user.contacto.nome}</strong> começou uma ${camera ? 'video' : ''}chamada.`,
+              chamada: {
+                inicio: new Date(),
+              },
+            } as Mensagem,
+          });
+
+          if (this.$store.state.user.contacto.emChamada?.nome !== this.recenteSeleccionado?.nome) {
+            this.$store.dispatch('contactos/setLastCallDuration', this.$store.state.user.contacto.emChamada);
+          }
+        }
 
         this.$store.dispatch('user/joinCall', this.recenteSeleccionado);
         if (!!this.$store.state.user.chamada.imagem !== camera) { this.$store.dispatch('user/toggleImage'); }

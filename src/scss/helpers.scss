@@ -9,6 +9,10 @@ h1,h2,h3,h4,h5,h6,p,th,td,tr,div {
   background-color: rgb(var(--vs-darker));
 }
 
+.vs-tooltip {
+  color: white;
+}
+
 .rounded-corners {
   border-radius: 12px;
 }

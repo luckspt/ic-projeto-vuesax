@@ -45,7 +45,6 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Contacto } from '@/typings/typings';
 
 export default Vue.extend({
   data: () => ({
@@ -69,7 +68,6 @@ export default Vue.extend({
     checkErro() {
       if (!this.nome) this.erro = 'Nome obrigatório';
       else if (this.nome.length > 20) this.erro = 'Comprimento máximo: 20 caracteres';
-      else if (this.$store.state.contactos.recentes.find((c: Contacto) => c.nome === this.nome)) this.erro = 'Já existe um grupo ou contacto com esse nome';
       else this.erro = '';
     },
   },

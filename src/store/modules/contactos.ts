@@ -1,5 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 import { ActionContext } from 'vuex';
+import ms from 'ms';
 import { Mensagem, Contacto } from '@/typings/typings';
 
 const avatars = {
@@ -9,11 +10,15 @@ const avatars = {
   Zé: 'img/avatars/male8.jpg',
   Maria: 'img/avatars/female3.jpg',
   Twix: 'img/avatars/twix.jpg',
+
+  // Sistema
   Jogo: 'img/avatars/jogo.png',
+  Chamada: 'img/avatars/chamada.jpg',
 } as Record<string, string>;
 
 const cameras = {
   António: 'img/cameras/antonio.jpg',
+  Carla: 'img/cameras/carla.jpg',
   Carlos: 'img/cameras/carlos.jpg',
   CarlosAssustado: 'img/cameras/carlos_assustado.jpg',
   'Avó Miranda': 'img/cameras/avo_miranda.jpg',
@@ -29,7 +34,6 @@ const state = {
   recentes: [
     {
       nome: 'António',
-      email: 'antonio@gmail.com',
       naChamada: [
         { nome: 'António', micro: true, camera: true },
       ],
@@ -145,16 +149,27 @@ const state = {
         { autor: '$$user$$', texto: 'omeudeus ola twix!!! sim por favor as respotas do exame de interação com computadores sim', momento: new Date('2022/10/19 10:12:48') },
         { autor: 'Twix', ficheiro: 'respostas_exame_ic2021.pdf', momento: new Date('2022/10/19 11:46:21') },
         { autor: '$$user$$', texto: 'TWIX ERA EXATAMENTE ISSO COMO E QUE SOUBESTE', momento: new Date('2022/01/10 16:01:12') },
-        { autor: 'Twix', texto: 'um bom magico nao revela os seus segredos', momento: new Date('2022/01/10 20:13:21') },
+        { autor: 'Twix', texto: 'um bom mágico nao revela os seus segredos', momento: new Date('2022/01/10 20:13:21') },
       ],
     },
     {
       nome: 'Carla',
-      email: 'carla42@mail.com',
+      email: 'carla42@email.com',
       hidden: true,
       mensagens: [{ autor: 'Carla', texto: 'what you know about rolling down in ', momento: new Date(2013, 13, 2) }],
     },
+    {
+      nome: 'Zé',
+      email: 'ze@chocolates.com',
+      hidden: true,
+    },
+    {
+      nome: 'Carlos',
+      email: 'pipocas_doces123@hotmail.com',
+      hidden: true,
+    },
     { nome: 'Jogo', hidden: true }, // fallback pq do Jogo quando se inicia um jogo
+    { nome: 'Chamada', hidden: true }, // fallback pq do Jogo quando se inicia um jogo
   ] as Contacto[],
 };
 
@@ -193,9 +208,23 @@ const mutations = {
       nome: data.nome,
       grupo: true,
       mensagens: [],
-      naChamada: data.contactos,
+      naChamada: data.contactos.map((c) => ({ ...c, micro: true, camera: true })),
       createdAt: new Date(),
     });
+  },
+  UPDATE_LAST_CALL_DURATION(currState: typeof state, chat: Contacto): void {
+    const c = currState.recentes.find((r) => r.nome === chat.nome);
+    if (c && c.mensagens) {
+      const msgs = [...c.mensagens]
+        .sort((a: Mensagem, b: Mensagem) => b.momento.getTime() - a.momento.getTime());
+
+      const msgIdx = msgs.findIndex((m) => m.autor === 'Chamada');
+
+      if (msgIdx >= 0) {
+        const duracao = Date.now() - msgs[msgIdx].momento.getTime();
+        msgs[msgIdx].texto += ` Durou ${ms(duracao)}.`;
+      }
+    }
   },
 };
 
@@ -210,6 +239,9 @@ const actions = {
   sendMessage({ commit }: ActionContext<unknown, unknown>, data: { chat: Contacto, mensagem: Mensagem }): void {
     commit('SEND_MESSAGE', data);
     commit('SAVE');
+  },
+  setLastCallDuration({ commit }: ActionContext<unknown, unknown>, chat: Contacto): void {
+    commit('UPDATE_LAST_CALL_DURATION', chat);
   },
   setParticipantCamera({ commit }: ActionContext<unknown, unknown>, data: { chat: Contacto, participant: string, cameraKey: string }): void {
     commit('SET_PARTICIPANT_CAMERA', data);
@@ -234,6 +266,7 @@ const getters = {
       .find((r) => r.nome === chat);
     if (c) {
       const u = c.naChamada?.find((r) => r.nome === nome);
+
       if (u) {
         if (typeof u.camera === 'string') return u.camera;
         return u.camera ? currState.cameras[nome] : currState.avatars[nome];

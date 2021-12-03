@@ -11,6 +11,7 @@ export interface Contacto {
     createdAt?: Date,
     command?: () => void // used on ListBox
 }
+
 export interface ParticipanteChamada {
     nome: string,
     micro?: boolean,
@@ -21,8 +22,16 @@ export interface Mensagem {
     autor: string,
     texto: string,
     momento: Date,
-    imagem?: string, // TODO b64 ?
+    imagem?: string,
     ficheiro?: Ficheiro,
+    sistema?: boolean,
+    chamada: {
+        inicio: Date,
+        /**
+         * Duracao da chamada em ms
+         */
+        duracao?: number,
+    },
 }
 
 export interface Ficheiro {

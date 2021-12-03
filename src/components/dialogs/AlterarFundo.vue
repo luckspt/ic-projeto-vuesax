@@ -27,14 +27,19 @@
             w="5"
             v-for="(imagem, i) in imagensFundo"
             :key="i">
-            <img
-              @click="() => imagemClick(imagem)"
-              :class="`${imagem.ativo ? 'imgselecionada' : ''} rounded-corners`"
-              :src="require(`../../assets/${imagem.href}`)"
-              v-tooltip="imagem.tooltip"
-              width="200px"
-              height="112px"
-              />
+            <vs-tooltip>
+              <img
+                @click="() => imagemClick(imagem)"
+                :class="`${imagem.ativo ? 'imgselecionada' : ''} rounded-corners`"
+                :src="require(`../../assets/${imagem.href}`)"
+                width="200px"
+                height="112px"
+                />
+
+              <template #tooltip>
+                {{ imagem.tooltip }}
+              </template>
+            </vs-tooltip>
           </vs-col>
         </vs-row>
       </div>
@@ -52,7 +57,7 @@
               Repor
             </vs-button>
           </vs-col>
-          <vs-col offset="2" w="6">
+          <vs-col offset="2" w="8">
             <div style="margin-left:12px">
               <vs-button
                 style="float:left;"
