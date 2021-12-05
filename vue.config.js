@@ -18,5 +18,5 @@ module.exports = {
   devServer: {
     disableHostCheck: true,
   },
-  publicPath: process.env.VUE_APP_BASE_URL,
+  publicPath: '/', // '/~ic024/entregas/iteracao3/E3-2/',
 };

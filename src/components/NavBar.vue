@@ -4,14 +4,6 @@
       <template #left>
         <img class="py-2" src="@/assets/img/logo.png" height="50" />
         <vs-navbar-item @click="goHome">Concord</vs-navbar-item>
-
-        <vs-navbar-item @click="openCriarGrupo">
-          <span
-            v-shortkey="['ctrl', 'g']"
-            @shortkey="openCriarGrupo">
-            Criar Grupo
-          </span>
-        </vs-navbar-item>
       </template>
 
       <template #right>
@@ -52,9 +44,6 @@
       </template>
     </vs-navbar>
 
-    <CriarGrupo
-      :isVisible.sync="dialogCriarGrupo"
-      @close="closeCriarGrupo" />
     <ConfirmarSaida
       :isVisible.sync="dialogConfirmarSaida"
       @close="closeConfirmarSaida"
@@ -70,14 +59,12 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import CriarGrupo from './dialogs/CriarGrupo.vue';
 import ConfirmarSaida from './dialogs/ConfirmarSaida.vue';
 
 export default Vue.extend({
-  components: { CriarGrupo, ConfirmarSaida },
+  components: { ConfirmarSaida },
   data() {
     return {
-      dialogCriarGrupo: false,
       dialogConfirmarSaida: false,
       lightMode: false,
     };
@@ -95,12 +82,6 @@ export default Vue.extend({
     },
     goHelp() {
       if (this.$route.name !== 'Help') this.$router.push({ name: 'Help', params: { p: this.$route.name as string } });
-    },
-    openCriarGrupo() {
-      this.dialogCriarGrupo = true;
-    },
-    closeCriarGrupo(): void {
-      this.dialogCriarGrupo = false;
     },
     openConfirmarSaida() {
       this.dialogConfirmarSaida = true;

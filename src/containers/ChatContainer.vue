@@ -8,31 +8,47 @@
         <vs-col w="2" class="mr-5" style="min-height:600px;">
           <!-- Barra pesquisa e star -->
           <div class="grid">
-            <vs-row justify="center" align="center" >
+            <vs-row justify="center" align="center" class="mb-1" >
+              <vs-col w="8">
+                <vs-button
+                  block
+                  @click="openCriarGrupo">
+                  <i class="fa-solid fa-plus mr-2"></i>
+                  Criar Grupo
+                </vs-button>
+              </vs-col>
+              <vs-col w="3" class="ml-3">
+                <vs-tooltip>
+                  <vs-switch
+                    warn
+                    v-model="filtroGrupos"
+                    class="mt-1">
+                    <template #off>
+                        <i class='fa-solid fa-user-group' ></i>
+                    </template>
+                    <template #on>
+                        <i class='fa-solid fa-user-group' ></i>
+                    </template>
+                  </vs-switch>
+
+                  <template #tooltip>
+                    Filtrar grupos
+                  </template>
+                </vs-tooltip>
+              </vs-col>
+            </vs-row>
+            <vs-row justify="center" align="center">
               <!-- Barra pesquisa -->
-              <vs-col w="7">
+              <vs-col w="12">
                 <vs-input
                   block
                   icon-before
-                  v-model="recentesSearch">
+                  v-model="recentesSearch"
+                  placeholder="Pesquisa no Concord">
                   <template #icon>
                     <i class="fa-solid fa-magnifying-glass"></i>
                   </template>
                 </vs-input>
-              </vs-col>
-              <vs-col w="3" class="ml-2">
-                <!-- Filtro Grupos -->
-                <vs-switch
-                  warn
-                  v-model="filtroGrupos"
-                  class="mt-1">
-                  <template #off>
-                      <i class='fa-solid fa-user-group' ></i>
-                  </template>
-                  <template #on>
-                      <i class='fa-solid fa-user-group' ></i>
-                  </template>
-                </vs-switch>
               </vs-col>
             </vs-row>
           </div>
@@ -48,26 +64,14 @@
             @shortkey="selecionar(1)">
           </div>
           <vs-table
-            style="height:585px;overflow-y:scroll"
             v-if="reRenderTable"
             v-model="recenteSeleccionado"
+            primary
+            style="height:530px;max-height:530px;overflow-y:scroll"
             class="mt-2">
             <template #notFound>
               Sem resultados
             </template>
-
-            <!-- Header -->
-            <template #thead>
-              <vs-tr>
-                <vs-th>
-                  Avatar
-                </vs-th>
-                <vs-th>
-                  Nome
-                </vs-th>
-              </vs-tr>
-            </template>
-
             <!-- Body -->
             <template #tbody>
               <vs-tr
@@ -157,7 +161,8 @@
                               <vs-input
                                 block
                                 icon-before
-                                v-model="pesquisaMensagem">
+                                v-model="pesquisaMensagem"
+                                placeholder="Pesquisa mensagem">
                                 <template #icon>
                                   <i class="fa-solid fa-magnifying-glass"></i>
                                 </template>
@@ -231,7 +236,7 @@
                                   @shortkey="entraChamada(true, !!$store.state.user.chamada.imagem, true)"
                                   @click="entraChamada(true, !!$store.state.user.chamada.imagem, true)">
                                   <i class="fa-solid fa-phone mr-2"></i>
-                                  <u>R</u>etomar chamada
+                                  <span><u>R</u>etomar chamada</span>
                                 </vs-button>
                               </div>
                             </vs-col>
@@ -281,6 +286,11 @@
         </vs-col>
       </vs-row>
     </div>
+
+    <CriarGrupo
+      :isVisible.sync="dialogCriarGrupo"
+      @close="closeCriarGrupo"
+      @criado="selecionarUltimo" />
   </div>
 </template>
 
@@ -313,14 +323,17 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import CriarGrupo from '@/components/dialogs/CriarGrupo.vue';
 import { Contacto, Mensagem } from '@/typings/typings';
 import NavBar from '@/components/NavBar.vue';
 
 export default Vue.extend({
   components: {
     NavBar,
+    CriarGrupo,
   },
   data: () => ({
+    dialogCriarGrupo: false,
     reRenderTable: true,
     filtroGrupos: false,
     pesquisaMensagem: '',
@@ -354,11 +367,20 @@ export default Vue.extend({
 
           return valid;
         })
-        .map((r: Contacto) => ({ ...r, lastIteraction: r.mensagens ? r.mensagens[r.mensagens.length - 1]?.momento?.getTime() : r.createdAt?.getTime() }))
+        .map((r: Contacto) => ({ ...r, lastIteraction: r.mensagens?.length ? r.mensagens[r.mensagens.length - 1]?.momento?.getTime() : r.createdAt?.getTime() }))
         .sort((a: Contacto & { lastIteraction: number }, b: Contacto & { lastIteraction: number }) => b.lastIteraction - a.lastIteraction);
     },
   },
   methods: {
+    openCriarGrupo() {
+      this.dialogCriarGrupo = true;
+    },
+    closeCriarGrupo(): void {
+      this.dialogCriarGrupo = false;
+    },
+    selecionarUltimo(): void {
+      if (this.computedRecentes.length) { [this.recenteSeleccionado] = this.computedRecentes; }
+    },
     selecionar(sentido: number) {
       if (!this.recenteSeleccionado) return;
 
