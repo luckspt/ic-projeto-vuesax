@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavBar style="height:66px;" class="mb-2"/>
+    <NavBar style="height:66px;" class="mb-2" @goHome="recenteSeleccionado = null"/>
 
     <div class="grid px-3" style="height:100%;">
       <vs-row justify="center" align="center" >
@@ -249,16 +249,12 @@
               </vs-row>
             </div>
 
-            <transition
-              name="fade"
-              mode="out-in">
-              <router-view
-                :chat="recenteSeleccionado"
-                :search="pesquisaMensagem"
-                @cameraUpdate="forceRerenderTable"
-                @messageSent="forceRerenderTable"
-                @callEnd="forceRerenderTable"/>
-            </transition>
+            <router-view
+              :chat="recenteSeleccionado"
+              :search="pesquisaMensagem"
+              @cameraUpdate="forceRerenderTable"
+              @messageSent="forceRerenderTable"
+              @callEnd="forceRerenderTable"/>
           </div>
         </vs-col>
 

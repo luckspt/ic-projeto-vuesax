@@ -149,7 +149,6 @@ export default Vue.extend({
     lastVol: 75,
     selected: null as Som | null,
     songs: [
-      { nome: 'Amanha hablamos ok?', path: 'jorgejesus.mp3', duracao: 2000 },
       { nome: 'Amogus', path: 'amogus.mp3', duracao: 4000 },
       { nome: 'Anúncio LOL', path: 'anuncio_lol.mp3', duracao: 103000 },
       { nome: 'Astronaut in the Ocean', path: 'astronaut_ocean.mp3', duracao: 13000 },
@@ -168,6 +167,7 @@ export default Vue.extend({
       { nome: 'Não é não', path: 'nao_e_nao.mp3', duracao: 1000 },
       { nome: 'Olha tanta luz', path: 'olha_tanta_luz.mp3', duracao: 2000 },
       { nome: 'Polozhenie - Zedline', path: 'polozhenie.mp3', duracao: 67000 },
+      { nome: 'Pingo doce', path: 'pingo_doce.mp3', duracao: 60000 },
       { nome: 'Shape of you', path: 'shape_of_you.mp3', duracao: 235000 },
       { nome: 'Shooting Stars', path: 'shooting_stars.mp3', duracao: 6000 },
       { nome: 'Super idol', path: 'super_idol.mp3', duracao: 14000 },

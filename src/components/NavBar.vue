@@ -79,6 +79,7 @@ export default Vue.extend({
     },
     goHome() {
       if (this.$route.name !== 'Chat') this.$router.push({ name: 'Chat' });
+      this.$emit('goHome');
     },
     goHelp() {
       if (this.$route.name !== 'Help') this.$router.push({ name: 'Help', params: { p: this.$route.name as string } });
