@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavBar style="height:66px;" class="mb-2" @goHome="recenteSeleccionado = null"/>
+    <NavBar style="height:66px;" class="mb-2" @goHome="recenteSeleccionado = null" />
 
     <div class="grid px-3" style="height:100%;">
       <vs-row justify="center" align="center" >

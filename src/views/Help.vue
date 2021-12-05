@@ -1,58 +1,61 @@
 <template>
-  <div
-    class="mr-1">
-    <div class="grid p-3">
-      <vs-row>
-        <vs-col w="1">
-          <vs-button
-            @click="goBack"
-            class="ml-6 mb-3"
-            v-shortkey="['v']"
-            @shortkey="goBack">
-            <i class="fa-solid fa-circle-arrow-left mr-2"></i>
-            <u>V</u>oltar
-          </vs-button>
-        </vs-col>
-        <vs-col w="1">
-          <vs-button
-            @click="openDialogKeybinds"
-            class="ml-6 mb-3"
-            v-shortkey="['a']"
-            @shortkey="openDialogKeybinds">
-            <i class="fa-solid fa-keyboard mr-2"></i>
-            <u>A</u>celeradores
-          </vs-button>
-        </vs-col>
-      </vs-row>
+  <div>
+    <NavBar style="height:66px;" class="mb-2" />
+    <div
+      class="mr-1">
+      <div class="grid p-3">
+        <vs-row>
+          <vs-col w="1">
+            <vs-button
+              @click="goBack"
+              class="ml-6 mb-3"
+              v-shortkey="['v']"
+              @shortkey="goBack">
+              <i class="fa-solid fa-circle-arrow-left mr-2"></i>
+              <u>V</u>oltar
+            </vs-button>
+          </vs-col>
+          <vs-col w="1">
+            <vs-button
+              @click="openDialogKeybinds"
+              class="ml-6 mb-3"
+              v-shortkey="['a']"
+              @shortkey="openDialogKeybinds">
+              <i class="fa-solid fa-keyboard mr-2"></i>
+              <u>A</u>celeradores
+            </vs-button>
+          </vs-col>
+        </vs-row>
 
-      <!-- style="height:200px;" -->
-      <!-- style="overflow-y:auto;height:200px" -->
-      <vs-row
-        style="max-height:620px;height:620px;overflow-y:auto;"
-        justify="center"
-        align="center">
-        <!-- Inicio de sessao -->
-        <vs-col
-          class="bg-darker p-3 my-5 rounded-corners"
-          w="5"
-          v-for="(help, i) in filteredHelp"
-          :key="i"
-          :offset="i % 2">
-          <h1>{{ help.titulo }}</h1>
+        <!-- style="height:200px;" -->
+        <!-- style="overflow-y:auto;height:200px" -->
+        <vs-row
+          style="max-height:550px;height:550px;overflow-y:auto;"
+          justify="center"
+          align="center">
+          <!-- Inicio de sessao -->
+          <vs-col
+            class="bg-darker p-3 my-5 rounded-corners"
+            w="5"
+            v-for="(help, i) in filteredHelp"
+            :key="i"
+            :offset="i % 2">
+            <h1>{{ help.titulo }}</h1>
 
-          <p
-            v-for="(p, i) in help.descricao"
-            :key="i">
-          {{ p }}
-          </p>
+            <p
+              v-for="(p, i) in help.descricao"
+              :key="i">
+            {{ p }}
+            </p>
 
-          <img
-            v-if="help.imagem"
-            :src="require(`../assets/${help.imagem}`)" />
-        </vs-col>
-      </vs-row>
+            <img
+              v-if="help.imagem"
+              :src="require(`../assets/${help.imagem}`)" />
+          </vs-col>
+        </vs-row>
+      </div>
+
     </div>
-
     <Keybinds
       :isVisible.sync="dialogKeybinds"
       @close="closeDialogKeybinds" />
@@ -70,11 +73,12 @@ img {
 
 <script lang="ts">
 import Vue from 'vue';
+import NavBar from '@/components/NavBar.vue';
 import Keybinds from '@/components/dialogs/Keybinds.vue';
 
 export default Vue.extend({
   components: {
-    Keybinds,
+    NavBar, Keybinds,
   },
   computed: {
     filteredHelp() {
