@@ -7,8 +7,7 @@
       </template>
 
       <template #right>
-
-        <vs-tooltip>
+        <vs-tooltip bottom class="mr-1">
           <vs-switch
             v-model="lightMode"
             @click="changeTheme">
@@ -74,7 +73,6 @@ export default Vue.extend({
   },
   methods: {
     changeTheme() {
-      console.log('toggleTheme', this.lightMode ? 'light' : 'dark');
       this.$vs.toggleTheme(this.lightMode ? 'light' : 'dark');
     },
     goHome() {

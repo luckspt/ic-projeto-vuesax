@@ -1,5 +1,5 @@
 h1,h2,h3,h4,h5,h6,p,th,td,tr,div {
-  color: rgb(var(--text-color));
+  color: rgb(var(--vs-text));
 }
 .vs-input:active .vs-input__icon,.vs-button__content,.vs-card__interactions h4  {
   color: white !important;
@@ -18,11 +18,15 @@ h1,h2,h3,h4,h5,h6,p,th,td,tr,div {
 }
 
 .vs-tooltip {
-  color: white;
+  color: rgb(var(--vs-text));
 }
 
 .rounded-corners {
   border-radius: 12px;
+}
+.vs-switch {
+  // coerencia
+  border-radius: 12px !important;
 }
 
 .twemoji {
@@ -41,7 +45,7 @@ h1,h2,h3,h4,h5,h6,p,th,td,tr,div {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgb(var(--text-color));
+  background: rgb(var(--vs-text));
   border-radius: 25px;
 }
 ::-webkit-scrollbar-thumb:hover {

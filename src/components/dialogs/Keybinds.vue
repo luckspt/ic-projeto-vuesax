@@ -58,7 +58,7 @@ export default Vue.extend({
       { keys: ['Ctrl', 'G'], titulo: 'Criar grupo' },
 
       // Navbar -> Criar grupo
-      { keys: ['G'], titulo: 'Criar grupo', excecao: 'Apenas no pop-up criar grupo' },
+      { keys: ['G'], titulo: 'Confirmar criar grupo', excecao: 'Apenas no pop-up criar grupo' },
 
       // ChatContainer
       { keys: ['A'], titulo: 'Chamada de áudio', excecao: 'Apenas numa conversa' },
@@ -67,8 +67,8 @@ export default Vue.extend({
 
       // ChatContainer -> Overwrite chamada
       { keys: ['O'], titulo: 'Entrar numa nova chamada', excecao: 'Apenas no pop-up de confirmação de troca de chamada' },
-      { keys: ['Ctrl', 'fa-arrow-down'], titulo: 'Contacto posterior' },
       { keys: ['Ctrl', 'fa-arrow-up'], titulo: 'Contacto anterior' },
+      { keys: ['Ctrl', 'fa-arrow-down'], titulo: 'Contacto posterior' },
 
       // Chat
       { keys: ['F'], titulo: 'Enviar ficheiro', excecao: 'Apenas numa conversa' },

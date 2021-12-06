@@ -9,6 +9,9 @@
         </transition>
       </vs-col>
     </vs-row>
+
+    <div id="audios" style="display:none;">
+    </div>
   </div>
 </template>
 

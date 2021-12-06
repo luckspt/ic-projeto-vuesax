@@ -63,6 +63,7 @@
             v-shortkey="['ctrl', 'arrowdown']"
             @shortkey="selecionar(1)">
           </div>
+
           <vs-table
             v-if="reRenderTable"
             v-model="recenteSeleccionado"
@@ -91,9 +92,9 @@
                     </template>
                   </vs-avatar>
                 </vs-td>
-                <vs-td>
+                <vs-td class="td_nome">
                   <!-- Nome -->
-                  {{ contacto.nome }}
+                  <span style="z-index:-1;">{{ minifyName(contacto.nome) }}</span>
 
                   <vs-tooltip
                     v-show="contacto.grupo"
@@ -127,120 +128,137 @@
         </vs-col>
 
         <!-- Parte Chat/Chamada -->
-        <vs-col w="9" v-if="recenteSeleccionado" class="pb-0">
+        <vs-col w="9" v-if="recenteSeleccionado" class="pb-0" style="height:600px">
           <div style="width:100%;">
+            <!-- Header -->
             <div id="chatCallHeader" class="grid mb-2">
               <vs-row align="center">
-                <vs-col w="4">
-                  <div class="grid">
-                    <vs-row justify="center" align="center">
-                      <vs-col w="1" class="ml-1">
-                        <vs-avatar v-if="$store.getters['contactos/getAvatar'](recenteSeleccionado.nome)">
-                          <img :src="require(`../assets/${$store.getters['contactos/getAvatar'](recenteSeleccionado.nome)}`)">
-                        </vs-avatar>
-                        <vs-avatar v-else>
-                          <template #text>
-                            {{ recenteSeleccionado.nome }}
-                          </template>
-                        </vs-avatar>
-                      </vs-col>
+                <vs-col w="6">
+                  <div class="ml-3">
+                    <vs-button
+                      v-if="$route.name === 'Call'"
+                      v-shortkey="['v']"
+                      @shortkey="$router.push({ name: 'Chat' })"
+                      @click="$router.push({ name: 'Chat' })"
+                      transparent
+                      style="float:left;margin-top:15px;height:44px;width:44px;">
+                      <i class="fa-solid fa-circle-arrow-left" data-fa-transform="grow-10"></i>
+                    </vs-button>
 
-                      <vs-col w="9" class="ml-5">
-                        <h2>{{ recenteSeleccionado.nome }}</h2>
-                      </vs-col>
-                    </vs-row>
+                    <vs-avatar
+                      v-if="$store.getters['contactos/getAvatar'](recenteSeleccionado.nome)"
+                      style="float:left;margin-top:15px;">
+                      <img :src="require(`../assets/${$store.getters['contactos/getAvatar'](recenteSeleccionado.nome)}`)">
+                    </vs-avatar>
+                    <vs-avatar
+                      v-else
+                      style="float:left;margin-top:15px;">
+                      <template #text>
+                        {{ recenteSeleccionado.nome }}
+                      </template>
+                    </vs-avatar>
+
+                    <h2
+                      style="float:left;"
+                      class="ml-2">
+                      {{ recenteSeleccionado.nome }}
+                    </h2>
                   </div>
                 </vs-col>
-                <vs-col w="8" v-if="$route.name === 'Chat'">
+                <vs-col w="6" v-if="$route.name === 'Chat'">
                   <div class="grid">
-                    <vs-row justify="end" align="center">
-                      <vs-col w="8">
-                        <div class="grid">
-                          <vs-row align="center" justify="end">
-                            <vs-col w="6" class="mr-1">
-                              <vs-input
-                                block
-                                icon-before
-                                v-model="pesquisaMensagem"
-                                placeholder="Pesquisa mensagem">
-                                <template #icon>
-                                  <i class="fa-solid fa-magnifying-glass"></i>
-                                </template>
-                              </vs-input>
-                            </vs-col>
-                            <vs-col w="5">
-                              <div v-if="!emChamada" class="ml-1">
-                                <vs-tooltip
-                                  bottom
-                                  shadow
-                                  not-hover
-                                  v-model="chamadaTooltip">
+                    <vs-row align="center" justify="end">
+                      <vs-col w="6" class="mr-1">
+                        <vs-input
+                          block
+                          icon-before
+                          v-model="pesquisaMensagem"
+                          placeholder="Pesquisa mensagem">
+                          <template #icon>
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                          </template>
+                        </vs-input>
+                      </vs-col>
+                      <vs-col w="5">
+                        <div v-if="!emChamada" class="ml-1">
+                          <vs-tooltip
+                            bottom
+                            shadow
+                            not-hover
+                            v-model="chamadaTooltip">
 
-                                  <vs-button
-                                    style="float:left;"
-                                    icon
-                                    v-shortkey="['a']"
-                                    @shortkey="entraChamada(false, false)"
-                                    @click="entraChamada(false, false)">
-                                    <i class="fa-solid fa-phone mr-2"></i>
-                                    <u>Á</u>udio
-                                  </vs-button>
-                                  <vs-button
-                                    icon
-                                    style="float:left;"
-                                    v-shortkey="['v']"
-                                    @shortkey="entraChamada(false, true)"
-                                    @click="entraChamada(false, true)">
-                                    <i class="fa-solid fa-video mr-2"></i>
-                                    <u>V</u>ídeo
-                                  </vs-button>
+                            <vs-button
+                              style="float:left;"
+                              icon
+                              v-shortkey="['a']"
+                              @shortkey="entraChamada(false, false)"
+                              @click="entraChamada(false, false)">
+                              <i class="fa-solid fa-phone mr-2"></i>
+                              <u>Á</u>udio
+                            </vs-button>
+                            <vs-button
+                              icon
+                              style="float:left;"
+                              v-shortkey="['v']"
+                              @shortkey="entraChamada(false, true)"
+                              @click="entraChamada(false, true)">
+                              <i class="fa-solid fa-video mr-2"></i>
+                              <u>V</u>ídeo
+                            </vs-button>
 
-                                  <template #tooltip>
-                                    <div class="content-tooltip">
-                                      <h4>
-                                        Confirmar
-                                      </h4>
-                                      <p>Já se encontra numa chamada. Se continuar, irá terminar a chamada anterior.</p>
-                                      <footer>
-                                        <div class="grid">
-                                          <vs-row align="center" justify="center">
-                                            <vs-col w="4">
-                                              <vs-button
-                                                v-shortkey="['c']"
-                                                @shortkey="chamadaTooltip = false"
-                                                @click="chamadaTooltip = false"
-                                                style="float:left;">
-                                                <u>C</u>ancelar
-                                              </vs-button>
-                                            </vs-col>
-                                            <vs-col w="4">
-                                              <vs-button
-                                                v-shortkey="['o']"
-                                                @shortkey="entraChamada(true)"
-                                                @click="entraChamada(true)"
-                                                danger
-                                                style="float:left;">
-                                                C<u>o</u>ntinuar
-                                              </vs-button>
-                                            </vs-col>
-                                          </vs-row>
-                                        </div>
-                                      </footer>
-                                    </div>
-                                  </template>
-                                </vs-tooltip>
+                            <template #tooltip>
+                              <div class="content-tooltip">
+                                <h4>
+                                  Confirmar
+                                </h4>
+                                <p>Já se encontra numa chamada. Se continuar, irá terminar a chamada anterior.</p>
+                                <footer>
+                                  <div class="grid">
+                                    <vs-row align="center" justify="center">
+                                      <vs-col w="4">
+                                        <vs-button
+                                          v-shortkey="['c']"
+                                          @shortkey="chamadaTooltip = false"
+                                          @click="chamadaTooltip = false"
+                                          style="float:left;">
+                                          <u>C</u>ancelar
+                                        </vs-button>
+                                      </vs-col>
+                                      <vs-col w="4">
+                                        <vs-button
+                                          v-shortkey="['o']"
+                                          @shortkey="entraChamada(true, comCamara)"
+                                          @click="entraChamada(true, comCamara)"
+                                          danger
+                                          style="float:left;">
+                                          C<u>o</u>ntinuar
+                                        </vs-button>
+                                      </vs-col>
+                                    </vs-row>
+                                  </div>
+                                </footer>
                               </div>
-                              <div v-else>
-                                <vs-button
-                                  v-shortkey="['r']"
-                                  @shortkey="entraChamada(true, !!$store.state.user.chamada.imagem, true)"
-                                  @click="entraChamada(true, !!$store.state.user.chamada.imagem, true)">
-                                  <i class="fa-solid fa-phone mr-2"></i>
-                                  <span><u>R</u>etomar chamada</span>
-                                </vs-button>
-                              </div>
-                            </vs-col>
-                          </vs-row>
+                            </template>
+                          </vs-tooltip>
+                        </div>
+                        <div v-else style="display:flex;align-items:center">
+                          <vs-button
+                            style="flex:1 1 0px;"
+                            v-shortkey="['r']"
+                            @shortkey="entraChamada(true, !!$store.state.user.chamada.imagem, true)"
+                            @click="entraChamada(true, !!$store.state.user.chamada.imagem, true)">
+                            <i class="fa-solid fa-phone mr-2"></i>
+                            <span><u>R</u>etomar</span>
+                          </vs-button>
+                          <vs-button
+                            style="flex:1 1 0px;"
+                            danger
+                            v-shortkey="['t']"
+                            @shortkey="terminarChamada"
+                            @click="terminarChamada">
+                            <i class="fa-solid fa-phone-slash mr-2" data-fa-transform="rotate-90"></i>
+                            <span><u>T</u>erminar</span>
+                          </vs-button>
                         </div>
                       </vs-col>
                     </vs-row>
@@ -291,6 +309,11 @@
 </template>
 
 <style lang="scss">
+.td_nome {
+  min-width: 135px;
+  max-width: 135px;
+}
+
 #chamadaIconContactos {
   color: rgb(var(--vs-danger));
 }
@@ -311,7 +334,7 @@
   max-width: 100% !important;
   min-width: 100% !important;
 
-  tbody {
+  tbody:not(.vs-table_not-found) {
     cursor: pointer;
   }
 }
@@ -336,6 +359,7 @@ export default Vue.extend({
     recentesSearch: '',
     recenteSeleccionado: null as Contacto | null,
     chamadaTooltip: false,
+    comCamara: false,
   }),
   beforeMount() {
     // Carregar chamada se tiver ido ao help ou feito refresh
@@ -368,6 +392,9 @@ export default Vue.extend({
     },
   },
   methods: {
+    minifyName(nome: string) {
+      return nome.length >= 12 ? `${nome.slice(0, 9)}...` : nome;
+    },
     openCriarGrupo() {
       this.dialogCriarGrupo = true;
     },
@@ -385,7 +412,6 @@ export default Vue.extend({
         || (idx === this.computedRecentes.length - 1 && sentido > 0)) { return; }
 
       this.recenteSeleccionado = this.computedRecentes[idx + sentido];
-      console.log(this.recenteSeleccionado);
     },
     getAvatar(nome: string) {
       return this.$store.state.contactos.avatars[nome];
@@ -397,9 +423,13 @@ export default Vue.extend({
         this.reRenderTable = true;
       });
     },
+    terminarChamada() {
+      this.$store.dispatch('user/leaveCall');
+    },
     entraChamada(force: boolean, camera: boolean, jaNaChamada: boolean) {
       if (!force && (this.$store.state.user.contacto.emChamada?.nome && this.$store.state.user.contacto.emChamada?.nome !== this.recenteSeleccionado?.nome)) {
         this.chamadaTooltip = true;
+        this.comCamara = camera;
         return;
       }
       this.chamadaTooltip = false;

@@ -93,7 +93,8 @@
     <Jogos
       :chat="chat"
       :isVisible.sync="dialogJogos"
-      @close="closeDialogJogos" />
+      @close="closeDialogJogos"
+      @iniciado="descerMensagem" />
   </div>
 </template>
 
@@ -121,6 +122,7 @@ export default Vue.extend({
       immediate: true,
       handler() {
         this.forceRerenderChat();
+        this.descerMensagem();
       },
     },
   },

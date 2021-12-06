@@ -12,6 +12,15 @@
         primary
         justify="center"
         align="center">
+        <vs-col w="4">
+          <vs-button
+            @click="closeDialog"
+            v-shortkey="['c']"
+            @shortkey="closeDialog">
+            <u>C</u>ancelar
+          </vs-button>
+        </vs-col>
+
         <vs-col w="5">
           <vs-button
             danger
@@ -19,21 +28,6 @@
             v-shortkey="['t']"
             @shortkey="submit">
             <u>T</u>erminar sessão
-            <template #animate>
-              <i class="fa-solid fa-right-from-bracket"></i>
-            </template>
-          </vs-button>
-        </vs-col>
-
-        <vs-col w="4">
-          <vs-button
-            @click="closeDialog"
-            v-shortkey="['c']"
-            @shortkey="goHelp">
-            <u>C</u>ancelar
-            <template #animate >
-              <i class="fa-solid fa-face-smile-beam"></i>
-            </template>
           </vs-button>
         </vs-col>
       </vs-row>

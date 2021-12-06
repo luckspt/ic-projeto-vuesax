@@ -216,6 +216,7 @@ export default Vue.extend({
         } as Mensagem,
       });
 
+      this.$emit('iniciado');
       this.closeDialog();
       this.resetFields();
     },

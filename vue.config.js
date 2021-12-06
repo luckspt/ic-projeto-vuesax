@@ -18,5 +18,5 @@ module.exports = {
   devServer: {
     disableHostCheck: true,
   },
-  publicPath: '/', // '/~ic024/entregas/iteracao3/E3-2/',
+  publicPath: '/~ic024/entregas/iteracao3/E3-2/',
 };

@@ -97,7 +97,7 @@
             </vs-button>
             <vs-button
               danger
-              :disabled="aTocar.length === 0"
+              :disabled="aTocar === 0"
               @click="stop"
               style="float:left;"
               v-shortkey="['p']"
@@ -144,6 +144,19 @@ export default Vue.extend({
       type: Object as () => Contacto,
     },
   },
+  watch: {
+    isVisible: {
+      immediate: true,
+      handler(active: boolean) {
+        if (active) {
+          const audios = document.getElementById('audios');
+          if (audios) {
+            this.aTocar = audios.children.length;
+          }
+        }
+      },
+    },
+  },
   data: () => ({
     volume: 75,
     lastVol: 75,
@@ -175,7 +188,7 @@ export default Vue.extend({
       { nome: 'Vine Boom', path: 'vine_boom.mp3', duracao: 1000 },
       { nome: 'Yeah Baby', path: 'yeah_baby.mp3', duracao: 7000 },
     ] as Som[],
-    aTocar: [] as HTMLAudioElement[],
+    aTocar: 0,
   }),
   computed: {
     sortedSongs(): Som[] {
@@ -198,20 +211,21 @@ export default Vue.extend({
     changeVolume(): void {
       if (this.volume !== this.lastVol) {
         this.lastVol = this.volume;
+        const v = this.volume / 100;
 
-        this.aTocar.forEach((audio, i) => {
-          // eslint-disable-next-line no-param-reassign
-          audio.volume = this.volume / 100;
-          this.$set(this.aTocar, i, audio);
-        });
+        const audios = document.getElementById('audios');
+        if (audios) {
+          for (let i = 0; i < audios.children.length; i += 1) { (audios.children[i] as HTMLAudioElement).volume = v; }
+        }
       }
     },
     closeDialog() {
       this.$emit('close');
     },
     stop() {
-      this.aTocar.forEach((audio) => audio.pause());
-      this.aTocar = [];
+      this.aTocar = 0;
+      const audios = document.getElementById('audios');
+      if (audios) { audios.innerHTML = ''; }
     },
     play() {
       try {
@@ -219,15 +233,19 @@ export default Vue.extend({
 
         // Tocar som
         const audio = new Audio(require(`../../assets/audio/${this.selected.path}`));
-        audio.id = `soundboard_${this.selected.nome}_${Date.now()}`;
+        const id = `soundboard_${this.selected.nome}_${Date.now()}`;
+        audio.id = id;
         audio.volume = this.volume / 100;
         audio.play();
-        this.aTocar.push(audio);
+        this.aTocar += 1;
 
-        // Remover som no fim
-        setTimeout(() => {
-          this.aTocar.splice(this.aTocar.findIndex((i) => i.id === audio.id), 1);
-        }, this.selected.duracao);
+        const $el = document.getElementById('audios');
+        if ($el) $el.append(audio);
+
+        audio.onended = ($event) => {
+          console.log($event);
+          this.aTocar -= 1;
+        };
 
         // Cenário em que o carlos se assusta
         if (this.chat.nome === 'Amigos' && this.volume === 100) {
@@ -235,6 +253,7 @@ export default Vue.extend({
             this.$store.dispatch('contactos/setParticipantCamera', { chat: this.chat, participant: 'Carlos', cameraKey: 'CarlosAssustado' });
           }, 1 * 1000);
         }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         let msg = err.message;
         if (err.message.startsWith('Cannot find module')) {

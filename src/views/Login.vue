@@ -53,6 +53,10 @@ export default Vue.extend({
     nome: '',
     erro: 'Nome obrigatório',
   }),
+  beforeCreate() {
+    // Limpar sessionStorage. é por domínio, portanto não queremos lixo de outros projetos
+    sessionStorage.clear();
+  },
   mounted() {
     if (sessionStorage.getItem('user')) {
       this.nome = this.$store.state.user.contacto.nome;
