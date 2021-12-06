@@ -163,8 +163,7 @@ export default Vue.extend({
     selected: null as Som | null,
     songs: [
       { nome: 'Amogus', path: 'amogus.mp3', duracao: 4000 },
-      { nome: 'Anúncio LOL', path: 'anuncio_lol.mp3', duracao: 103000 },
-      { nome: 'Astronaut in the Ocean', path: 'astronaut_ocean.mp3', duracao: 13000 },
+      { nome: 'Astronauta no Oceano', path: 'astronaut_ocean.mp3', duracao: 13000 },
       { nome: 'Boss AC - Sexta Feira', path: 'bossac.mp3', duracao: 177000 },
       { nome: 'Burgir', path: 'burgir.mp3', duracao: 1000 },
       { nome: 'Can you feel my heart', path: 'can_you_feel_my_heart.mp3', duracao: 228000 },
@@ -175,6 +174,7 @@ export default Vue.extend({
       { nome: 'Ihh ca burro', path: 'ihh_ca_burro.mp3', duracao: 1000 },
       { nome: 'John Cena', path: 'john_cena.mp3', duracao: 49000 },
       { nome: 'Jojos Three Pillar Theme - Ayayay', path: 'jojo_ayayay.mp3', duracao: 10000 },
+      { nome: 'League of Legendas', path: 'anuncio_lol.mp3', duracao: 103000 },
       { nome: 'MLG Airhorn', path: 'mlg_airhorn.mp3', duracao: 3000 },
       { nome: 'Never Gonna Give You Up', path: 'never_gonna_give_you_up.mp3', duracao: 212000 },
       { nome: 'Não é não', path: 'nao_e_nao.mp3', duracao: 1000 },
@@ -184,6 +184,7 @@ export default Vue.extend({
       { nome: 'Shape of you', path: 'shape_of_you.mp3', duracao: 235000 },
       { nome: 'Shooting Stars', path: 'shooting_stars.mp3', duracao: 6000 },
       { nome: 'Super idol', path: 'super_idol.mp3', duracao: 14000 },
+      { nome: 'Um bom natal', path: 'a_todos_um_bom_natal.mp3', duracao: 222000 },
       { nome: 'Um Volto Já - João Pedro Pais', path: 'um_volto_ja.mp3', duracao: 257000 },
       { nome: 'Vine Boom', path: 'vine_boom.mp3', duracao: 1000 },
       { nome: 'Yeah Baby', path: 'yeah_baby.mp3', duracao: 7000 },
@@ -242,8 +243,7 @@ export default Vue.extend({
         const $el = document.getElementById('audios');
         if ($el) $el.append(audio);
 
-        audio.onended = ($event) => {
-          console.log($event);
+        audio.onended = () => {
           this.aTocar -= 1;
         };
 

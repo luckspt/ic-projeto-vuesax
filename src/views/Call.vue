@@ -246,10 +246,6 @@ export default Vue.extend({
       this.loadedImages = {};
     },
     leaveCall() {
-      const sounds = document.getElementsByTagName('audio');
-      console.log(sounds);
-      for (let i = 0; i < sounds.length; i += 1) sounds[i].pause();
-
       this.$store.dispatch('contactos/setLastCallDuration', this.chat);
 
       this.$emit('callEnd');

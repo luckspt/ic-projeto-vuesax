@@ -88,47 +88,47 @@ export default Vue.extend({
     helps: [
       // Chat
       {
-        paginaBefore: 'xChat', titulo: 'Chat', descricao: ['Depois de iniciar sessão, escolha uma conversa que pretende no chat lateral à esquerda'], imagem: 'img/help/chat.png',
+        paginaBefore: 'Chat', titulo: 'Chat', descricao: ['Para aceder a uma conversa basta clicar num contacto.'], imagem: 'img/help/chat/selecionar_contacto.gif',
       },
       {
-        paginaBefore: 'xChat', titulo: 'Pesquisa de contactos', descricao: ['Pesquise ao escrever o nome no campo de texto ou filtre os grupos através do botão que se encontra ao lado da pesquisa de contactos "'], imagem: 'img/help/pesquisa_contactos.png',
+        paginaBefore: 'Chat', titulo: 'Pesquisar contactos', descricao: ['Pesquise ao escrever o nome no campo de texto ou filtre os grupos através do botão que se encontra em cima da pesquisa de contactos.'], imagem: 'img/help/chat/pesquisa_contacto.gif',
       },
       {
-        paginaBefore: 'xChat', titulo: 'Filtro grupos', descricao: [''], imagem: 'img/help/pesquisa_contactos.png',
+        paginaBefore: 'Chat', titulo: 'Enviar mensagem', descricao: ['Após selecionar uma conversa, no campo de texto escreva a sua mensagem e carregue no enviar.'], imagem: 'img/help/chat/envio_mensagem.gif',
       },
       {
-        paginaBefore: 'xChat', titulo: 'Envio de Mensagens', descricao: ['Após selecionar uma conversa, no campo de texto insira a sua mensagem e carregue no enviar'], imagem: 'img/help/envio_mensagens.png',
+        paginaBefore: 'Chat', titulo: 'Enviar ficheiro', descricao: ['Carregar no botão "Ficheiro" e escolher do explorador de ficheiros do seu computador o ficheiro que pretende enviar.'], imagem: 'img/help/chat/envio_ficheiros.gif',
       },
       {
-        paginaBefore: 'xChat', titulo: 'Enviar ficheiro', descricao: ['Carregar no botão "Ficheiro" e escolher do explorador de ficheiros do seu computador o ficheiro que pretende enviar.'], imagem: 'img/help/envio_ficheiros.png',
+        paginaBefore: 'Chat', titulo: 'Iniciar jogo', descricao: ['1. Numa conversa, carregar no botão "Jogos";', '2. Escolher o jogo a pessoa com quem quer jogar, e carregar no botão "Confirmar" para iniciar o jogo.'], imagem: 'img/help/chat/jogos.gif',
       },
       {
-        paginaBefore: 'xChat', titulo: 'Iniciar Jogo', descricao: ['Selecionar o contacto/grupo da pessoa com quem quer jogar, carregar no botão "Jogos"', 'escolher o jogo que pretende jogar e a pessoa com quem quer jogar, e carregar no botão "Confirmar".'], imagem: 'img/help/iniciar_jogo.png',
+        paginaBefore: 'Chat', titulo: 'Criar grupo', descricao: ['1. Carregar no botão "Criar Grupo" junto à pesquisa de contactos;', '2. Escrever o nome do novo grupo;', '3. Selecione os contactos que tem registados na sua lista de contactos carregando no campo seguinte;', '4. Adicionar através de email os contactos que não tenha adicionados.', 'No final deve carregar em "Confirmar" para criar o grupo.'], imagem: 'img/help/chat/criar_grupo.gif',
       },
       {
-        paginaBefore: 'xChat', titulo: 'Criar grupo', descricao: ['1. Carregar no botão "Criar Grupo" na barra superior.', '2. Escrever o nome do novo grupo.', '3. Selecione os contactos que tem registados na sua lista de contactos carregando no campo seguinte.', '4. Adicionar através de email os contactos que não tenha adicionados.', 'No final deve carregar em "Confirmar" para criar o grupo ou "Cancelar" para cancelar.'], imagem: 'img/help/criar_grupo.png',
+        paginaBefore: 'Chat', titulo: 'Iniciar chamada', descricao: ['Numa conversa, carregar no botão "Áudio" ou "Vídeo".', 'Caso já se encontre numa chamada, pode terminá-la através do botão "Continuar".'], imagem: 'img/help/chat/iniciar_chamada.gif',
       },
       {
-        paginaBefore: 'Chat', titulo: 'Iniciar Chamada', descricao: ['1. Escolher no chat o contacto/grupo com o qual pretende iniciar uma chamada.', '2. Carregar no botão "Áudio" ou "Vídeo".', 'Caso se encontre noutra chamada, pode terminá-la no ecrã de chamada através do botão "Desligar chamada" ou selecionando no chat o contacto/grupo com quem pretende iniciar uma nova chamada carregando no botão "Áudio" ou "Vídeo" e confirmando que pretende continuar através do botão "Continuar".'], imagem: 'img/help/iniciar_chamada.png',
+        paginaBefore: 'Chat', titulo: 'Retomar chamada', descricao: ['Numa conversa, para retomar uma chamada, basta carregar no botão "Retomar"'], imagem: 'img/help/chat/retomar_chamada.gif',
       },
       {
-        paginaBefore: 'Chat', titulo: 'Retomar chamada', descricao: ['Para retomar uma chamada, basta carregar no contacto/grupo com quem se encontra em chamada e carregar no botão "Retomar chamada"'], imagem: 'img/help/retomar_chamada.png',
+        paginaBefore: 'Chat', titulo: 'Terminar chamada', descricao: ['Numa conversa, para retomar uma chamada, basta carregar no botão "Terminar"'], imagem: 'img/help/chat/terminar_chamada.gif',
       },
       // Call
       {
-        paginaBefore: 'Call', titulo: 'Ativar/desativar câmara e microfone', descricao: ['Carregar no botão "Microfone" ou "Câmara"'], imagem: 'img/help/ativar_microfone.png',
+        paginaBefore: 'Call', titulo: 'Ativar ou desativar câmara e microfone', descricao: ['Carregar no botão "Microfone" ou "Câmara" para ativar ou desativar'], imagem: 'img/help/call/micro_camara.gif',
       },
       {
-        paginaBefore: 'Call', titulo: 'Mudar Fundo de Vídeo', descricao: ['Carregar no botão "Fundo de Vídeo, escolher o fundo e clicar em "Confirmar"', 'Para remover o fundo aplicado, Carregar no botão "Fundo de Vídeo" e clicar "Repor"'], imagem: 'img/help/mudar_fundo.png',
+        paginaBefore: 'Call', titulo: 'Mudar fundo de câmara', descricao: ['Carregar no botão "Fundos", escolher o fundo e clicar em "Confirmar"', 'Para remover o fundo aplicado, carregar no botão "Fundo" e clicar "Repor"'], imagem: 'img/help/call/fundos.gif',
       },
       {
-        paginaBefore: 'Call', titulo: 'Sons', descricao: ['Carregar no botão "Sons"'], imagem: 'img/help/sons.png',
+        paginaBefore: 'Call', titulo: 'Tocar sons', descricao: ['Carregar no botão "Sons", seleccionar o som que pretende tocar, ajustar o volume à sua preferência e clicar "Tocar"'], imagem: 'img/help/call/sons.gif',
       },
       {
-        paginaBefore: 'Call', titulo: 'Voltar à conversa', descricao: ['Ao carregar no botão "Voltar à conversa", será reencaminhado para a conversa do contacto/grupo com quem se encontra em chamada onde pode enviar mensagens, ficheiros, iniciar jogos, etc...'], imagem: 'img/help/voltar_conversa.png',
+        paginaBefore: 'Call', titulo: 'Voltar à conversa', descricao: ['Ao carregar no botão de voltar atrás será reencaminhado para o ecrã de conversa onde pode enviar mensagens, ficheiros, iniciar jogos, etc...'], imagem: 'img/help/call/voltar_conversa.gif',
       },
       {
-        paginaBefore: 'Call', titulo: 'Terminar chamada', descricao: ['Carregar no botão "Terminar chamada" no ecrã de chamada.'], imagem: 'img/help/terminar_chamada.png',
+        paginaBefore: 'Call', titulo: 'Terminar chamada', descricao: ['De forma a terminar uma chamada, basta carregar no botão "Terminar".'], imagem: 'img/help/call/terminar_chamada.gif',
       },
     ] as {titulo: string, descricao:string[], imagem?:string, paginaBefore: string }[],
   }),
