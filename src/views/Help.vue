@@ -109,20 +109,20 @@ export default Vue.extend({
         paginaBefore: 'Chat', titulo: 'Iniciar chamada', descricao: ['Numa conversa, carregar no botão "Áudio" ou "Vídeo".', 'Caso já se encontre numa chamada, pode terminá-la através do botão "Continuar".'], imagem: 'img/help/chat/iniciar_chamada.gif',
       },
       {
-        paginaBefore: 'Chat', titulo: 'Retomar chamada', descricao: ['Numa conversa, para retomar uma chamada, basta carregar no botão "Retomar"'], imagem: 'img/help/chat/retomar_chamada.gif',
+        paginaBefore: 'Chat', titulo: 'Retomar chamada', descricao: ['Numa conversa, para retomar uma chamada, basta carregar no botão "Retomar".'], imagem: 'img/help/chat/retomar_chamada.gif',
       },
       {
-        paginaBefore: 'Chat', titulo: 'Terminar chamada', descricao: ['Numa conversa, para retomar uma chamada, basta carregar no botão "Terminar"'], imagem: 'img/help/chat/terminar_chamada.gif',
+        paginaBefore: 'Chat', titulo: 'Terminar chamada', descricao: ['Numa conversa, para retomar uma chamada, basta carregar no botão "Terminar".'], imagem: 'img/help/chat/terminar_chamada.gif',
       },
       // Call
       {
-        paginaBefore: 'Call', titulo: 'Ativar ou desativar câmara e microfone', descricao: ['Carregar no botão "Microfone" ou "Câmara" para ativar ou desativar'], imagem: 'img/help/call/micro_camara.gif',
+        paginaBefore: 'Call', titulo: 'Ativar ou desativar câmara e microfone', descricao: ['Carregar no botão "Microfone" ou "Câmara" para ativar ou desativar.'], imagem: 'img/help/call/micro_camara.gif',
       },
       {
-        paginaBefore: 'Call', titulo: 'Mudar fundo de câmara', descricao: ['Carregar no botão "Fundos", escolher o fundo e clicar em "Confirmar"', 'Para remover o fundo aplicado, carregar no botão "Fundo" e clicar "Repor"'], imagem: 'img/help/call/fundos.gif',
+        paginaBefore: 'Call', titulo: 'Mudar fundo de câmara', descricao: ['Carregar no botão "Fundos", escolher o fundo e clicar em "Confirmar"', 'Para remover o fundo aplicado, carregar no botão "Fundo" e clicar "Repor".'], imagem: 'img/help/call/fundos.gif',
       },
       {
-        paginaBefore: 'Call', titulo: 'Tocar sons', descricao: ['Carregar no botão "Sons", seleccionar o som que pretende tocar, ajustar o volume à sua preferência e clicar "Tocar"'], imagem: 'img/help/call/sons.gif',
+        paginaBefore: 'Call', titulo: 'Tocar sons', descricao: ['Carregar no botão "Sons", seleccionar o som que pretende tocar, ajustar o volume à sua preferência e clicar "Tocar".'], imagem: 'img/help/call/sons.gif',
       },
       {
         paginaBefore: 'Call', titulo: 'Voltar à conversa', descricao: ['Ao carregar no botão de voltar atrás será reencaminhado para o ecrã de conversa onde pode enviar mensagens, ficheiros, iniciar jogos, etc...'], imagem: 'img/help/call/voltar_conversa.gif',
