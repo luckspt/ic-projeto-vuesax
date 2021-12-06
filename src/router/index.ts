@@ -55,7 +55,7 @@ const routes: Array<RouteConfig> = [
 
 const router = new VueRouter({
   mode: 'hash',
-  base: '/~ic024/entregas/iteracao3/E3-2/',
+  base: '/', // '/~ic024/entregas/iteracao3/E3-2/',
   routes,
 });
 
