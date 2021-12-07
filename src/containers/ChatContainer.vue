@@ -424,6 +424,7 @@ export default Vue.extend({
       });
     },
     terminarChamada() {
+      this.$store.dispatch('contactos/setLastCallDuration', this.recenteSeleccionado);
       this.$store.dispatch('user/leaveCall');
     },
     entraChamada(force: boolean, camera: boolean, jaNaChamada: boolean) {
