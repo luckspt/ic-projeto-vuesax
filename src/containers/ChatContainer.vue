@@ -142,7 +142,7 @@
                       @click="$router.push({ name: 'Chat' })"
                       transparent
                       style="float:left;margin-top:15px;height:44px;width:44px;">
-                      <i class="fa-solid fa-circle-arrow-left" data-fa-transform="grow-10"></i>
+                      <i class="fa-solid fa-circle-arrow-left" data-fa-transform="grow-18"></i>
                     </vs-button>
 
                     <vs-avatar

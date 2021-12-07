@@ -13,7 +13,7 @@
                 @click="goBack"
                 transparent
                 style="flex: 0 0 44px;height:44px;">
-                <i class="fa-solid fa-circle-arrow-left" data-fa-transform="grow-10"></i>
+                <i class="fa-solid fa-circle-arrow-left" data-fa-transform="grow-18"></i>
               </vs-button>
               <vs-button
                 @click="openDialogKeybinds"
