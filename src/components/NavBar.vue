@@ -50,12 +50,6 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
-.vs-switch {
-  height: 34px !important;
-}
-</style>
-
 <script lang="ts">
 import Vue from 'vue';
 import ConfirmarSaida from './dialogs/ConfirmarSaida.vue';

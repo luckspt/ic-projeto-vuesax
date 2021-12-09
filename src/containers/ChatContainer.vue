@@ -5,7 +5,10 @@
     <div class="grid px-3" style="height:100%;">
       <vs-row justify="center" align="center" >
         <!-- Recentes (contactos) -->
-        <vs-col w="2" class="mr-5" style="min-height:600px;">
+        <vs-col
+          w="2"
+          class="mr-5"
+          style="min-height:600px;">
           <!-- Barra pesquisa e star -->
           <div class="grid">
             <vs-row justify="center" align="center" class="mb-1" >
@@ -130,10 +133,14 @@
         </vs-col>
 
         <!-- Parte Chat/Chamada -->
-        <vs-col w="9" v-if="recenteSeleccionado" class="pb-0" style="height:600px">
+        <vs-col
+          w="9"
+          v-if="recenteSeleccionado"
+          class="pb-0"
+          style="height:600px">
           <div style="width:100%;">
             <!-- Header -->
-            <div id="chatCallHeader" class="grid mb-2">
+            <div class="grid mb-2 rounded-corners border-bottom-darker">
               <vs-row align="center">
                 <vs-col w="6">
                   <div class="ml-3">
@@ -281,8 +288,8 @@
         <!-- Nada Selecionado -->
         <vs-col v-else w="9">
           <div class="grid" style="width:970px;height:100%">
-            <vs-row align="center">
-              <vs-col w="5">
+            <vs-row align="center" style="height:100%;">
+              <vs-col w="4">
                 <i id="leftArrow" class="fa-solid fa-share" data-fa-transform="rotate-220"></i>
               </vs-col>
               <vs-col w="5">
@@ -318,11 +325,6 @@
 
 #chamadaIconContactos {
   color: rgb(var(--vs-danger));
-}
-
-#chatCallHeader {
-  border-bottom: 3px rgb(var(--vs-darker)) solid;
-  border-radius: 20px;
 }
 
 #leftArrow {

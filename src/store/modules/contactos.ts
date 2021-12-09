@@ -163,11 +163,11 @@ const state = {
         { autor: 'Twix', texto: 'pois', momento: new Date('2021/10/19 11:50:00') },
       ],
     },
+    // Hidden
     {
       nome: 'Carla',
       email: 'carla42@email.com',
       hidden: true,
-      mensagens: [{ autor: 'Carla', texto: 'what you know about rolling down in ', momento: new Date(2013, 13, 2) }],
     },
     {
       nome: 'Zé',
@@ -175,7 +175,7 @@ const state = {
       hidden: true,
     },
     {
-      nome: 'Carlos',
+      nome: 'Carlos Pipocas',
       email: 'pipocas_doces123@hotmail.com',
       hidden: true,
     },
