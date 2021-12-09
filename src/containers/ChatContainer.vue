@@ -64,9 +64,9 @@
             @shortkey="selecionar(1)">
           </div>
 
+          <!-- v-model="recenteSeleccionado" -->
           <vs-table
             v-if="reRenderTable"
-            v-model="recenteSeleccionado"
             primary
             style="height:530px;max-height:530px;overflow-y:scroll"
             class="mt-2">
@@ -78,19 +78,21 @@
               <vs-tr
                 v-for="(contacto, i) in computedRecentes"
                 :key="i"
-                :data="contacto"
+                @click="recenteSeleccionado = contacto"
                 :is-selected="recenteSeleccionado && recenteSeleccionado.nome == contacto.nome">
 
                 <vs-td>
                   <!-- Avatar -->
-                  <vs-avatar v-if="$store.getters['contactos/getAvatar'](contacto.nome)">
-                    <img :src="require(`../assets/${$store.getters['contactos/getAvatar'](contacto.nome)}`)">
-                  </vs-avatar>
-                  <vs-avatar v-else>
-                    <template #text>
-                      {{ contacto.nome }}
-                    </template>
-                  </vs-avatar>
+                  <div>
+                    <vs-avatar v-if="$store.getters['contactos/getAvatar'](contacto.nome)">
+                      <img :src="require(`../assets/${$store.getters['contactos/getAvatar'](contacto.nome)}`)">
+                    </vs-avatar>
+                    <vs-avatar v-else>
+                      <template #text>
+                        {{ contacto.nome }}
+                      </template>
+                    </vs-avatar>
+                  </div>
                 </vs-td>
                 <vs-td class="td_nome">
                   <!-- Nome -->
@@ -142,7 +144,7 @@
                       @click="$router.push({ name: 'Chat' })"
                       transparent
                       style="float:left;margin-top:15px;height:44px;width:44px;">
-                      <i class="fa-solid fa-circle-arrow-left" data-fa-transform="grow-18"></i>
+                      <i class="fa-solid fa-angles-left" data-fa-transform="grow-18"></i>
                     </vs-button>
 
                     <vs-avatar
@@ -211,7 +213,7 @@
                                 <h4>
                                   Confirmar
                                 </h4>
-                                <p>Já se encontra numa chamada. Se continuar, irá terminar a chamada anterior.</p>
+                                <p>Eencontra-se numa chamada com{{ $store.state.user.contacto.emChamada.grupo ? ' o grupo ' : ''}} <strong>{{ $store.state.user.contacto.emChamada.nome }}</strong>. Se continuar, irá terminar essa chamada.</p>
                                 <footer>
                                   <div class="grid">
                                     <vs-row align="center" justify="center">

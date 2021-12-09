@@ -14,7 +14,7 @@
           </div>
       </vs-col>
       <vs-col
-        w="12"
+        w="8"
         v-else>
         <div class="p-grid p-jc-center p-ai-center vertical-container" style="width:100%;height:465px">
           <div class="grid" style="width:970px;height:100%">

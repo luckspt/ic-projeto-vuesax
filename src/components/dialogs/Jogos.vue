@@ -37,26 +37,28 @@
         Jogo obrigatório
       </small>
 
-      <p class="ml-5">Escolha um elemento do grupo!</p>
-      <div class="grid">
-        <vs-select
-          class="ml-5 mr-6"
-          style="min-width:300px;max-width:300px;"
-          v-model="selecionado"
-          primary
-          @change="errosSelecionado">
-          <template #message-danger v-if="erroSelecionado">
-            {{ erroSelecionado }}
-          </template>
+      <div v-if="chat.grupo">
+        <p class="ml-5">Escolha um elemento do grupo!</p>
+        <div class="grid">
+          <vs-select
+            class="ml-5 mr-6"
+            style="min-width:300px;max-width:300px;"
+            v-model="selecionado"
+            primary
+            @change="errosSelecionado">
+            <template #message-danger v-if="erroSelecionado">
+              {{ erroSelecionado }}
+            </template>
 
-          <vs-option
-            v-for="(contacto, i) in contactos"
-            :key="i"
-            :label="contacto.nome"
-            :value="contacto.nome">
-            {{ contacto.nome }}
-          </vs-option>
-        </vs-select>
+            <vs-option
+              v-for="(contacto, i) in contactos"
+              :key="i"
+              :label="contacto.nome"
+              :value="contacto.nome">
+              {{ contacto.nome }}
+            </vs-option>
+          </vs-select>
+        </div>
       </div>
     </div>
     <template #footer>
@@ -158,23 +160,14 @@ export default Vue.extend({
 
             return 0;
           });
+
+        this.resetFields();
+        if (this.contactos.length === 1) {
+          this.selecionado = this.contactos[0].nome;
+          this.erroSelecionado = '';
+        }
       },
     },
-  },
-  beforeMount() {
-    this.contactos = this.chat.naChamada
-      .sort((a: ParticipanteChamada, b: ParticipanteChamada) => {
-        if (a.nome < b.nome) return -1;
-        if (a.nome > b.nome) return 1;
-
-        return 0;
-      });
-
-    this.resetFields();
-    if (this.contactos.length === 1) {
-      this.selecionado = this.contactos[0].nome;
-      this.erroSelecionado = '';
-    }
   },
   methods: {
     errosSelecionado() {
@@ -184,6 +177,8 @@ export default Vue.extend({
     resetFields() {
       this.selecionado = '';
       this.erroSelecionado = 'Contacto obrigatório';
+
+      for (let i = 0; i < this.imagensJogo.length; i += 1) { this.imagensJogo[i].ativo = false; }
     },
     imagemClick(imagem: { href: string, ativo: boolean }): void {
       // Meter imagem ativa

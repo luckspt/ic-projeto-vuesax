@@ -9,11 +9,12 @@
           color="rbg(255,255,255)"
           style="height:180px;">
           <template #title>
-            Iniciar Sessão
+            Identificação
           </template>
 
           <!-- <small class="ml-1">Nome de utilizador</small> -->
           <vs-input
+            ref="inpNome"
             v-model="nome"
             @keypress="checkSubmit"
             @input="checkErro"
@@ -62,6 +63,9 @@ export default Vue.extend({
       this.nome = this.$store.state.user.contacto.nome;
       this.erro = '';
     }
+
+    const inp = (this.$refs.inpNome as Vue).$el.querySelector('input');
+    if (inp) { inp.focus(); }
   },
   methods: {
     iniciarSessao() {

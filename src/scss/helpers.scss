@@ -4,6 +4,11 @@ h1,h2,h3,h4,h5,h6,p,th,td,tr,div {
 .vs-input:active .vs-input__icon,.vs-button__content,.vs-card__interactions h4  {
   color: white !important;
 }
+.vs-button--transparent {
+  svg {
+    color: rgb(var(--vs-text))
+  }
+}
 
 .vs-button--darker {
   background-color: rgb(var(--vs-darker));
