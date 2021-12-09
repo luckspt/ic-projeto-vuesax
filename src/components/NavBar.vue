@@ -6,9 +6,7 @@
         <vs-navbar-item @click="goHome">Concord</vs-navbar-item>
       </template>
 
-      <template #right>
-        <vs-tooltip bottom class="mr-1">
-          <vs-switch
+          <!-- <vs-switch
             v-model="lightMode"
             @click="changeTheme">
             <template #on>
@@ -19,10 +17,40 @@
               <i class='fa-solid fa-moon mr-2'></i>
               Escuro
             </template>
-          </vs-switch>
+          </vs-switch> -->
+
+      <template #right>
+        <vs-tooltip
+          bottom
+          interactivity>
+          <vs-button
+            border
+            class="no-hover">
+            Tema
+          </vs-button>
 
           <template #tooltip>
-            Mudar tema
+            <div class="grid">
+              <vs-row justify="center" align="center" style="width:200px;">
+                <vs-col w="6">
+                  <vs-switch
+                    v-model="lightMode"
+                    @click="changeTheme">
+                    <template #on>
+                      <i class='fa-solid fa-sun mr-2'></i>
+                      Claro
+                    </template>
+                    <template #off>
+                      <i class='fa-solid fa-moon mr-2'></i>
+                      Escuro
+                    </template>
+                    </vs-switch>
+                </vs-col>
+                <vs-col w="4">
+                  <input type="color" v-model="primaryColor" @input="updatePrimary"/>
+                </vs-col>
+              </vs-row>
+            </div>
           </template>
         </vs-tooltip>
 
@@ -58,16 +86,23 @@ export default Vue.extend({
   components: { ConfirmarSaida },
   data() {
     return {
+      primaryColor: '',
       dialogConfirmarSaida: false,
       lightMode: false,
     };
   },
-  mounted() {
+  beforeMount() {
     this.lightMode = localStorage.getItem('vsTheme') === 'light';
+    this.primaryColor = localStorage.getItem('vsPrimary') || '#7289DA';
+    this.updatePrimary();
   },
   methods: {
     changeTheme() {
       this.$vs.toggleTheme(this.lightMode ? 'light' : 'dark');
+    },
+    updatePrimary() {
+      this.$vs.setColor('primary', this.primaryColor);
+      localStorage.setItem('vsPrimary', this.primaryColor);
     },
     goHome() {
       if (this.$route.name !== 'Chat') this.$router.push({ name: 'Chat' });
