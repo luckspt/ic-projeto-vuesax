@@ -39,7 +39,7 @@
           <span
             v-if="j !== 0"
             class="ic-message-time">
-            {{ mensagem.momento.toTimeString().slice(0, -45) }}
+            {{ getHoras(mensagem.momento) }}
           </span>
 
           <div v-if="mensagem.texto">
@@ -173,6 +173,10 @@ export default Vue.extend({
     parseAutor(autor: string): string {
       if (autor === '$$user$$') { return this.$store.state.user.contacto.nome; }
       return autor;
+    },
+    getHoras(data: Date) {
+      const d = data.toTimeString();
+      return d.slice(0, d.indexOf(':') + 3);
     },
   },
   computed: {

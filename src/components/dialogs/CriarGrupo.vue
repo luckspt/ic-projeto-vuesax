@@ -21,6 +21,11 @@
             v-if="errosNome">
             {{ errosNome }}
           </template>
+          <template
+            #message-success
+            v-if="informacoesNome">
+            {{ informacoesNome }}
+          </template>
         </vs-input>
 
         <!-- ADICIONAR CONTACTOS -->
@@ -34,6 +39,11 @@
           collapse-chips
           v-model="selecionados"
           @input="contactosErrors">
+          <template
+            #message-success
+            v-if="informacoesContactos">
+            {{ informacoesContactos }}
+          </template>
           <template
             #message-danger
             v-if="errosContactos">
@@ -61,6 +71,16 @@
           collapse-chips
           v-model="selecionadosEmail"
           @input="contactosErrors">
+          <template
+            #message-success
+            v-if="informacoesContactos">
+            {{ informacoesContactos }}
+          </template>
+          <template
+            #message-danger
+            v-if="errosContactos">
+            {{ errosContactos }}
+          </template>
 
           <vs-option
             v-for="(contacto, i) in contactosEmail"
@@ -124,15 +144,17 @@ export default Vue.extend({
     selecionados: [],
     selecionadosEmail: [] as string[],
     errosNome: '',
+    informacoesNome: '',
     errosEmail: '',
+    informacoesEmail: '',
     errosContactos: '',
+    informacoesContactos: '',
     contactos: [],
     contactosEmail: [],
-
   }),
   computed: {
     canSubmit() {
-      return !this.errosNome && (this.selecionados.length || this.selecionadosEmail.length);
+      return !this.errosNome && !this.informacoesNome && (this.selecionados.length || this.selecionadosEmail.length);
     },
   },
   beforeMount() {
@@ -158,19 +180,22 @@ export default Vue.extend({
   },
   methods: {
     nomeErrors() {
+      this.informacoesNome = '';
       if (!this.nome.length) this.errosNome = 'Nome obrigatório';
       else if (this.nome.length > 20) this.errosNome = 'Comprimento máximo: 20 caracteres';
       else if (this.$store.state.contactos.recentes.find((c: Contacto) => c.nome === this.nome)) this.errosNome = 'Já existe um grupo ou contacto com esse nome';
       else this.errosNome = '';
     },
     emailErrors() {
+      this.informacoesEmail = '';
       if (!this.txtEmail.length) this.errosEmail = 'E-mail obrigatório';
       else if (this.txtEmail.length > 128) this.errosEmail = 'Comprimento máximo: 128 caracteres';
-      else if (!this.emailValid(this.txtEmail)) this.errosEmail = 'Email inválido — Não apresenta formato de e-mail.';
+      else if (!this.emailValid(this.txtEmail)) this.errosEmail = 'Email inválido';
       else this.errosEmail = '';
     },
     contactosErrors() {
-      if (!this.selecionados.length) this.errosContactos = 'Pelo menos um contacto obrigatório';
+      this.informacoesContactos = '';
+      if (!this.selecionados.length && !this.selecionadosEmail.length) this.errosContactos = 'Pelo menos um contacto obrigatório';
       else this.errosContactos = '';
     },
     submit() {
@@ -191,11 +216,14 @@ export default Vue.extend({
     },
     resetFields() {
       this.nome = '';
-      this.errosNome = 'Nome obrigatório';
+      this.errosNome = '';
+      this.informacoesNome = 'Nome obrigatório';
       this.txtEmail = '';
-      this.errosEmail = 'Insira um email válido.';
+      this.errosEmail = '';
+      this.informacoesEmail = 'Insira um email válido.';
       this.selecionados = [];
-      this.errosContactos = 'Pelo menos um contacto obrigatório';
+      this.errosContactos = '';
+      this.informacoesContactos = 'Pelo menos um contacto obrigatório';
       this.selecionadosEmail = [];
     },
     closeDialog() {

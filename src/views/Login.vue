@@ -29,15 +29,18 @@
             <template #message-danger v-if="erro" class="mb-0">
               {{ erro }}
             </template>
+            <template #message-success v-if="informacao" class="mb-0">
+              {{ informacao }}
+            </template>
           </vs-input>
 
           <vs-button
             color="primary"
-            :disabled="!!erro"
+            :disabled="!!erro || !!informacao"
             @click="iniciarSessao"
             class="ml-0"
             v-shortkey="['c']"
-            @shortkey="!erro ? iniciarSessao() : () => {}">
+            @shortkey="!erro && !informacao ? iniciarSessao() : () => {}">
             <u>C</u>ontinuar
           </vs-button>
         </vs-alert>
@@ -52,7 +55,8 @@ import Vue from 'vue';
 export default Vue.extend({
   data: () => ({
     nome: '',
-    erro: 'Nome obrigatório',
+    erro: '',
+    informacao: 'Nome obrigatório',
   }),
   beforeCreate() {
     // Limpar sessionStorage. é por domínio, portanto não queremos lixo de outros projetos
@@ -76,6 +80,7 @@ export default Vue.extend({
       if (code === 'Enter' && !this.erro) this.iniciarSessao();
     },
     checkErro() {
+      this.informacao = '';
       if (!this.nome) this.erro = 'Nome obrigatório';
       else if (this.nome.length > 20) this.erro = 'Comprimento máximo: 20 caracteres';
       else this.erro = '';

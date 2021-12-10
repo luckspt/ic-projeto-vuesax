@@ -35,6 +35,8 @@ import Vue from 'vue';
 export default Vue.extend({
   created() {
     console.log('Hola que hace');
+    console.log('a mi me gusta la gasolina');
+
     const lightMode = localStorage.getItem('vsTheme') === 'light';
     this.$vs.setTheme(lightMode ? 'light' : 'dark');
 
@@ -51,9 +53,9 @@ export default Vue.extend({
   },
   mounted() {
     // this.ataque();
-    const primaryColor = localStorage.getItem('vsPrimary') || '#7289DA';
+    const primaryColor = sessionStorage.getItem('vsPrimary') || '#7289DA';
     this.$vs.setColor('primary', primaryColor);
-    localStorage.setItem('vsPrimary', primaryColor);
+    sessionStorage.setItem('vsPrimary', primaryColor);
   },
   methods: {
     getCor() {

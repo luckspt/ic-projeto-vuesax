@@ -28,6 +28,9 @@ body:not([vs-theme=dark]) {
 .bg-darker {
   background-color: rgb(var(--vs-darker));
 }
+.border-darker {
+  border: 3px rgb(var(--vs-darker)) solid;
+}
 .border-top-darker {
   border-top: 3px rgb(var(--vs-darker)) solid;
 }
