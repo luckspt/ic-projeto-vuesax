@@ -29,7 +29,7 @@
                   </template>
 
                   <p v-show="!search">
-                    Envie uma mensagem ou inicie uma ligação de vídeo para começar!
+                    Envie uma mensagem ou inicie uma chamada para começar!
                     <i class="fa-solid fa-face-smile-wink twemoji ml-2" data-fa-transform="grow-16" />
                   </p>
                   <p v-show="search">

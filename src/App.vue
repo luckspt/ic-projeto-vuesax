@@ -51,6 +51,9 @@ export default Vue.extend({
   },
   mounted() {
     // this.ataque();
+    const primaryColor = localStorage.getItem('vsPrimary') || '#7289DA';
+    this.$vs.setColor('primary', primaryColor);
+    localStorage.setItem('vsPrimary', primaryColor);
   },
   methods: {
     getCor() {

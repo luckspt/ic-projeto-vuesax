@@ -94,7 +94,6 @@ export default Vue.extend({
   beforeMount() {
     this.lightMode = localStorage.getItem('vsTheme') === 'light';
     this.primaryColor = localStorage.getItem('vsPrimary') || '#7289DA';
-    this.updatePrimary();
   },
   methods: {
     changeTheme() {

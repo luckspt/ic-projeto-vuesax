@@ -15,8 +15,7 @@ h1,h2,h3,h4,h5,h6,p,th,td,tr,div {
 }
 
 body:not([vs-theme=dark]) {
-  .vs-button--border .vs-button__content,
-  .vs-button--transparent .vs-button__content {
+  .vs-button--border .vs-button__content {
     color: rgb(var(--vs-text));
     filter: invert(100%);
   }
