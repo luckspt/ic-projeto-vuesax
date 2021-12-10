@@ -3,12 +3,12 @@
 
 export interface Contacto {
     nome: string,
+    naChamada: ParticipanteChamada[],
+    createdAt: Date,
     grupo?: boolean,
     email?: string,
     hidden?: boolean,
     mensagens?: Mensagem[],
-    naChamada: ParticipanteChamada[],
-    createdAt?: Date,
     command?: () => void // used on ListBox
 }
 

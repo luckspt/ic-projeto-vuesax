@@ -14,12 +14,12 @@
           </div>
       </vs-col>
       <vs-col
-        w="12"
+        w="8"
         v-else>
         <div class="p-grid p-jc-center p-ai-center vertical-container" style="width:100%;height:465px">
           <div class="grid" style="width:970px;height:100%">
-            <vs-row align="center">
-              <vs-col w="4">
+            <vs-row align="center" justify="center" style="height:100%;">
+              <vs-col w="4" v-show="!search">
                 <i id="leftArrow" class="fa-solid fa-share fa-flip-vertical" data-fa-transform="rotate--90"></i>
               </vs-col>
               <vs-col w="5">
@@ -28,12 +28,16 @@
                     <h1>Sem mensagens...</h1>
                   </template>
 
-                  <p>Envie uma mensagem ou inicie uma ligação de vídeo para começar!
-                    <i
-                    class="fa-solid fa-face-smile-wink twemoji ml-2"
-                    data-fa-transform="grow-16" /></p>
+                  <p v-show="!search">
+                    Envie uma mensagem ou inicie uma chamada para começar!
+                    <i class="fa-solid fa-face-smile-wink twemoji ml-2" data-fa-transform="grow-16" />
+                  </p>
+                  <p v-show="search">
+                    Sem mensagens encontradas para <i>"<strong>{{ search }}</strong>"</i>.
+                  </p>
                 </vs-alert>
               </vs-col>
+              <vs-col w="1"></vs-col>
             </vs-row>
           </div>
         </div>
@@ -93,7 +97,8 @@
     <Jogos
       :chat="chat"
       :isVisible.sync="dialogJogos"
-      @close="closeDialogJogos" />
+      @close="closeDialogJogos"
+      @iniciado="descerMensagem" />
   </div>
 </template>
 
@@ -121,6 +126,7 @@ export default Vue.extend({
       immediate: true,
       handler() {
         this.forceRerenderChat();
+        this.descerMensagem();
       },
     },
   },

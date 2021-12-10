@@ -4,20 +4,9 @@
       <template #left>
         <img class="py-2" src="@/assets/img/logo.png" height="50" />
         <vs-navbar-item @click="goHome">Concord</vs-navbar-item>
-
-        <vs-navbar-item @click="openCriarGrupo">
-          <span
-            v-shortkey="['ctrl', 'g']"
-            @shortkey="openCriarGrupo">
-            Criar Grupo
-          </span>
-        </vs-navbar-item>
       </template>
 
-      <template #right>
-
-        <vs-tooltip>
-          <vs-switch
+          <!-- <vs-switch
             v-model="lightMode"
             @click="changeTheme">
             <template #on>
@@ -28,10 +17,40 @@
               <i class='fa-solid fa-moon mr-2'></i>
               Escuro
             </template>
-          </vs-switch>
+          </vs-switch> -->
+
+      <template #right>
+        <vs-tooltip
+          bottom
+          interactivity>
+          <vs-button
+            border
+            class="no-hover">
+            Tema
+          </vs-button>
 
           <template #tooltip>
-            Mudar tema
+            <div class="grid">
+              <vs-row justify="center" align="center" style="width:200px;">
+                <vs-col w="6">
+                  <vs-switch
+                    v-model="lightMode"
+                    @click="changeTheme">
+                    <template #on>
+                      <i class='fa-solid fa-sun mr-2'></i>
+                      Claro
+                    </template>
+                    <template #off>
+                      <i class='fa-solid fa-moon mr-2'></i>
+                      Escuro
+                    </template>
+                    </vs-switch>
+                </vs-col>
+                <vs-col w="4">
+                  <input type="color" v-model="primaryColor" @input="updatePrimary"/>
+                </vs-col>
+              </vs-row>
+            </div>
           </template>
         </vs-tooltip>
 
@@ -52,9 +71,6 @@
       </template>
     </vs-navbar>
 
-    <CriarGrupo
-      :isVisible.sync="dialogCriarGrupo"
-      @close="closeCriarGrupo" />
     <ConfirmarSaida
       :isVisible.sync="dialogConfirmarSaida"
       @close="closeConfirmarSaida"
@@ -62,45 +78,37 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
-.vs-switch {
-  height: 34px !important;
-}
-</style>
-
 <script lang="ts">
 import Vue from 'vue';
-import CriarGrupo from './dialogs/CriarGrupo.vue';
 import ConfirmarSaida from './dialogs/ConfirmarSaida.vue';
 
 export default Vue.extend({
-  components: { CriarGrupo, ConfirmarSaida },
+  components: { ConfirmarSaida },
   data() {
     return {
-      dialogCriarGrupo: false,
+      primaryColor: '',
       dialogConfirmarSaida: false,
       lightMode: false,
     };
   },
-  mounted() {
+  beforeMount() {
     this.lightMode = localStorage.getItem('vsTheme') === 'light';
+    this.primaryColor = localStorage.getItem('vsPrimary') || '#7289DA';
   },
   methods: {
     changeTheme() {
-      console.log('toggleTheme', this.lightMode ? 'light' : 'dark');
       this.$vs.toggleTheme(this.lightMode ? 'light' : 'dark');
+    },
+    updatePrimary() {
+      this.$vs.setColor('primary', this.primaryColor);
+      localStorage.setItem('vsPrimary', this.primaryColor);
     },
     goHome() {
       if (this.$route.name !== 'Chat') this.$router.push({ name: 'Chat' });
+      this.$emit('goHome');
     },
     goHelp() {
       if (this.$route.name !== 'Help') this.$router.push({ name: 'Help', params: { p: this.$route.name as string } });
-    },
-    openCriarGrupo() {
-      this.dialogCriarGrupo = true;
-    },
-    closeCriarGrupo(): void {
-      this.dialogCriarGrupo = false;
     },
     openConfirmarSaida() {
       this.dialogConfirmarSaida = true;

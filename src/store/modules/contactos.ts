@@ -37,31 +37,32 @@ const state = {
       naChamada: [
         { nome: 'António', micro: true, camera: true },
       ],
+      createdAt: new Date('2019/05/30'),
       mensagens: [
         {
           autor: 'António',
           texto: 'Hey! Tudo fixe?',
-          momento: new Date('2003/05/30 05:37:06'),
+          momento: new Date('2019/05/30 05:37:06'),
         },
         {
           autor: '$$user$$',
           texto: 'Ya meu!! Tirei alta nota a Arquiteturas de Computadores!!! ',
-          momento: new Date('2003/05/30 06:10:30'),
+          momento: new Date('2019/05/30 06:10:30'),
         },
         {
           autor: 'António',
           texto: 'Mas que grande maluco tu! Quem me dera, chumbei 8 vezes a essa cadeira :(.',
-          momento: new Date('2003/05/30 06:11:23'),
+          momento: new Date('2019/05/30 06:11:23'),
         },
         {
           autor: '$$user$$',
           texto: 'É como eu digo: mais vale três folhas a voar que duas garrafas na mão',
-          momento: new Date('2003/05/30 06:11:47'),
+          momento: new Date('2019/05/30 06:11:47'),
         },
         {
           autor: 'António',
           texto: 'Fixe',
-          momento: new Date('2003/05/30 17:58:23'),
+          momento: new Date('2019/05/30 17:58:23'),
         },
       ],
     },
@@ -73,16 +74,17 @@ const state = {
         { nome: 'Zé', micro: true, camera: true },
         { nome: 'Carlos', camera: true, micro: true },
       ],
+      createdAt: new Date('2021/01/12'),
       mensagens: [
         {
-          autor: 'António', texto: 'Quem é vosso amigo quem é?', momento: new Date('2013/01/13 12:34:11'),
+          autor: 'António', texto: 'Quem é vosso amigo quem é?', momento: new Date('2021/01/13 12:34:11'),
         },
         {
-          autor: '$$user$$', texto: 'És tu Toninho :)', momento: new Date('2013/01/13 12:36:11'),
+          autor: '$$user$$', texto: 'És tu Toninho :)', momento: new Date('2021/01/13 12:36:11'),
         },
-        { autor: 'Carlos', texto: 'Mas quem', momento: new Date('2013/01/13 12:37:11') },
-        { autor: 'António', texto: 'quem te perguntou', momento: new Date('2013/01/13 13:14:11') },
-        { autor: 'António', texto: 'já não caio nessa amigo carlitos pirulitos', momento: new Date('2013/01/13 13:15:11') },
+        { autor: 'Carlos', texto: 'Mas quem', momento: new Date('2021/01/13 12:37:11') },
+        { autor: 'António', texto: 'quem te perguntou', momento: new Date('2021/01/13 13:14:11') },
+        { autor: 'António', texto: 'já não caio nessa amigo carlitos pirulitos', momento: new Date('2021/01/13 13:15:11') },
       ],
     },
     {
@@ -90,6 +92,7 @@ const state = {
       naChamada: [
         { nome: 'Avó Miranda', camera: true, micro: true },
       ],
+      createdAt: new Date('2015/12/21'),
       mensagens: [
         { autor: 'Avó Miranda', texto: '´onetinhoajudaaavo,naoencontro!oespaço', momento: new Date('2015/12/21 15:51:50') },
         {
@@ -99,7 +102,7 @@ const state = {
         {
           autor: '$$user$$', texto: 'burger', momento: new Date('2015/12/27 12:11:50'),
         },
-        { autor: 'Avó Miranda', texto: 'hojenaojantas', momento: new Date('2015/12/27 19:38:18') },
+        { autor: 'Avó Miranda', texto: 'anonovovidanova', momento: new Date('2015/12/27 19:38:18') },
       ],
     },
     {
@@ -109,6 +112,7 @@ const state = {
         { nome: 'António' },
         { nome: 'Zé', micro: true },
       ],
+      createdAt: new Date('2019/03/11'),
       mensagens: [
         { autor: 'António', texto: 'Bom dia pessoal, bora um jogo?', momento: new Date('2019/03/18 11:38:39') },
         { autor: '$$user$$', texto: 'Pode ser', momento: new Date('2019/03/18 11:40:39') },
@@ -121,6 +125,7 @@ const state = {
       naChamada: [
         { nome: 'Maria', micro: true, camera: true },
       ],
+      createdAt: new Date('2019/12/12'),
       mensagens: [
         { autor: 'Maria', texto: 'O que você sabe sobre rolar nas profundezas?', momento: new Date('2019/12/19 19:01:52') },
         { autor: 'Maria', texto: 'Quando seu cérebro fica entorpecido, você pode chamar isso de congelamento mental', momento: new Date('2019/12/19 19:02:13') },
@@ -135,6 +140,7 @@ const state = {
       naChamada: [
         { nome: 'Ed Sheeran', camera: true, micro: true },
       ],
+      createdAt: new Date('2018/01/22'),
       mensagens: [
         { autor: 'Ed Sheeran', texto: 'Girl, you know I want your love', momento: new Date('2018/01/22 18:15:36') },
       ],
@@ -144,19 +150,24 @@ const state = {
       naChamada: [
         { nome: 'Twix', micro: true, camera: true },
       ],
+      createdAt: new Date('2021/10/19'),
       mensagens: [
-        { autor: 'Twix', texto: 'ola sou o twix venho do futuro queres as respostas do exame de interação com computadores??? rapido', momento: new Date('2022/10/19 02:21:48') },
-        { autor: '$$user$$', texto: 'omeudeus ola twix!!! sim por favor as respotas do exame de interação com computadores sim', momento: new Date('2022/10/19 10:12:48') },
-        { autor: 'Twix', ficheiro: 'respostas_exame_ic2021.pdf', momento: new Date('2022/10/19 11:46:21') },
-        { autor: '$$user$$', texto: 'TWIX ERA EXATAMENTE ISSO COMO E QUE SOUBESTE', momento: new Date('2022/01/10 16:01:12') },
-        { autor: 'Twix', texto: 'um bom mágico nao revela os seus segredos', momento: new Date('2022/01/10 20:13:21') },
+        { autor: 'Twix', texto: 'ola sou o twix o melhor chocolate queres as respostas do exame de interação com computadores??? rapido', momento: new Date('2021/10/19 02:21:48') },
+        { autor: '$$user$$', texto: 'omeudeus ola twix!!! sim por favor as respotas do exame de interação com computadores sim', momento: new Date('2021/10/19 10:12:48') },
+        {
+          autor: 'Twix', texto: 'pegalá então mas rápido antes que nos vejam estão a olhar vá', ficheiro: 'respostas_exame_ic2021.pdf', momento: new Date('2021/10/19 11:46:21'),
+        },
+        { autor: '$$user$$', texto: 'mil milhões de obrigados! a` noite comes frango', momento: new Date('2021/10/19 11:47:12') },
+        { autor: 'Twix', texto: 'acho, de facto, bem, mas espero que não seja frango de leiria', momento: new Date('2021/10/19 11:47:21') },
+        { autor: '$$user$$', texto: 'frango de onde?', momento: new Date('2021/10/19 11:48:00') },
+        { autor: 'Twix', texto: 'pois', momento: new Date('2021/10/19 11:50:00') },
       ],
     },
+    // Hidden
     {
       nome: 'Carla',
       email: 'carla42@email.com',
       hidden: true,
-      mensagens: [{ autor: 'Carla', texto: 'what you know about rolling down in ', momento: new Date(2013, 13, 2) }],
     },
     {
       nome: 'Zé',
@@ -164,12 +175,12 @@ const state = {
       hidden: true,
     },
     {
-      nome: 'Carlos',
+      nome: 'Carlos Pipocas',
       email: 'pipocas_doces123@hotmail.com',
       hidden: true,
     },
-    { nome: 'Jogo', hidden: true }, // fallback pq do Jogo quando se inicia um jogo
-    { nome: 'Chamada', hidden: true }, // fallback pq do Jogo quando se inicia um jogo
+    { nome: 'Jogo', hidden: true }, // fallback pq do Jogo quando se inicia
+    { nome: 'Chamada', hidden: true }, // fallback pq da Chamada quando se inicia/termina
   ] as Contacto[],
 };
 

@@ -183,6 +183,7 @@ export default Vue.extend({
       });
 
       this.resetFields();
+      this.$emit('criado');
       this.closeDialog();
     },
     add() {

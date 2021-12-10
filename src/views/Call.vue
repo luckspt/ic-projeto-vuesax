@@ -2,7 +2,7 @@
   <div class="grid" justify="center">
     <vs-row>
       <vs-col w="12">
-        <div style="width:100%;height:429px;">
+        <div style="width:100%;height:465px;">
           <div class="dish" style="height:429px;overflow-y:scroll;">
             <div
               class="participant mr-3 mb-3"
@@ -102,27 +102,19 @@
               <i class="fa-solid fa-volume-high mr-2"></i>
               <u>S</u>ons
             </vs-button>
-          </vs-row>
+          <!-- </vs-row>
         </div>
       </vs-col>
 
       <vs-col w="12">
         <div class="grid">
-          <vs-row justify="center">
+          <vs-row justify="center"> -->
             <vs-button
               danger
               @click="leaveCall">
 
-              <i class="fa-solid fa-phone mr-2"></i>
-              Terminar Chamada
-            </vs-button>
-
-            <vs-button
-              v-shortkey="['v']"
-              @shortkey="$router.push({ name: 'Chat' })"
-              @click="$router.push({ name: 'Chat' })">
-              <i class="fa-solid fa-circle-arrow-left mr-2"></i>
-              <u>V</u>oltar à Conversa
+              <i class="fa-solid fa-phone-slash mr-2" data-fa-transform="rotate-90"></i>
+              Terminar
             </vs-button>
           </vs-row>
         </div>

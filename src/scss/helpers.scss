@@ -1,12 +1,24 @@
 h1,h2,h3,h4,h5,h6,p,th,td,tr,div {
-  color: rgb(var(--text-color));
+  color: rgb(var(--vs-text));
 }
 .vs-input:active .vs-input__icon,.vs-button__content,.vs-card__interactions h4  {
   color: white !important;
 }
+.vs-button--transparent {
+  svg {
+    color: rgb(var(--vs-text))
+  }
+}
 
 .vs-button--darker {
   background-color: rgb(var(--vs-darker));
+}
+
+body:not([vs-theme=dark]) {
+  .vs-button--border .vs-button__content {
+    color: rgb(var(--vs-text));
+    filter: invert(100%);
+  }
 }
 
 .no-hover {
@@ -16,13 +28,32 @@ h1,h2,h3,h4,h5,h6,p,th,td,tr,div {
 .bg-darker {
   background-color: rgb(var(--vs-darker));
 }
+.border-top-darker {
+  border-top: 3px rgb(var(--vs-darker)) solid;
+}
+.border-bottom-darker {
+  border-bottom: 3px rgb(var(--vs-darker)) solid;
+}
+.border-left-darker {
+  border-left: 3px rgb(var(--vs-darker)) solid;
+}
+.border-right-darker {
+  border-right: 3px rgb(var(--vs-darker)) solid;
+}
 
 .vs-tooltip {
-  color: white;
+  color: rgb(var(--vs-text));
 }
 
 .rounded-corners {
   border-radius: 12px;
+}
+
+.vs-switch {
+  margin: var(--vs-button-margin);
+  // TODO isto funciona com zoom a 100% mas se mudar o zoom os botões mudam mas este não
+  height: 34px !important;
+  border-radius: 12px !important;
 }
 
 .twemoji {
@@ -41,7 +72,7 @@ h1,h2,h3,h4,h5,h6,p,th,td,tr,div {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgb(var(--text-color));
+  background: rgb(var(--vs-text));
   border-radius: 25px;
 }
 ::-webkit-scrollbar-thumb:hover {
