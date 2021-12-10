@@ -6,19 +6,6 @@
         <vs-navbar-item @click="goHome">Concord</vs-navbar-item>
       </template>
 
-          <!-- <vs-switch
-            v-model="lightMode"
-            @click="changeTheme">
-            <template #on>
-              <i class='fa-solid fa-sun mr-2'></i>
-              Claro
-            </template>
-            <template #off>
-              <i class='fa-solid fa-moon mr-2'></i>
-              Escuro
-            </template>
-          </vs-switch> -->
-
       <template #right>
         <vs-tooltip
           bottom
@@ -93,7 +80,7 @@ export default Vue.extend({
   },
   beforeMount() {
     this.lightMode = localStorage.getItem('vsTheme') === 'light';
-    this.primaryColor = localStorage.getItem('vsPrimary') || '#7289DA';
+    this.primaryColor = sessionStorage.getItem('vsPrimary') || '#7289DA';
   },
   methods: {
     changeTheme() {
@@ -101,7 +88,7 @@ export default Vue.extend({
     },
     updatePrimary() {
       this.$vs.setColor('primary', this.primaryColor);
-      localStorage.setItem('vsPrimary', this.primaryColor);
+      sessionStorage.setItem('vsPrimary', this.primaryColor);
     },
     goHome() {
       if (this.$route.name !== 'Chat') this.$router.push({ name: 'Chat' });

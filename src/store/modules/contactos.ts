@@ -111,6 +111,7 @@ const state = {
       naChamada: [
         { nome: 'António' },
         { nome: 'Zé', micro: true },
+        { nome: 'Carlos', camera: true },
       ],
       createdAt: new Date('2019/03/11'),
       mensagens: [
@@ -163,6 +164,20 @@ const state = {
         { autor: 'Twix', texto: 'pois', momento: new Date('2021/10/19 11:50:00') },
       ],
     },
+    {
+      nome: 'Carlos',
+      naChamada: [
+        { nome: 'Carlos', micro: true },
+      ],
+      createdAt: new Date('2021/07/12'),
+      mensagens: [
+        { autor: 'Carlos', texto: 'ola e o carlos dormi bue oje gosto bue de dormir', momento: new Date('2021/07/12 10:00:23') },
+        { autor: 'Carlos', texto: 'queres morangos!', momento: new Date('2021/07/12 12:24:54') },
+        { autor: 'Carlos', texto: 'ou   ou nao', momento: new Date('2021/07/12 12:26:15') },
+        { autor: '$$user$$', texto: 'nao', momento: new Date('2021/07/12 23:08:49') },
+        { autor: 'Carlos', texto: 'queres sim abre aboca diz aaaaaaaaaa sao bons', momento: new Date('2021/07/12 23:13:10') },
+      ],
+    },
     // Hidden
     {
       nome: 'Carla',
@@ -175,7 +190,7 @@ const state = {
       hidden: true,
     },
     {
-      nome: 'Carlos Pipocas',
+      nome: 'Penélope Pipocas',
       email: 'pipocas_doces123@hotmail.com',
       hidden: true,
     },

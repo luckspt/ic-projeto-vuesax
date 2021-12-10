@@ -38,7 +38,7 @@
       </small>
 
       <div v-if="chat.grupo">
-        <p class="ml-5">Escolha um elemento do grupo!</p>
+        <p class="ml-5">Escolha um elemento do grupo</p>
         <div class="grid">
           <vs-select
             class="ml-5 mr-6"
@@ -46,7 +46,14 @@
             v-model="selecionado"
             primary
             @change="errosSelecionado">
-            <template #message-danger v-if="erroSelecionado">
+            <template
+              #message-success
+              v-if="informacoesSelecionado">
+              {{ informacoesSelecionado }}
+            </template>
+            <template
+              #message-danger
+              v-if="erroSelecionado">
               {{ erroSelecionado }}
             </template>
 
@@ -99,7 +106,7 @@
 
 #msgErroJogos {
   font-size: 11.2px;
-  color: rgb(var(--vs-danger));
+  color: rgb(var(--vs-success));
   margin-left:6px;
 }
 </style>
@@ -141,7 +148,8 @@ export default Vue.extend({
       },
     ],
     selecionado: '',
-    erroSelecionado: 'Contacto obrigatório',
+    erroSelecionado: '',
+    informacoesSelecionado: '',
     contactos: [] as ParticipanteChamada[],
   }),
   computed: {
@@ -171,12 +179,14 @@ export default Vue.extend({
   },
   methods: {
     errosSelecionado() {
+      this.informacoesSelecionado = '';
       if (!this.selecionado) this.erroSelecionado = 'Contacto obrigatório';
       else this.erroSelecionado = '';
     },
     resetFields() {
       this.selecionado = '';
-      this.erroSelecionado = 'Contacto obrigatório';
+      this.erroSelecionado = '';
+      this.informacoesSelecionado = 'Contacto obrigatório';
 
       for (let i = 0; i < this.imagensJogo.length; i += 1) { this.imagensJogo[i].ativo = false; }
     },

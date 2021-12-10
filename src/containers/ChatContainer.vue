@@ -14,6 +14,8 @@
             <vs-row justify="center" align="center" class="mb-1" >
               <vs-col w="8">
                 <vs-button
+                  v-shortkey="['ctrl', 'g']"
+                  @shortkey="openCriarGrupo"
                   block
                   @click="openCriarGrupo">
                   <i class="fa-solid fa-plus mr-2"></i>
@@ -409,11 +411,20 @@ export default Vue.extend({
 
           return valid;
         })
-        .map((r: Contacto) => ({ ...r, lastIteraction: r.mensagens?.length ? r.mensagens[r.mensagens.length - 1]?.momento?.getTime() : r.createdAt?.getTime() }))
+        // eslint-disable-next-line no-nested-ternary
+        .map((r: Contacto) => ({ ...r, lastIteraction: r.mensagens?.length ? r.mensagens[r.mensagens.length - 1]?.momento?.getTime() : (r.createdAt instanceof Date ? r.createdAt.getTime() : 0) }))
         .sort((a: Contacto & { lastIteraction: number }, b: Contacto & { lastIteraction: number }) => b.lastIteraction - a.lastIteraction);
     },
     computedContactosGrupo() {
-      return this.recenteSeleccionado?.naChamada
+      if (!this.recenteSeleccionado) return [];
+      console.log(this.recenteSeleccionado.naChamada);
+      return [...this.recenteSeleccionado.naChamada]
+        .sort((a, b) => {
+          if (a.nome < b.nome) return -1;
+          if (a.nome > b.nome) return 1;
+
+          return 0;
+        })
         .map((c) => c.nome)
         .join(', ');
     },
@@ -424,7 +435,6 @@ export default Vue.extend({
       if (eGrupo) cnt += 3;
       if (emChamada) cnt += 3;
 
-      console.log(nome, cnt);
       return nome.length >= 15 - cnt ? `${nome.slice(0, 13 - cnt)}...` : nome;
     },
     openCriarGrupo() {
