@@ -24,8 +24,7 @@
                 <vs-tooltip>
                   <vs-switch
                     warn
-                    v-model="filtroGrupos"
-                    class="mt-1">
+                    v-model="filtroGrupos">
                     <template #off>
                         <i class='fa-solid fa-user-group' ></i>
                     </template>
@@ -99,7 +98,7 @@
                 </vs-td>
                 <vs-td class="td_nome">
                   <!-- Nome -->
-                  <span style="z-index:-1;">{{ minifyName(contacto.nome) }}</span>
+                  <span style="z-index:-1;">{{ minifyName(contacto.nome, contacto.grupo, $store.state.user.contacto.emChamada && $store.state.user.contacto.emChamada.nome === contacto.nome) }}</span>
 
                   <vs-tooltip
                     v-show="contacto.grupo"
@@ -177,7 +176,26 @@
                 <vs-col w="6" v-if="$route.name === 'Chat'">
                   <div class="grid">
                     <vs-row align="center" justify="end">
-                      <vs-col w="6" class="mr-1">
+                      <vs-col
+                        w="1"
+                        class="mr-3"
+                        v-if="recenteSeleccionado.grupo">
+                        <vs-tooltip
+                          bottom
+                          interactivity>
+                            <vs-button
+                              style="height:34px;"
+                              border
+                              class="no-hover">
+                              <i class="fa-solid fa-user-group"></i>
+                            </vs-button>
+
+                            <template #tooltip>
+                              {{ computedContactosGrupo }}
+                            </template>
+                        </vs-tooltip>
+                      </vs-col>
+                      <vs-col w="5" class="mr-1">
                         <vs-input
                           block
                           icon-before
@@ -189,7 +207,7 @@
                         </vs-input>
                       </vs-col>
                       <vs-col w="5">
-                        <div v-if="!emChamada" class="ml-1">
+                        <div v-if="!emChamada">
                           <vs-tooltip
                             bottom
                             shadow
@@ -394,10 +412,20 @@ export default Vue.extend({
         .map((r: Contacto) => ({ ...r, lastIteraction: r.mensagens?.length ? r.mensagens[r.mensagens.length - 1]?.momento?.getTime() : r.createdAt?.getTime() }))
         .sort((a: Contacto & { lastIteraction: number }, b: Contacto & { lastIteraction: number }) => b.lastIteraction - a.lastIteraction);
     },
+    computedContactosGrupo() {
+      return this.recenteSeleccionado?.naChamada
+        .map((c) => c.nome)
+        .join(', ');
+    },
   },
   methods: {
-    minifyName(nome: string) {
-      return nome.length >= 12 ? `${nome.slice(0, 9)}...` : nome;
+    minifyName(nome: string, eGrupo: boolean, emChamada: boolean) {
+      let cnt = 0;
+      if (eGrupo) cnt += 3;
+      if (emChamada) cnt += 3;
+
+      console.log(nome, cnt);
+      return nome.length >= 15 - cnt ? `${nome.slice(0, 13 - cnt)}...` : nome;
     },
     openCriarGrupo() {
       this.dialogCriarGrupo = true;
